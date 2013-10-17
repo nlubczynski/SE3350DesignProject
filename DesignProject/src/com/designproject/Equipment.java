@@ -1,6 +1,8 @@
 package com.designproject;
 
+import android.annotation.SuppressLint;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -109,8 +111,9 @@ public class Equipment {
 	 * 
 	 * @return InspectionElement[] elements - the inspection elements for a piece of equipment
 	 */
+	@SuppressLint("NewApi")
 	public InspectionElement[] getInspectionElements(){
-		return (InspectionElement[]) this.elements.toArray();
+		return Arrays.copyOf(this.elements.toArray(), this.elements.toArray().length, InspectionElement[].class);
 	}
 	/**
 	 * @return String name - return the name of the equipment
@@ -151,8 +154,9 @@ public class Equipment {
 	 * Get all the attributes for a piece of equipment
 	 * @return node[] - An array of all the attributes
 	 */
+	@SuppressLint("NewApi")
 	public node[] getAttributes(){
-		return (node[]) attributes.toArray();
+		return Arrays.copyOf(this.attributes.toArray(), this.attributes.toArray().length, node[].class);
 	}
 	
 	/**
