@@ -15,5 +15,13 @@
     <string name="title_menu_detail">Menu Detail</string>
     <string name="title_menu_list">Menus</string>
     <string name="signOut">Sign Out</string>
+    <string name="username_default">Guest</string>
+    <string name="progress_default">0/0</string>
+    <string name="completed_contracts_string">Contracts Completed</string>
+    <string name="due_today_string">Due Today</string>
+    <string name="due_next_week_string">Due Next Week</string>
+    <string name="due_next_month">Due Next Month</string>
+    <string name="reports_waiting_to_be_sent_string">Reports Waiting To Be Sent</string>
+    <string name="Inspect_string">Inspect</string>
 
 </resources>
