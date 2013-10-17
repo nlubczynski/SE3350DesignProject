@@ -32,9 +32,7 @@ public class XMLReader {
 		parser = factory.newPullParser();
 	}
 	
-	public Franchise parseXML() throws XmlPullParserException, IOException{
-		
-		Franchise returnVal = null;
+	public void parseXML() throws XmlPullParserException, IOException{
 		
 		int eventType = parser.getEventType();
 		
@@ -64,7 +62,6 @@ public class XMLReader {
 		}
 		
 		System.out.println("Done parsing document");
-		return returnVal;
 	}
 	
 }
