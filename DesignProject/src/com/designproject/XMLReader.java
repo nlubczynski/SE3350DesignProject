@@ -81,7 +81,7 @@ public class XMLReader {
 						inspectionElementParser( parser, lastEquipment );
 					break;
 				case XmlPullParser.END_TAG:
-					if( parser.getName().matches( "Room" ) )
+					if( parser.getName().equals( "Room" ) )
 						inRoom = false;
 					else if( inRoom = true && inRoom == inEquipment && !parser.getName().matches( "inspectionElement_[0-9]+" ))
 						inEquipment = false;
@@ -325,7 +325,8 @@ public class XMLReader {
 		{
 			if ( rmParser.getAttributeName( i ).equals( "id" ) )
 				roomObject.setId( rmParser.getAttributeValue( i ) );
-			else if ( rmParser.getAttributeName( i ).equals( "No" ) )
+			else if ( rmParser.getAttributeName( i ).equals( "No" ) )				
+				//TODO: what if room no is null?
 				roomObject.setRoomNo( Integer.parseInt( rmParser.getAttributeValue( i ) ) );
 		}
 
