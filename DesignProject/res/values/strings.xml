@@ -21,7 +21,7 @@
     <string name="due_today_string">Today</string>
     <string name="due_next_week_string">Next Week</string>
     <string name="due_next_month">Next Month</string>
-    <string name="reports_waiting_to_be_sent_string">Reports Waiting To Be Sent</string>
+    <string name="reports_waiting_to_be_sent_string">Reports Pending:</string>
     <string name="Inspect_string">Inspect</string>
 
 </resources>

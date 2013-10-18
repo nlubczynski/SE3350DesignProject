@@ -37,15 +37,14 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/button2"
+        <ImageButton
+            android:id="@+id/popupMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@color/light_grey"
-            android:padding="@dimen/default_margin"
-            android:text="@string/menu_settings" />
+            android:src="@android:drawable/ic_menu_preferences" />
 
     </RelativeLayout>
 
@@ -56,7 +55,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/relativeLayout1"
         android:paddingBottom="@dimen/default_margin"
-        android:paddingTop="@dimen/default_margin" >
+        android:paddingTop="@dimen/default_margin_2x" >
 
         <TableLayout
             android:id="@+id/tableLayout1"
@@ -80,7 +79,6 @@
                     android:text="@string/completed_contracts_string"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black" />
-
             </TableRow>
 
             <TableRow
@@ -109,7 +107,6 @@
                     android:text="@string/progress_default"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/black" />
-
             </TableRow>
 
             <TableRow
@@ -130,7 +127,6 @@
                     android:minHeight="32dp"
                     android:progress="50"
                     android:progressDrawable="@drawable/progress_green" />
-
             </TableRow>
 
             <TableRow
@@ -158,7 +154,6 @@
                     android:text="@string/progress_default"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/black" />
-
             </TableRow>
 
             <TableRow
@@ -179,7 +174,6 @@
                     android:minHeight="32dip"
                     android:progress="75"
                     android:progressDrawable="@drawable/progress_green" />
-
             </TableRow>
 
             <TableRow
@@ -207,7 +201,6 @@
                     android:text="@string/progress_default"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/black" />
-
             </TableRow>
 
             <TableRow
@@ -227,54 +220,57 @@
                     android:minHeight="32dip"
                     android:progress="90"
                     android:progressDrawable="@drawable/progress_green" />
-
             </TableRow>
-
         </TableLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/LinearLayout1"
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/relativeLayout1"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/relative_graphs"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/default_margin" >
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
             android:layout_weight="1"
             android:text="@string/reports_waiting_to_be_sent_string"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView8"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/relativeLayout1"
-        android:layout_alignTop="@+id/LinearLayout1"
-        android:gravity="right"
-        android:text="0"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/black" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/LinearLayout1"
         android:layout_margin="@dimen/default_margin"
-        android:layout_marginTop="22dp"
+        android:layout_marginBottom="30dp"
         android:background="@color/light_grey"
+        android:height="48dp"
+        android:padding="@dimen/default_margin"
         android:text="@string/Inspect_string"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="22dp" />
 
 </RelativeLayout>
