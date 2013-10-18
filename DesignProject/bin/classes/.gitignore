@@ -1,2 +1,6 @@
 /com
 /.gitignore
+/dummy.class
+/MainActivity$DrawerItemClickListener.class
+/MainActivity$PlanetFragment.class
+/MainActivity.class

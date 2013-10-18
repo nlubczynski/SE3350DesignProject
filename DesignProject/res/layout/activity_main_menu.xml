@@ -1,276 +1,291 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lighter_light_grey"
-    android:fadingEdge="none" >
-
+    android:layout_height="match_parent" >
+    
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/light_grey"
-        android:paddingBottom="@dimen/default_margin"
-        android:paddingLeft="@dimen/default_margin"
-        android:paddingRight="@dimen/default_margin"
-        android:paddingTop="@dimen/default_margin" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/fire_alert_small" />
-
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="19dp"
-            android:layout_toRightOf="@+id/imageView1"
-            android:text="@string/username_default"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black" />
-
-        <ImageButton
-            android:id="@+id/popupMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@color/light_grey"
-            android:src="@android:drawable/ic_menu_preferences" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relative_graphs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relativeLayout1"
-        android:paddingBottom="@dimen/default_margin"
-        android:paddingTop="@dimen/default_margin_2x" >
-
-        <TableLayout
-            android:id="@+id/tableLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" >
-
-            <TableRow
-                android:id="@+id/tableRow7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:paddingBottom="@dimen/default_margin"
-                    android:text="@string/completed_contracts_string"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:text="@string/due_today_string"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="@string/progress_default"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <ProgressBar
-                    android:id="@+id/progressBar1"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:minHeight="32dp"
-                    android:progress="50"
-                    android:progressDrawable="@drawable/progress_green" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:text="@string/due_next_week_string"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="@string/progress_default"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <ProgressBar
-                    android:id="@+id/progressBar2"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/default_margin"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:minHeight="32dip"
-                    android:progress="75"
-                    android:progressDrawable="@drawable/progress_green" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:text="@string/due_next_month"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:text="@string/progress_default"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <ProgressBar
-                    android:id="@+id/progressBar3"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_margin"
-                    android:layout_marginRight="@dimen/default_margin"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:minHeight="32dip"
-                    android:progress="90"
-                    android:progressDrawable="@drawable/progress_green" />
-            </TableRow>
-        </TableLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/RelativeLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/relative_graphs"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/default_margin" >
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_weight="1"
-            android:text="@string/reports_waiting_to_be_sent_string"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textView8"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="0"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/default_margin"
-        android:layout_marginBottom="30dp"
-        android:background="@color/light_grey"
-        android:height="48dp"
-        android:padding="@dimen/default_margin"
-        android:text="@string/Inspect_string"
-        android:textColor="@color/black"
-        android:textSize="22dp" />
-
-</RelativeLayout>
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="@color/lighter_light_grey"
+	    android:fadingEdge="none" >
+	
+	    <RelativeLayout
+	        android:id="@+id/relativeLayout1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:background="@color/light_grey"
+	        android:paddingBottom="@dimen/default_margin"
+	        android:paddingLeft="@dimen/default_margin"
+	        android:paddingRight="@dimen/default_margin"
+	        android:paddingTop="@dimen/default_margin" >
+	
+	        <ImageView
+	            android:id="@+id/imageView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:src="@drawable/fire_alert_small" />
+	
+	        <TextView
+	            android:id="@+id/welcomeText"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="19dp"
+	            android:layout_toRightOf="@+id/imageView1"
+	            android:text="@string/username_default"
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="@color/black" />
+	
+	        <ImageButton
+	            android:id="@+id/popupMenu"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true"
+	            android:background="@color/light_grey"
+	            android:src="@android:drawable/ic_menu_preferences" />
+	
+	    </RelativeLayout>
+	
+	    <RelativeLayout
+	        android:id="@+id/relative_graphs"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/relativeLayout1"
+	        android:paddingBottom="@dimen/default_margin"
+	        android:paddingTop="@dimen/default_margin_2x" >
+	
+	        <TableLayout
+	            android:id="@+id/tableLayout1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true" >
+	
+	            <TableRow
+	                android:id="@+id/tableRow7"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	
+	                <TextView
+	                    android:id="@+id/textView7"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:paddingBottom="@dimen/default_margin"
+	                    android:text="@string/completed_contracts_string"
+	                    android:textAppearance="?android:attr/textAppearanceLarge"
+	                    android:textColor="@color/black" />
+	            </TableRow>
+	
+	            <TableRow
+	                android:id="@+id/tableRow1"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content" >
+	
+	                <TextView
+	                    android:id="@+id/textView1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:text="@string/due_today_string"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textColor="@color/black" />
+	
+	                <TextView
+	                    android:id="@+id/textView2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="right"
+	                    android:layout_marginRight="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:gravity="right"
+	                    android:text="@string/progress_default"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textColor="@color/black" />
+	            </TableRow>
+	
+	            <TableRow
+	                android:id="@+id/tableRow2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	
+	                <ProgressBar
+	                    android:id="@+id/progressBar1"
+	                    style="?android:attr/progressBarStyleHorizontal"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="@dimen/default_margin"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:layout_marginRight="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:max="100"
+	                    android:minHeight="32dp"
+	                    android:progress="50"
+	                    android:progressDrawable="@drawable/progress_green" />
+	            </TableRow>
+	
+	            <TableRow
+	                android:id="@+id/tableRow3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	
+	                <TextView
+	                    android:id="@+id/textView3"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:text="@string/due_next_week_string"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textColor="@color/black" />
+	
+	                <TextView
+	                    android:id="@+id/textView4"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginRight="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:gravity="right"
+	                    android:text="@string/progress_default"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textColor="@color/black" />
+	            </TableRow>
+	
+	            <TableRow
+	                android:id="@+id/tableRow5"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	
+	                <ProgressBar
+	                    android:id="@+id/progressBar2"
+	                    style="?android:attr/progressBarStyleHorizontal"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="@dimen/default_margin"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:layout_marginRight="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:max="100"
+	                    android:minHeight="32dip"
+	                    android:progress="75"
+	                    android:progressDrawable="@drawable/progress_green" />
+	            </TableRow>
+	
+	            <TableRow
+	                android:id="@+id/tableRow4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	
+	                <TextView
+	                    android:id="@+id/textView5"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:text="@string/due_next_month"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textColor="@color/black" />
+	
+	                <TextView
+	                    android:id="@+id/textView6"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginRight="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:gravity="right|center_vertical"
+	                    android:text="@string/progress_default"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textColor="@color/black" />
+	            </TableRow>
+	
+	            <TableRow
+	                android:id="@+id/tableRow6"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" >
+	
+	                <ProgressBar
+	                    android:id="@+id/progressBar3"
+	                    style="?android:attr/progressBarStyleHorizontal"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="@dimen/default_margin"
+	                    android:layout_marginRight="@dimen/default_margin"
+	                    android:layout_weight="1"
+	                    android:max="100"
+	                    android:minHeight="32dip"
+	                    android:progress="90"
+	                    android:progressDrawable="@drawable/progress_green" />
+	            </TableRow>
+	        </TableLayout>
+	    </RelativeLayout>
+	
+	    <RelativeLayout
+	        android:id="@+id/RelativeLayout1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/relative_graphs"
+	        android:orientation="horizontal"
+	        android:paddingTop="@dimen/default_margin" >
+	
+	        <TextView
+	            android:id="@+id/textView8"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="@dimen/default_margin"
+	            android:layout_weight="1"
+	            android:text="@string/reports_waiting_to_be_sent_string"
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="@color/black" />
+	
+	        <TextView
+	            android:id="@+id/textView9"
+	            android:layout_width="25dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentTop="true"
+	            android:layout_toRightOf="@+id/textView8"
+	            android:layout_weight="1"
+	            android:gravity="right"
+	            android:text="0"
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="@color/black" />
+	
+	    </RelativeLayout>
+	
+	    <Button
+	        android:id="@+id/button1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_margin="@dimen/default_margin"
+	        android:layout_marginBottom="30dp"
+	        android:background="@color/light_grey"
+	        android:height="48dp"
+	        android:padding="@dimen/default_margin"
+	        android:text="@string/Inspect_string"
+	        android:textColor="@color/black"
+	        android:textSize="22dp" />
+	
+	</RelativeLayout>
+	<ListView android:id="@+id/left_drawer"
+	        android:layout_width="240dp"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="start"
+	        android:choiceMode="singleChoice"
+	        android:divider="@android:color/black"
+	        android:dividerHeight="2dp"
+	        android:background="@color/light_grey" />
+</android.support.v4.widget.DrawerLayout>
