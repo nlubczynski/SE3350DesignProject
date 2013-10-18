@@ -1,6 +1,7 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -82,7 +83,7 @@ public class Franchise {
 	 * @return Client [] - This clients from a franchise
 	 */
 	public Client[] getClients(){
-		return (Client[]) clients.toArray();
+		return Arrays.copyOf(clients.toArray(), clients.toArray().length, Client[].class);
 	}
 	
 	/**

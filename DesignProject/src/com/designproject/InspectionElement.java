@@ -46,7 +46,7 @@ public class InspectionElement {
 	/**
 	 * @return Boolean testResult - the current result of the test
 	 */
-	public boolean testResult() {
+	public boolean getTestResult() {
 		return testResult;
 	}
 	
@@ -55,7 +55,7 @@ public class InspectionElement {
 	 * @param Boolean testResult - the result of the test
 	 * @return Boolean result - whether or not the test result value was updated
 	 */
-	public boolean testResult(boolean testResult){
+	public boolean setTestResult(boolean testResult){
 		try{
 			this.testResult = testResult;
 

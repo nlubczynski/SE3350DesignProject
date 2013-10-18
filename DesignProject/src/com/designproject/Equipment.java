@@ -1,6 +1,7 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 public class Equipment {
 
 	private String name;
+	private node id;
+	private node location;
 	private ArrayList<node> attributes;
 	private ArrayList<InspectionElement> elements;
 	
@@ -89,6 +92,8 @@ public class Equipment {
 		this.name = name;
 		this.attributes = new ArrayList<node>();
 		this.elements = new ArrayList<InspectionElement>();
+		this.id = new node("id","");
+		this.location = new node("location","");
 	}
 	
 	/**
@@ -110,7 +115,7 @@ public class Equipment {
 	 * @return InspectionElement[] elements - the inspection elements for a piece of equipment
 	 */
 	public InspectionElement[] getInspectionElements(){
-		return (InspectionElement[]) this.elements.toArray();
+		return Arrays.copyOf(elements.toArray(), elements.toArray().length, InspectionElement[].class);
 	}
 	/**
 	 * @return String name - return the name of the equipment
@@ -139,8 +144,16 @@ public class Equipment {
 	 */
 	public boolean addAttribute(String name, String value){
 		try{
-			node temp = new node(name,value);
-			attributes.add(temp);
+			if(name == "id"){
+				this.setID(value);
+			}
+			else if(name == "location"){
+				this.setLocation(value);
+			}
+			else{
+				node temp = new node(name,value);
+				attributes.add(temp);
+			}
 		}catch(Exception e){
 			return false;
 		}
@@ -152,7 +165,7 @@ public class Equipment {
 	 * @return node[] - An array of all the attributes
 	 */
 	public node[] getAttributes(){
-		return (node[]) attributes.toArray();
+		return Arrays.copyOf(attributes.toArray(), attributes.toArray().length, node[].class);
 	}
 	
 	/**
@@ -170,4 +183,44 @@ public class Equipment {
 		return null;
 	}
 	
+	/**
+	 * Get the id of the equipment
+	 * @return String id - the id of the equipment
+	 */
+	public String getID(){
+		return this.id.getValue();
+	}
+	/**
+	 * Set the id for the piece of equipment
+	 * @param String value - the value of the ID
+	 * @return Boolean result - whether or not the id was changed
+	 */
+	public boolean setID(String value){
+		try{
+			this.id.setValue(value);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+	/**
+	 * Get the location for the piece of equipment
+	 * @return String value - the value of the location
+	 */
+	public String getLocation(){
+		return this.location.getValue();
+	}
+	/**
+	 * Set the location of the equipment
+	 * @param String value - the value of the location
+	 * @return Boolean result - whether the location was changed or not
+	 */
+	public boolean setLocation(String value){
+		try{
+			this.location.setValue(value);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
 }

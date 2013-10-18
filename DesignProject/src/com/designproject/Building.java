@@ -1,7 +1,8 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 
 /**
  * 
@@ -16,10 +17,12 @@ public class Building {
 	private String city;
 	private String province;
 	private String country;
-	private Date timeStamp;
+	private String contact;
+	private String lastInspectedBy;
+	private GregorianCalendar timeStamp;
 	private ArrayList<Floor> floors;
 	
-	public Building(String id, String address, String postalCode, String city, String province, String country, Date timeStamp){
+	public Building(String id, String address, String postalCode, String city, String province, String country, String contact, String lastInspectedBy, GregorianCalendar timeStamp){
 		this.id = id;
 		this.address = address;
 		this.postalCode = postalCode;
@@ -27,6 +30,8 @@ public class Building {
 		this.province = province;
 		this.country = country;
 		this.timeStamp = timeStamp;
+		this.contact = contact;
+		this.lastInspectedBy = lastInspectedBy;
 		this.floors = new ArrayList<Floor>();
 	}
 
@@ -34,7 +39,7 @@ public class Building {
 	 * @return String id - returns the id
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
@@ -49,12 +54,50 @@ public class Building {
 		}
 		return true;
 	}
+	/**
+	 * @return String lastInspectedBy - returns the id of the last Inspector
+	 */
+	public String getLastInspectedBy() {
+		return this.lastInspectedBy;
+	}
+
+	/**
+	 * @param String id - the id of the last Inspector who inspected the building
+	 * @return Boolean result - whether or not the id was changed.
+	 */
+	public boolean setLastInspectedBy(String id) {
+		try{
+			this.lastInspectedBy = id;
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @return String contact - the building's contact
+	 */
+	public String getContact() {
+		return this.contact;
+	}
+	/**
+	 * @param String contact - the contact to set
+	 * @return Boolean result - whether or not the contact was changed.
+	 */
+	public boolean setContact(String contact) {
+		try{
+			this.contact = contact;
+		}catch(Exception e){
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * @return String address - the building's address
 	 */
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
 	/**
@@ -74,7 +117,7 @@ public class Building {
 	 * @return String postalCode - returns the building's postal code
 	 */
 	public String getPostalCode() {
-		return postalCode;
+		return this.postalCode;
 	}
 
 	/**
@@ -94,7 +137,7 @@ public class Building {
 	 * @return String city - the City the building belongs too
 	 */
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	/**
@@ -114,7 +157,7 @@ public class Building {
 	 * @return String province - the building's province
 	 */
 	public String getProvince() {	
-		return province;
+		return this.province;
 	}
 
 	/**
@@ -134,7 +177,7 @@ public class Building {
 	 * @return String country - the country a building is in
 	 */
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	/**
@@ -153,15 +196,15 @@ public class Building {
 	/**
 	 * @return Date timeStamp - The timestamp of a building's last inspection
 	 */
-	public Date getTimeStamp() {
-		return timeStamp;
+	public GregorianCalendar getTimeStamp() {
+		return this.timeStamp;
 	}
 
 	/**
 	 * @param Date timeStamp - the new timeStamp a building was inspected
 	 * @return Boolean result - whether or not the new timestamp was set
 	 */
-	public boolean setTimeStamp(Date timeStamp) {
+	public boolean setTimeStamp(GregorianCalendar timeStamp) {
 		try{
 			this.timeStamp = timeStamp;
 		}catch(Exception e){
@@ -174,7 +217,7 @@ public class Building {
 	 * @return Floor[] floors - returns the floors in a building
 	 */
 	public Floor[] getFloors() {
-		return (Floor[]) floors.toArray();
+		return Arrays.copyOf(floors.toArray(), floors.toArray().length, Floor[].class);		
 	}
 
 	/**
