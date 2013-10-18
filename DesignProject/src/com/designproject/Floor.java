@@ -1,6 +1,7 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -41,7 +42,7 @@ public class Floor {
 	 * @return Room[] rooms - the rooms on a floor
 	 */
 	public Room[] getRooms() {
-		return (Room[]) rooms.toArray();
+		return Arrays.copyOf(rooms.toArray(), rooms.toArray().length, Room[].class);
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -34,7 +35,7 @@ public class Client {
 	 * @return Contract[] - An array of the contracts
 	 */
 	public Contract[] getContracts(){
-		return (Contract[]) contracts.toArray();
+		return Arrays.copyOf(contracts.toArray(), contracts.toArray().length, Contract[].class);
 	}
 	/**
 	 * Add a contract to the client

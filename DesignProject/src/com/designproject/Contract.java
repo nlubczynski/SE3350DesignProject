@@ -1,7 +1,8 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 
 /**
  * 
@@ -12,12 +13,12 @@ public class Contract {
 	
 	private int id;
 	private int no;
-	private Date startDate;
-	private Date endDate;
+	private GregorianCalendar startDate;
+	private GregorianCalendar endDate;
 	private String terms;
 	private ArrayList<Building> buildings;
 	
-	public Contract(int id, int no, Date start, Date end, String terms){
+	public Contract(int id, int no, GregorianCalendar start, GregorianCalendar end, String terms){
 		
 		this.id = id;
 		this.no = no;
@@ -67,14 +68,14 @@ public class Contract {
 	/**
 	 * @return Date startDate - returns the start date of the contract
 	 */
-	public Date getStartDate() {
+	public GregorianCalendar getStartDate() {
 		return startDate;
 	}
 	/**
 	 * @param Date starDate - Set the starDate
 	 * @return Boolean result - whether or not the changed was successful
 	 */
-	public boolean setStartDate(Date starDate) {
+	public boolean setStartDate(GregorianCalendar starDate) {
 		try{
 			this.startDate = starDate;
 		}catch(Exception e){
@@ -85,13 +86,13 @@ public class Contract {
 	/**
 	 * @return Date endDate - the end date of the contract
 	 */
-	public Date getEndDate() {
+	public GregorianCalendar getEndDate() {
 		return endDate;
 	}
 	/**
 	 * @param Date endDate - set the endDate for the contract
 	 */
-	public boolean setEndDate(Date endDate) {
+	public boolean setEndDate(GregorianCalendar endDate) {
 		try{
 			this.endDate = endDate;
 		}catch(Exception e){
@@ -122,7 +123,7 @@ public class Contract {
 	 * @return Building[] buidlings - return the buildings in a contract
 	 */
 	public Building[] getBuildings(){
-		return (Building[]) buildings.toArray();
+		return Arrays.copyOf(buildings.toArray(), buildings.toArray().length, Building[].class);
 	}
 	/**
 	 * 

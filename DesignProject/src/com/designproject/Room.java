@@ -1,6 +1,7 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -63,7 +64,7 @@ public class Room {
 	 * @return Equipment[] equipment - returns a rooms equipment
 	 */
 	public Equipment[] getEquipment() {
-		return (Equipment[]) equipment.toArray();
+		return Arrays.copyOf(equipment.toArray(), equipment.toArray().length, Equipment[].class);
 	}
 
 	/**

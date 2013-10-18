@@ -1,5 +1,9 @@
 package com.designproject;
 
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -10,6 +14,17 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		try {
+			XMLReader reader = new XMLReader("C:\\Users\\NikLubz\\SkyDrive\\Documents\\Third Year\\Design\\InspectionData.xml");
+			reader.parseXML();
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("end");
 	}
 
 	@Override

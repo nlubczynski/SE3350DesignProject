@@ -1,6 +1,7 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 
@@ -67,7 +68,7 @@ public class Inspector {
 	 * @return Building[] - The buildings an inspector has investigated
 	 */
 	public Building[] getInspectedBuildings() {
-		return (Building[]) inspectedBuildings.toArray();
+		return Arrays.copyOf(inspectedBuildings.toArray(), inspectedBuildings.toArray().length, Building[].class);
 	}
 
 	/**
