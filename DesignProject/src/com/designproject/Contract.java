@@ -11,14 +11,14 @@ import java.util.GregorianCalendar;
  */
 public class Contract {
 	
-	private int id;
+	private String id;
 	private int no;
 	private GregorianCalendar startDate;
 	private GregorianCalendar endDate;
 	private String terms;
 	private ArrayList<Building> buildings;
 	
-	public Contract(int id, int no, GregorianCalendar start, GregorianCalendar end, String terms){
+	public Contract(String id, int no, GregorianCalendar start, GregorianCalendar end, String terms){
 		
 		this.id = id;
 		this.no = no;
@@ -30,16 +30,16 @@ public class Contract {
 	}
 	
 	/**
-	 * @return Int id - returns the contract id
+	 * @return String id - returns the contract id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	/**
-	 * @param Int id - the new id for the contract
+	 * @param String id - the new id for the contract
 	 * @return Boolean result - whether or not the id was updated
 	 */
-	public boolean setId(int id) {
+	public boolean setId(String id) {
 		try{
 			this.id = id;
 		}catch(Exception e){

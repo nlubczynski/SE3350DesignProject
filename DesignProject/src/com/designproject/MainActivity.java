@@ -1,5 +1,6 @@
 package com.designproject;
 
+
 import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -16,12 +17,11 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		try {
-			XMLReader reader = new XMLReader("C:\\Users\\NikLubz\\SkyDrive\\Documents\\Third Year\\Design\\InspectionData.xml");
+			XMLReader reader = new XMLReader( this.getApplicationContext() );
 			reader.parseXML();
-		} catch (XmlPullParserException e) {
+		}catch (XmlPullParserException e) {
 			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		System.out.println("end");
