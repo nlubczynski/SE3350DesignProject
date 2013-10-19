@@ -1,10 +1,12 @@
 package com.designproject;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 
@@ -28,7 +30,7 @@ public class XMLReader {
 		this.context = context;
 	}
 	
-	public void parseXML() throws XmlPullParserException, IOException{
+	public Franchise parseXML() throws XmlPullParserException, IOException{
 		
 		// Set the parser
 		XmlResourceParser parser = context.getResources().getXml(R.xml.inspection_data);	
@@ -83,7 +85,7 @@ public class XMLReader {
 				case XmlPullParser.END_TAG:
 					if( parser.getName().equals( "Room" ) )
 						inRoom = false;
-					else if( inRoom = true && inRoom == inEquipment && !parser.getName().matches( "inspectionElement_[0-9]+" ))
+					else if( inRoom == true && inRoom == inEquipment && !parser.getName().matches( "inspectionElement_[0-9]+" ))
 						inEquipment = false;
 					break;
 				case XmlPullParser.TEXT:
@@ -92,7 +94,7 @@ public class XMLReader {
 			eventType = parser.next();			
 		}
 		
-		System.out.println("Done parsing document");
+		return this.franchise;
 	}
 	
 	/**
@@ -201,7 +203,7 @@ public class XMLReader {
 				no = Integer.valueOf( parser.getAttributeValue(i) );
 			else if( parser.getAttributeName( i ).equals( "terms" ) )
 				terms = parser.getAttributeValue( i );
-			else if( parser.getAttributeValue( i ).equals( "StartDate" ) ){
+			else if( parser.getAttributeName( i ).equals( "startDate" ) ){
 				
 				String [] temp = parser.getAttributeValue( i ).split("/");
 				int year = Integer.valueOf( temp[2] );
@@ -210,7 +212,7 @@ public class XMLReader {
 				
 				startDate = new GregorianCalendar(year, month, day);
 			}
-			else if( parser.getAttributeValue( i ).equals( "EndDate" ) ){
+			else if( parser.getAttributeName( i ).equals( "endDate" ) ){
 				
 				String [] temp = parser.getAttributeValue( i ).split("/");
 				int year = Integer.valueOf( temp[2] );
@@ -255,7 +257,7 @@ public class XMLReader {
 		
 		// find the number of attributes (should be 9)
 		int numOfAttributes = parser.getAttributeCount();
-				
+
 		// Loop through these attributes and set the id, name, and address values
 		for(int i = 0; i < numOfAttributes; i++)
 			if( parser.getAttributeName( i ).equals( "id" ) )
@@ -274,7 +276,7 @@ public class XMLReader {
 				country = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals(  "InspectorID" ) )
 				inspectorId = parser.getAttributeValue( i );
-			else if( parser.getAttributeValue( i ).equals(  "testTimeStamp" ) ){
+			else if( parser.getAttributeName( i ).equals(  "testTimeStamp" ) ){
 				
 				String [] temp = parser.getAttributeValue( i ).split(" ");
 				int year = Integer.valueOf( temp[0].substring(0, 4) );
@@ -284,7 +286,11 @@ public class XMLReader {
 				int hour = 	Integer.valueOf( temp[1].substring(0,5).split(":")[0] );
 				int minute = Integer.valueOf( temp[1].substring(0,5).split(":")[1] );
 				
-				timeStamp = new GregorianCalendar(year, month, day, hour, minute);
+				int am_pm = temp[1].substring(5,7).equals("PM") ? Calendar.PM : Calendar.AM;
+				
+				timeStamp = new GregorianCalendar(year, month, day, hour, minute);				
+				timeStamp.set(Calendar.AM_PM, am_pm);
+				
 			}
 		
 		// Create new building
