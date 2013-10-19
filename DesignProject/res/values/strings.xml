@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Fire-Alert</string>
@@ -23,5 +24,8 @@
     <string name="due_next_month">Next Month</string>
     <string name="reports_waiting_to_be_sent_string">Reports Pending:</string>
     <string name="Inspect_string">Inspect</string>
+    <string name="title_activity_inspection_view">Inspections</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_inspection_overview">InspectionOverview</string>
 
 </resources>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.designproject"
     android:versionCode="1"
@@ -12,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".FireAlertSplash"
+            android:name="com.designproject.FireAlertSplash"
             android:label="@string/title_activity_fire_alert_splash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,38 +22,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginScreen"
+            android:name="com.designproject.LoginScreen"
             android:label="@string/title_activity_login_screen" >
-            <intent-filter>
-                <action android:name="android.intent.action.Login" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".MainMenu"
+            android:name="com.designproject.MainMenu"
             android:label="@string/title_activity_main_menu" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".MenuListActivity"
+            android:name="com.designproject.MenuListActivity"
             android:label="@string/title_menu_list" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
-            android:name=".MenuDetailActivity"
+            android:name="com.designproject.MenuDetailActivity"
             android:label="@string/title_menu_detail" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuListActivity" />
+        </activity>
+        <activity
+            android:name="com.designproject.InspectionView"
+            android:label="@string/title_activity_inspection_view"
+            android:parentActivityName="com.designproject.MainMenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.designproject.MainMenu" />
+        </activity>
+        <activity
+            android:name="com.designproject.InspectionOverview"
+            android:label="@string/title_activity_inspection_overview"
+            android:parentActivityName="com.designproject.InspectionView" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.designproject.InspectionView" />
         </activity>
     </application>
 

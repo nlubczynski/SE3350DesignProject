@@ -3,6 +3,9 @@
     <array name="drawer_list_options">
         <item>View Clients</item>
         <item>View Locations</item>
+        <item>View Inspections</item>
+        <item>Settings</item>
+        <item>Logout</item>
     </array>
     
 </resources>

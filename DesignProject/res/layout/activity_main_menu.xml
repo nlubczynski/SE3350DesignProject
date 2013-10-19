@@ -93,7 +93,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <TextView
-	                    android:id="@+id/textView1"
+	                    android:id="@+id/line_1"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="@dimen/default_margin"
@@ -103,7 +103,7 @@
 	                    android:textColor="@color/black" />
 	
 	                <TextView
-	                    android:id="@+id/textView2"
+	                    android:id="@+id/line_2"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_gravity="right"
@@ -277,7 +277,8 @@
 	        android:padding="@dimen/default_margin"
 	        android:text="@string/Inspect_string"
 	        android:textColor="@color/black"
-	        android:textSize="22dp" />
+	        android:textSize="22dp"
+	        android:onClick="inspectionClickListener" />
 	
 	</RelativeLayout>
 	<ListView android:id="@+id/left_drawer"
@@ -285,7 +286,7 @@
 	        android:layout_height="match_parent"
 	        android:layout_gravity="start"
 	        android:choiceMode="singleChoice"
-	        android:divider="@android:color/black"
-	        android:dividerHeight="2dp"
+	        android:divider="@color/grey"
+	        android:dividerHeight="1dp"
 	        android:background="@color/light_grey" />
 </android.support.v4.widget.DrawerLayout>

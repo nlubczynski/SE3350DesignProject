@@ -29,7 +29,7 @@ public class MainMenu extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_menu);
         
    
@@ -76,6 +76,13 @@ public class MainMenu extends Activity {
 
     }
     
+    public void inspectionClickListener(View view)
+    {
+    	
+    	Intent openInspectionView = new Intent(MainMenu.this, InspectionView.class);
+    	//openInspectionView.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    	startActivity(openInspectionView);
+    }
     
     
 }
