@@ -27,5 +27,6 @@
     <string name="title_activity_inspection_view">Inspections</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_inspection_overview">InspectionOverview</string>
+    <string name="title_activity_equipment_inspection_list">EquipmentInspectionList</string>
 
 </resources>

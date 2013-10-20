@@ -1,21 +1,19 @@
 package com.designproject;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 
-public class InspectionOverview extends Activity {
+public class EquipmentInspectionList extends ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inspection_overview);
+		setContentView(R.layout.activity_equipment_inspection_list);
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}
@@ -33,7 +31,7 @@ public class InspectionOverview extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.inspection_overview, menu);
+		getMenuInflater().inflate(R.menu.equipment_inspection_list, menu);
 		return true;
 	}
 
@@ -52,12 +50,6 @@ public class InspectionOverview extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	public void inspectListener(View view)
-	{
-		Intent openEquipmentInspectionList = new Intent(InspectionOverview.this, EquipmentInspectionList.class);
-		startActivity(openEquipmentInspectionList);
 	}
 
 }
