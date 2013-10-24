@@ -2,6 +2,8 @@ package com.designproject;
 
 import java.io.IOException;
 
+import com.designproject.FireAlertApplication;
+
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.designproject.R;
@@ -35,9 +37,12 @@ public class MainMenu extends Activity {
         super.onCreate(savedInstanceState);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         
-        try {
-			XMLReader reader = new XMLReader( this.getApplicationContext() );
-			reader.parseXML();
+		try {
+			XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
+			FireAlertApplication a = (FireAlertApplication)getApplication();
+			a.setFranchise( reader.parseXML() );
+			Franchise franchise = a.getFranchise();
+			franchise.getId();
 		}catch (XmlPullParserException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -46,6 +51,7 @@ public class MainMenu extends Activity {
 		System.out.println("end");
         
         setContentView(R.layout.activity_main_menu);
+        
         
    
         mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);

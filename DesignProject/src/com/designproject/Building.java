@@ -1,7 +1,6 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 /**
@@ -217,7 +216,12 @@ public class Building {
 	 * @return Floor[] floors - returns the floors in a building
 	 */
 	public Floor[] getFloors() {
-		return Arrays.copyOf(floors.toArray(), floors.toArray().length, Floor[].class);		
+		Floor[] returnArray = new Floor[ floors.size() ];
+		
+		for(int i = 0; i < floors.size(); i++)
+			returnArray[i] = floors.get(i);
+		
+		return returnArray;		
 	}
 
 	/**

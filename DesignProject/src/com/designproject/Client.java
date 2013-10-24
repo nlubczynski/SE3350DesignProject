@@ -1,7 +1,6 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 
@@ -11,17 +10,17 @@ import java.util.Arrays;
 public class Client {
 
 	private String name;
-	private int id;
+	private String id;
 	private String address;
 	private ArrayList<Contract> contracts;
 	
 	/**
 	 * Just your basic constructor
 	 * @param String name - the name of the client
-	 * @param Int id - the unique id of the client
+	 * @param String id - the unique id of the client
 	 * @param String address - The address of head office for the client. No address verification is done in the constructor.
 	 */
-	public Client(String name, int id, String address){
+	public Client(String name, String id, String address){
 		
 		this.name = name;
 		this.id = id;
@@ -35,7 +34,12 @@ public class Client {
 	 * @return Contract[] - An array of the contracts
 	 */
 	public Contract[] getContracts(){
-		return Arrays.copyOf(contracts.toArray(), contracts.toArray().length, Contract[].class);
+		Contract[] returnArray = new Contract[ contracts.size() ];
+		
+		for(int i = 0; i < contracts.size(); i++)
+			returnArray[i] = contracts.get(i);
+		
+		return returnArray;	
 	}
 	/**
 	 * Add a contract to the client
@@ -66,17 +70,17 @@ public class Client {
 	}
 
 	/**
-	 * @return Int id - the client's ID
+	 * @return String id - the client's ID
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
 	/**
-	 * @param Int id - Set the client's id
+	 * @param String id - Set the client's id
 	 * @return Boolean result - whether or not the ID was set.
 	 */
-	public boolean setId(int id) {
+	public boolean setId(String id) {
 		try{
 			this.id = id;
 		}catch(Exception e){

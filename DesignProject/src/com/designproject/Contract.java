@@ -1,7 +1,6 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 /**
@@ -12,13 +11,13 @@ import java.util.GregorianCalendar;
 public class Contract {
 	
 	private String id;
-	private int no;
+	private String no;
 	private GregorianCalendar startDate;
 	private GregorianCalendar endDate;
 	private String terms;
 	private ArrayList<Building> buildings;
 	
-	public Contract(String id, int no, GregorianCalendar start, GregorianCalendar end, String terms){
+	public Contract(String id, String no, GregorianCalendar start, GregorianCalendar end, String terms){
 		
 		this.id = id;
 		this.no = no;
@@ -48,16 +47,16 @@ public class Contract {
 		return true;
 	}
 	/**
-	 * @return Int contractNo - returns the contract no
+	 * @return String contractNo - returns the contract no
 	 */
-	public int getNo() {
+	public String getNo() {
 		return no;
 	}
 	/**
-	 * @param Int contractNo - the new contract number
+	 * @param String contractNo - the new contract number
 	 * @return Boolean result - whether or not the contractDo was changed
 	 */
-	public boolean setNo(int no) {
+	public boolean setNo(String no) {
 		try{
 			this.no = no;
 		}catch(Exception e){
@@ -123,7 +122,12 @@ public class Contract {
 	 * @return Building[] buidlings - return the buildings in a contract
 	 */
 	public Building[] getBuildings(){
-		return Arrays.copyOf(buildings.toArray(), buildings.toArray().length, Building[].class);
+		Building[] returnArray = new Building[ buildings.size() ];
+		
+		for(int i = 0; i < buildings.size(); i++)
+			returnArray[i] = buildings.get(i);
+		
+		return returnArray;
 	}
 	/**
 	 * 

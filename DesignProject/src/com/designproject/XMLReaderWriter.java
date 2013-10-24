@@ -226,7 +226,7 @@ public class XMLReaderWriter {
 			return null;
 		
 		// Initialize the variables
-		int id = 0;
+		String id = "0";
 		String ownerName = "John Smith";
 		
 		// find the number of attributes (should be 2)
@@ -235,7 +235,7 @@ public class XMLReaderWriter {
 		// Loop through these attributes and set the id and owner name values
 		for(int i = 0; i < numOfAttributes; i++)
 			if( parser.getAttributeName( i ).equals( "id" ) )
-				id = Integer.valueOf( parser.getAttributeValue(i) );
+				id = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "name" ) )
 				ownerName = parser.getAttributeValue(i);
 		
@@ -260,7 +260,7 @@ public class XMLReaderWriter {
 		// Initialize variables
 		String name = "ACME Inc.";
 		String address = "123 Fake Street";
-		int id = 0;
+		String id = "0";
 		
 		// find the number of attributes (should be 3)
 		int numOfAttributes = parser.getAttributeCount();
@@ -268,7 +268,7 @@ public class XMLReaderWriter {
 		// Loop through these attributes and set the id, name, and address values
 		for(int i = 0; i < numOfAttributes; i++)
 			if( parser.getAttributeName( i ) == "id" )
-				id = Integer.valueOf( parser.getAttributeValue(i) );
+				id = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "name" ) )
 				name = parser.getAttributeValue(i);
 			else if( parser.getAttributeName( i ).equals( "address" ) )
@@ -302,7 +302,7 @@ public class XMLReaderWriter {
 		// Initialize variables
 		String terms = "ACME Inc.";
 		String id = "0";
-		int no = 0;
+		String no = "0";
 		GregorianCalendar startDate = null;
 		GregorianCalendar endDate = null;
 		
@@ -314,7 +314,7 @@ public class XMLReaderWriter {
 			if( parser.getAttributeName( i ).equals( "id"  ) )
 				id = parser.getAttributeValue(i);
 			else if( parser.getAttributeName( i ).equals( "No" ) )
-				no = Integer.valueOf( parser.getAttributeValue(i) );
+				no = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "terms" ) )
 				terms = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "startDate" ) ){
@@ -436,7 +436,7 @@ public class XMLReaderWriter {
 	
 	private Room roomParser( XmlPullParser rmParser, Floor lastFloor ){		
 		// Create Room Object
-		Room roomObject = new Room("", 0);
+		Room roomObject = new Room("", "0");
 		
 		// Expected - 2 attributes (id, No)
 		int counter = rmParser.getAttributeCount();
@@ -447,7 +447,7 @@ public class XMLReaderWriter {
 				roomObject.setId( rmParser.getAttributeValue( i ) );
 			else if ( rmParser.getAttributeName( i ).equals( "No" ) )				
 				//TODO: what if room no is null?
-				roomObject.setRoomNo( Integer.parseInt( rmParser.getAttributeValue( i ) ) );
+				roomObject.setRoomNo( rmParser.getAttributeValue( i ) );
 		}
 
 		// Add Room to Above Floor

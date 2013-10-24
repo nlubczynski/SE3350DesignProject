@@ -17,8 +17,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main_menu);
 		
 		try {
-			XMLReader reader = new XMLReader( this.getApplicationContext() );
-			reader.parseXML();
+			XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
+			reader.writeXML( reader.parseXML() );
 		}catch (XmlPullParserException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

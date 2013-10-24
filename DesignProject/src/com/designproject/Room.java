@@ -1,7 +1,6 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 
@@ -11,10 +10,10 @@ import java.util.Arrays;
 public class Room {
 	
 	private String id;
-	private int roomNo;
+	private String roomNo;
 	private ArrayList<Equipment> equipment;
 	
-	public Room(String id, int roomNo){
+	public Room(String id, String roomNo){
 		this.id = id;
 		this.roomNo = roomNo;
 		this.equipment = new ArrayList<Equipment>();
@@ -41,17 +40,17 @@ public class Room {
 	}
 
 	/**
-	 * @return Int roomNo - returns the room number
+	 * @return String roomNo - returns the room number
 	 */
-	public int getRoomNo() {
+	public String getRoomNo() {
 		return roomNo;
 	}
 
 	/**
-	 * @param Int roomNo - sets the room number
+	 * @param String roomNo - sets the room number
 	 * @return Boolean result - whether or not the room number was changed
 	 */
-	public boolean setRoomNo(int roomNo) {
+	public boolean setRoomNo(String roomNo) {
 		try{
 			this.roomNo = roomNo;
 		}catch(Exception e){
@@ -64,7 +63,12 @@ public class Room {
 	 * @return Equipment[] equipment - returns a rooms equipment
 	 */
 	public Equipment[] getEquipment() {
-		return Arrays.copyOf(equipment.toArray(), equipment.toArray().length, Equipment[].class);
+		Equipment[] returnArray = new Equipment[ equipment.size() ];
+		
+		for(int i = 0; i < equipment.size(); i++)
+			returnArray[i] = equipment.get(i);
+		
+		return returnArray;
 	}
 
 	/**
