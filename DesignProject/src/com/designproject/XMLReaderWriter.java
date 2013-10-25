@@ -13,8 +13,7 @@ import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.util.Xml;
 
-import com.designproject.*
-;import com.designproject.Equipment.node;
+import com.designproject.Equipment.node;
 /**
  * 
  * @author NikLubz and Jessica
