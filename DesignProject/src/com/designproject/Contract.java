@@ -1,10 +1,8 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.joda.time.DateTime;
 
 /**
  * 
