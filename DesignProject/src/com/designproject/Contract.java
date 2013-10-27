@@ -15,8 +15,8 @@ public class Contract {
 	
 	private String id;
 	private String no;
-	private Calendar startDate;
-	private Calendar endDate;
+	private GregorianCalendar startDate;
+	private GregorianCalendar endDate;
 	private String terms;
 	private ArrayList<Building> buildings;
 	
@@ -26,7 +26,7 @@ public class Contract {
 		this.no = no;
 		this.startDate = start;
 		this.endDate = end;
-		this.terms = terms ;
+		this.terms = terms;
 		this.buildings = new ArrayList<Building>();
 		
 	}
@@ -70,7 +70,7 @@ public class Contract {
 	/**
 	 * @return Date startDate - returns the start date of the contract
 	 */
-	public Calendar getStartDate() {
+	public GregorianCalendar getStartDate() {
 		return startDate;
 	}
 	/**
@@ -88,7 +88,7 @@ public class Contract {
 	/**
 	 * @return Date endDate - the end date of the contract
 	 */
-	public Calendar getEndDate() {
+	public GregorianCalendar getEndDate() {
 		return endDate;
 	}
 	/**
@@ -106,7 +106,7 @@ public class Contract {
 	 * @return String terms - return the terms of the agreement
 	 */
 	public String getTerms() {
-		return String.valueOf(terms);
+		return terms;
 	}
 	/**
 	 * @param String terms  - the terms to set

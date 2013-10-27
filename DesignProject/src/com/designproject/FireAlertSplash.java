@@ -48,7 +48,7 @@ public class FireAlertSplash extends Activity {
     	Thread loadData = new Thread(){
     		public void run(){
     			try{
-    				if(/*isLogInSaved()*/false)
+    				if(isLogInSaved())
     				{
     					Intent openMenu = new Intent(FireAlertSplash.this, MainMenu.class);
     					openMenu.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
