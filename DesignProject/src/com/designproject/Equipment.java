@@ -8,6 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class Equipment {
+	//test
 
 	private String name;
 	private node id;
