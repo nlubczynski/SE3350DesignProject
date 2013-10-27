@@ -1,6 +1,6 @@
 <Franchisee id="1001" name="Darwin Fleming">
   <Client id="1001-01" name="North Bay Inc" address="North Bay, Muskoka, Parry Sound, Orillia">
-    <clientContract id="1001-01-003" No ="1234" startDate ="01/01/2013" endDate ="31/12/2014" terms="">
+    <clientContract id="1001-01-003" No ="1234" startDate ="27/10/2013" endDate ="27/10/2013" terms="">
       <ServiceAddress id="S1" address="123 Sesame Street" postalCode="N6G 2P4" contact="" city="London" province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20131009 09:49PM">
         <Floor name="First Floor">
           <Room id="R1" No="1">

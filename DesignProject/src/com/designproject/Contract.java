@@ -1,7 +1,10 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import org.joda.time.DateTime;
 
 /**
  * 
@@ -12,8 +15,8 @@ public class Contract {
 	
 	private String id;
 	private String no;
-	private GregorianCalendar startDate;
-	private GregorianCalendar endDate;
+	private Calendar startDate;
+	private Calendar endDate;
 	private String terms;
 	private ArrayList<Building> buildings;
 	
@@ -23,7 +26,7 @@ public class Contract {
 		this.no = no;
 		this.startDate = start;
 		this.endDate = end;
-		this.terms = terms;
+		this.terms = terms ;
 		this.buildings = new ArrayList<Building>();
 		
 	}
@@ -67,7 +70,7 @@ public class Contract {
 	/**
 	 * @return Date startDate - returns the start date of the contract
 	 */
-	public GregorianCalendar getStartDate() {
+	public Calendar getStartDate() {
 		return startDate;
 	}
 	/**
@@ -85,7 +88,7 @@ public class Contract {
 	/**
 	 * @return Date endDate - the end date of the contract
 	 */
-	public GregorianCalendar getEndDate() {
+	public Calendar getEndDate() {
 		return endDate;
 	}
 	/**
@@ -103,7 +106,7 @@ public class Contract {
 	 * @return String terms - return the terms of the agreement
 	 */
 	public String getTerms() {
-		return terms;
+		return String.valueOf(terms);
 	}
 	/**
 	 * @param String terms  - the terms to set

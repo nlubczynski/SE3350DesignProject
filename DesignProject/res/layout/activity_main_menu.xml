@@ -24,13 +24,14 @@
 	        android:paddingRight="@dimen/default_margin"
 	        android:paddingTop="@dimen/default_margin" >
 	
-	        <ImageView
-	            android:id="@+id/imageView1"
+	        <ImageButton
+	            android:id="@+id/imageButtonLogoMainMenu"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentLeft="true"
 	            android:layout_alignParentTop="true"
-	            android:src="@drawable/fire_alert_small" />
+	            android:src="@drawable/fire_alert_small"
+	            android:onClick="imageButtonLogoListener" />
 	
 	        <TextView
 	            android:id="@+id/welcomeText"
@@ -38,7 +39,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_centerVertical="true"
 	            android:layout_marginLeft="19dp"
-	            android:layout_toRightOf="@+id/imageView1"
+	            android:layout_toRightOf="@+id/imageButtonLogoMainMenu"
 	            android:text="@string/username_default"
 	            android:textAppearance="?android:attr/textAppearanceLarge"
 	            android:textColor="@color/black" />
@@ -77,7 +78,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <TextView
-	                    android:id="@+id/textView7"
+	                    android:id="@+id/textViewItemsLabel"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="@dimen/default_margin"
@@ -93,7 +94,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <TextView
-	                    android:id="@+id/textView1"
+	                    android:id="@+id/textViewTodayLabel"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="@dimen/default_margin"
@@ -103,7 +104,7 @@
 	                    android:textColor="@color/black" />
 	
 	                <TextView
-	                    android:id="@+id/textView2"
+	                    android:id="@+id/textViewTodayValue"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_gravity="right"
@@ -121,7 +122,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <ProgressBar
-	                    android:id="@+id/progressBar1"
+	                    android:id="@+id/progressBarToday"
 	                    style="?android:attr/progressBarStyleHorizontal"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -141,7 +142,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <TextView
-	                    android:id="@+id/textView3"
+	                    android:id="@+id/textViewWeekLabel"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="@dimen/default_margin"
@@ -151,7 +152,7 @@
 	                    android:textColor="@color/black" />
 	
 	                <TextView
-	                    android:id="@+id/textView4"
+	                    android:id="@+id/textViewWeekValue"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginRight="@dimen/default_margin"
@@ -168,7 +169,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <ProgressBar
-	                    android:id="@+id/progressBar2"
+	                    android:id="@+id/progressBarWeek"
 	                    style="?android:attr/progressBarStyleHorizontal"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -188,7 +189,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <TextView
-	                    android:id="@+id/textView5"
+	                    android:id="@+id/textViewMonthLabel"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="@dimen/default_margin"
@@ -198,7 +199,7 @@
 	                    android:textColor="@color/black" />
 	
 	                <TextView
-	                    android:id="@+id/textView6"
+	                    android:id="@+id/textViewMonthValue"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginRight="@dimen/default_margin"
@@ -215,7 +216,7 @@
 	                android:layout_height="wrap_content" >
 	
 	                <ProgressBar
-	                    android:id="@+id/progressBar3"
+	                    android:id="@+id/progressBarMonth"
 	                    style="?android:attr/progressBarStyleHorizontal"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -240,7 +241,7 @@
 	        android:paddingTop="@dimen/default_margin" >
 	
 	        <TextView
-	            android:id="@+id/textView8"
+	            android:id="@+id/textViewReportProgressLabel"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="@dimen/default_margin"
@@ -250,11 +251,11 @@
 	            android:textColor="@color/black" />
 	
 	        <TextView
-	            android:id="@+id/textView9"
+	            android:id="@+id/textViewReportProgressValue"
 	            android:layout_width="25dp"
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentTop="true"
-	            android:layout_toRightOf="@+id/textView8"
+	            android:layout_toRightOf="@+id/textViewReportProgressLabel"
 	            android:layout_weight="1"
 	            android:gravity="right"
 	            android:text="0"
@@ -264,7 +265,7 @@
 	    </RelativeLayout>
 	
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/buttonInspect"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentBottom="true"
