@@ -20,6 +20,13 @@ public class Room {
 	}
 
 	/**
+	 * Overriding the toString method
+	 */
+	@Override
+	public String toString(){
+		return this.getId();
+	}
+	/**
 	 * @return String id - the room's id
 	 */
 	public String getId() {
