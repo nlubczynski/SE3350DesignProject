@@ -1,5 +1,7 @@
 package com.designproject;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Calendar;
@@ -57,25 +59,49 @@ public class XMLReaderWriter {
 	        	serializer.attribute( "", "address", client.getAddress() );
 	        	//Contracts
 	        	for( Contract contract: client.getContracts() ){
-	        		//<clientContract id="1001-01-003" No ="1234" startDate ="01/01/2013" endDate ="31/12/2014" terms="">
+	        		// <clientContract id="1001-01-003" No ="1234" startDate ="01/01/2013" endDate ="31/12/2014" terms="">
 	        		serializer.startTag("", "clientContract");
 	        		serializer.attribute( "", "id", contract.getId() );
 	        		serializer.attribute( "", "No", String.valueOf( contract.getNo() ) );
-	        		//start date to ints
+	        		// start date to ints
 	        		int day = contract.getStartDate().get( Calendar.DAY_OF_MONTH );
 	        		int month = contract.getStartDate().get( Calendar.MONTH ) + 1;
 	        		int year = contract.getStartDate().get( Calendar.YEAR );
-	        		serializer.attribute("", "startDate", day + "/" + month + "/" + year );
-	        		//end date to ints
+	        		
+	        		// need to make sure that day, month, hour, and minutes are not single digits
+	        		// hourString and minute string are used in the next level of loop
+	        		String dayString, monthString, hourString, minuteString;
+        			if(day < 10)
+        				dayString = "0" + day;
+        			else
+        				dayString = String.valueOf( day );
+        			if(month < 10)
+        				monthString = "0" + month;
+        			else
+        				monthString = String.valueOf( month );
+	        		
+	        		serializer.attribute("", "startDate", dayString + "/" + monthString + "/" + year );
+	        		// end date to ints
 	        		day = contract.getEndDate().get( Calendar.DAY_OF_MONTH );
 	        		month = contract.getEndDate().get( Calendar.MONTH ) + 1;
 	        		year = contract.getEndDate().get( Calendar.YEAR );
-	        		serializer.attribute("", "endDate", day + "/" + month + "/" + year );
+	        		
+	        		// need to make sure that day, month, hour, and minutes are not single digits
+        			if(day < 10)
+        				dayString = "0" + day;
+        			else
+        				dayString = String.valueOf( day );
+        			if(month < 10)
+        				monthString = "0" + month;
+        			else
+        				monthString = String.valueOf( month );
+	        		
+	        		serializer.attribute("", "endDate", dayString + "/" + monthString + "/" + year );
 	        		serializer.attribute("", "terms", contract.getTerms() );
-	        		//Buildings
+	        		// Buildings
 	        		for( Building building: contract.getBuildings() ){
-	        			//<ServiceAddress id="S1" address="123 Sesame Street" postalCode="N6G 2P4" contact="" city="London" 
-	        			//province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20131009 09:49PM">
+	        			// <ServiceAddress id="S1" address="123 Sesame Street" postalCode="N6G 2P4" contact="" city="London" 
+	        			// province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20131009 09:49PM">
 	        			serializer.startTag( "", "ServiceAddress" );
 	        			serializer.attribute( "", "id", building.getId() );
 	        			serializer.attribute( "", "address", building.getAddress() );
@@ -87,53 +113,60 @@ public class XMLReaderWriter {
 	        			serializer.attribute( "", "InspectorID", building.getLastInspectedBy() );
 	        			// Time Stamp ints
 	        			day = building.getTimeStamp().get( Calendar.DAY_OF_MONTH );
-	        			//need to make sure that day and month are not single digits
-	        			String dayString;
-	        			if(day < 10)
-	        				dayString = "0" + day;
-	        			else
-	        				dayString = String.valueOf( day );
-	        			
-	        			month = building.getTimeStamp().get( Calendar.DAY_OF_MONTH ) + 1;
-	        			String monthString;
-	        			if(month < 10)
-	        				monthString = "0" + month;
-	        			else
-	        				monthString = String.valueOf( month );
-	        				
+        				month = building.getTimeStamp().get( Calendar.MONTH ) + 1;	        				
 	        			year = building.getTimeStamp().get( Calendar.YEAR );
 	        			int hour = building.getTimeStamp().get( Calendar.HOUR);
 	        			int minute = building.getTimeStamp().get( Calendar.MINUTE );
 	        			String am_pm = building.getTimeStamp().get( Calendar.AM_PM ) == Calendar.AM ? "AM" : "PM";
+	        			
+	        			// need to make sure that day, month, hour, and minutes are not single digits
+	        			if(day < 10)
+	        				dayString = "0" + day;
+	        			else
+	        				dayString = String.valueOf( day );
+	        			if(month < 10)
+	        				monthString = "0" + month;
+	        			else
+	        				monthString = String.valueOf( month );
+	        			if(hour < 10)
+	        				hourString = "0" + hour;
+	        			else
+	        				hourString = String.valueOf( hour );
+	        			if(minute < 10)
+	        				minuteString = "0" + minute;
+	        			else
+	        				minuteString = String.valueOf( minute );
+	        			
 	        			serializer.attribute( "", "testTimeStamp", year + monthString + dayString + " " 
-	        					+ hour + ":" + minute + am_pm);
+	        					+ hourString + ":" + minuteString + am_pm);
 	        			// Floors
 	        			for(Floor floor: building.getFloors() ){
-	        				//<Floor name="First Floor">
+	        				// <Floor name="First Floor">
 	        				serializer.startTag( "", "Floor" );
 	        				serializer.attribute( "", "name", floor.getName() );
 	        				// Rooms
 	        				for(Room room: floor.getRooms() ){
-	        					//<Room id="R1" No="1">
+	        					// <Room id="R1" No="1">
 	        					serializer.startTag( "", "Room");
 	        					serializer.attribute( "", "id", room.getId() );
 	        					serializer.attribute( "", "No", String.valueOf( room.getRoomNo() ) );
-	        					//Equipment
+	        					// Equipment
 	        					for(Equipment equipment: room.getEquipment() ){
-	        						//<Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+	        						// <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
 	        						serializer.startTag( "", equipment.getName() );
 	        						serializer.attribute( "", "id", equipment.getID() );
 	        						serializer.attribute( "", "location", equipment.getLocation() );
 	        						for( node attribute: equipment.getAttributes() )
 	        							serializer.attribute( "", attribute.getName() , attribute.getValue() );
-	        						//Inspection elements
+	        						// Inspection elements
 	        						for(int i = 0; i < equipment.getInspectionElements().length; i++){
-	        							//<inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
-	        							serializer.startTag("", "inspectionElement_" + String.valueOf( i ) );
+	        							// <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
+	        							serializer.startTag("", "inspectionElement_" + String.valueOf( i + 1 ) );
 	        							serializer.attribute( "", "name", equipment.getInspectionElements()[i].getName() );
-	        							serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].getTestResult() == true ? "PASS" : "FAIL" );
+	        							serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].hasBeenTested() == false ? "" :
+	        									equipment.getInspectionElements()[i].getTestResult() == true ? "PASS" : "FAIL" );
 	        							serializer.attribute( "", "testNote", equipment.getInspectionElements()[i].getTestNotes() );
-	        							serializer.endTag( "", "inspectionElement_" + String.valueOf( i ) );
+	        							serializer.endTag( "", "inspectionElement_" + String.valueOf( i + 1 ) );
 	        						}
 	        						serializer.endTag( "", equipment.getName() );
 	        					}
@@ -152,7 +185,18 @@ public class XMLReaderWriter {
 		} catch (Exception e) {
 	        return false;
 	    } 
-		String out = writer.toString();
+
+		// Write the file to "XMLOut.xml"
+		File file = new File(context.getFilesDir(), "XMLOut.xml");
+		FileWriter out;
+		try {
+			out = new FileWriter(file);
+			out.write( writer.toString() );
+			out.close();
+		} catch (IOException e) {
+			return false;
+		}
+		
 		return true;
 	}
 	
@@ -279,7 +323,7 @@ public class XMLReaderWriter {
 				
 		// Loop through these attributes and set the id, name, and address values
 		for(int i = 0; i < numOfAttributes; i++)
-			if( parser.getAttributeName( i ) == "id" )
+			if( parser.getAttributeName( i ).equals( "id" ) )
 				id = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "name" ) )
 				name = parser.getAttributeValue(i);
