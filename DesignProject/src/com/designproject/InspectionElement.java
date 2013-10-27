@@ -47,7 +47,7 @@ public class InspectionElement {
 	 * @return Boolean testResult - the current result of the test
 	 */
 	public boolean getTestResult() {
-		return testResult;
+			return testResult;
 	}
 	
 	/**

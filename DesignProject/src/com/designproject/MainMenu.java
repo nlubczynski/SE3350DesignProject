@@ -43,6 +43,7 @@ public class MainMenu extends Activity {
 			a.setFranchise( reader.parseXML() );
 			Franchise franchise = a.getFranchise();
 			franchise.getId();
+			reader.writeXML( franchise );
 		}catch (XmlPullParserException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -87,12 +87,25 @@ public class XMLReaderWriter {
 	        			serializer.attribute( "", "InspectorID", building.getLastInspectedBy() );
 	        			// Time Stamp ints
 	        			day = building.getTimeStamp().get( Calendar.DAY_OF_MONTH );
+	        			//need to make sure that day and month are not single digits
+	        			String dayString;
+	        			if(day < 10)
+	        				dayString = "0" + day;
+	        			else
+	        				dayString = String.valueOf( day );
+	        			
 	        			month = building.getTimeStamp().get( Calendar.DAY_OF_MONTH ) + 1;
+	        			String monthString;
+	        			if(month < 10)
+	        				monthString = "0" + month;
+	        			else
+	        				monthString = String.valueOf( month );
+	        				
 	        			year = building.getTimeStamp().get( Calendar.YEAR );
-	        			int hour = building.getTimeStamp().get( Calendar.HOUR );
+	        			int hour = building.getTimeStamp().get( Calendar.HOUR);
 	        			int minute = building.getTimeStamp().get( Calendar.MINUTE );
 	        			String am_pm = building.getTimeStamp().get( Calendar.AM_PM ) == Calendar.AM ? "AM" : "PM";
-	        			serializer.attribute( "", "testTimeStamp", year + month + day + " " 
+	        			serializer.attribute( "", "testTimeStamp", year + monthString + dayString + " " 
 	        					+ hour + ":" + minute + am_pm);
 	        			// Floors
 	        			for(Floor floor: building.getFloors() ){
@@ -135,11 +148,11 @@ public class XMLReaderWriter {
 	        	serializer.endTag( "", "Client");
 	        }
 	        serializer.endTag( "", "Franchisee" );        
+	        serializer.endDocument();
 		} catch (Exception e) {
-	        throw new RuntimeException(e);
+	        return false;
 	    } 
 		String out = writer.toString();
-		out.charAt(1);
 		return true;
 	}
 	
@@ -401,7 +414,9 @@ public class XMLReaderWriter {
 				
 				int am_pm = temp[1].substring(5,7).equals("PM") ? Calendar.PM : Calendar.AM;
 				
-				timeStamp = new GregorianCalendar(year, month, day, hour, minute);				
+				timeStamp = new GregorianCalendar(year, month, day);
+				timeStamp.set(Calendar.HOUR, hour);
+				timeStamp.set(Calendar.MINUTE, minute);
 				timeStamp.set(Calendar.AM_PM, am_pm);
 				
 			}
@@ -460,7 +475,7 @@ public class XMLReaderWriter {
 		// Varying number of expected attributes
 		int counter = equipParser.getAttributeCount();
 		
-		for ( int i = 1; i < counter; i++ )
+		for ( int i = 0; i < counter; i++ )
 			equipObject.addAttribute( equipParser.getAttributeName( i ), equipParser.getAttributeValue( i ) );
 
 		// Equipment equipObject = new Equipment(equipParser.getAttributeValue(0));
