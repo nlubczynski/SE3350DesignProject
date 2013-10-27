@@ -18,6 +18,7 @@ import android.os.Build;
 public class InspectionOverview extends Activity {
 
     private TabHost myTabHost;
+    private Contract mContract;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +27,12 @@ public class InspectionOverview extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+    	mContract = (Contract)a.getLocation();
+		
 		//Set up the tabs dynamically
 		setUpTabs();
+		
 		
 	}
 	
@@ -38,10 +43,12 @@ public class InspectionOverview extends Activity {
 		
 		
 		
-		for(int i = 0 ; i<3; i++)
+		
+		for(Building building : mContract.getBuildings())
 		{
 			TabSpec ts1 = myTabHost.newTabSpec("TAB_TAG_1");
-			ts1.setIndicator("Tab1");
+			String buildingName = building.getId();
+			ts1.setIndicator("Building: " + buildingName);
 			ts1.setContent(new TabHost.TabContentFactory(){
 				public View createTabContent(String tag)
 				{     
@@ -51,12 +58,35 @@ public class InspectionOverview extends Activity {
 					return view;
 					}       
 				});
+			
 			myTabHost.addTab(ts1);
-			if(i%2==0)
+			TextView textView = (TextView)findViewById(R.id.textViewAddress);
+			textView.setText(building.getAddress());
+			
+			textView= (TextView)findViewById(R.id.textViewFloorsValue);
+			String numberOfFloorsString = String.valueOf(building.getFloors().length);
+			textView.setText(numberOfFloorsString);
+			
+			int numberOfRooms=0;
+			int numberOfInspectionsElements = 0;
+			
+			for(Floor floor : building.getFloors())
 			{
-				TextView textView = (TextView)findViewById(R.id.textViewAddress);
-				textView.setText("115 Edgevalley Circle");
-				}        
+				numberOfRooms += floor.getRooms().length;
+				
+				for(Room room : floor.getRooms())
+				{
+					numberOfInspectionsElements += room.getEquipment().length;
+					
+				}
+			}
+			
+			textView= (TextView)findViewById(R.id.textViewRoomsValue);
+			textView.setText(String.valueOf(numberOfRooms));
+			
+			textView = (TextView)findViewById(R.id.textViewItemsValue);
+			textView.setText(String.valueOf(numberOfInspectionsElements));
+			      
 			}
 	}
 

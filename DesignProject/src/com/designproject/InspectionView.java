@@ -11,7 +11,9 @@ import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -49,6 +51,7 @@ public class InspectionView extends ListActivity {
 		//TODO: take in data from model classes and write to the member variables
 		String clientName;
 		String contractDueDate;
+		String contractId;
 		
 		for(Client client : mFranchise.getClients())
 		{
@@ -66,9 +69,10 @@ public class InspectionView extends ListActivity {
     					.toLocalDate()
     					.toString();
     			
-    			String[] s = {clientName, contractDueDate};
-    			inspectionInformationArray.add(s);
+    			contractId = contract.getId();
     			
+    			String[] s = {clientName, contractDueDate, contractId};
+    			inspectionInformationArray.add(s);
     		}
 		}
 		
@@ -84,13 +88,15 @@ public class InspectionView extends ListActivity {
 			item = new HashMap<String, String>();
 			item.put("line1", inspectionInformation[0]);
 			item.put("line2", inspectionInformation[1]);
+			item.put("line3", inspectionInformation[2]);
 			listInformationString.add(item);
 		}
 		
 		simpleAdapter =  new SimpleAdapter(this,listInformationString, R.layout.custom_two_lines,
-				new String[] {"line1", "line2"},
-				new int[] {R.id.line_1,
-				R.id.line_2});
+				new String[] {"line1", "line2", "line3"},
+				new int[] {R.id.clientName,
+				R.id.dueDate,
+				R.id.textViewIdValue});
 		
 		///bind the data
 		setListAdapter(simpleAdapter);
@@ -133,10 +139,45 @@ public class InspectionView extends ListActivity {
 	
 	public void inspectionItemListener(View view)
 	{
+		Client[] clientList = mFranchise.getClients();
+		TextView clientNameChild = (TextView) ((ViewGroup)view).getChildAt(0);
+		String clientName = clientNameChild.getText().toString();
+		
+		//The view is a listView and its second child element is a relative layout. 
+		//So I cast that relativeLayout as a ViewGroup and get its child.
+		TextView contractIdChild = (TextView)((ViewGroup)((ViewGroup)view).getChildAt(1)).getChildAt(1);
+		String contractId = contractIdChild.getText().toString();
+
+
+		for(Client client : clientList)
+		{
+			    if(client.getName() == clientName)
+			    {
+			    	for(Contract contract : client.getContracts())
+			    	{
+			    		if(contract.getId()== contractId)
+			    		{
+			    			FireAlertApplication a = (FireAlertApplication)getApplication();
+					    	a.setLocation(contract); 	
+			    		}
+			    	}
+			    }	
+		}
+		
 		Intent openInspectionOverview= new Intent(InspectionView.this, InspectionOverview.class);
     	//openInspectionView.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
     	startActivity(openInspectionOverview);
 		
+	}
+	
+	@Override
+	public void onResume() 
+	{
+	    super.onResume();  // Always call the superclass method first
+
+	    FireAlertApplication a = (FireAlertApplication)getApplication();
+    	a.setLocation(mFranchise); 	
+	   
 	}
 
 }

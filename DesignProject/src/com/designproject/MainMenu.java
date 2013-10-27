@@ -66,10 +66,6 @@ public class MainMenu extends Activity {
         
         // Set the adapter for this list view
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        
-        Intent inspectionForm = new Intent(MainMenu.this, InspectionForm.class);
-     	inspectionForm.putExtra("Page Number", 1);
-     	startActivity(inspectionForm);
 
         calculateDates();
     }

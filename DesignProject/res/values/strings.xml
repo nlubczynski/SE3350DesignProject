@@ -32,5 +32,10 @@
     <string name="title_activity_inspection_form">Inspection Form</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Closed</string>
+    <string name="idString">ID:</string>
+    <string name="address_label">Address:</string>
+    <string name="floors_label">Floors:</string>
+    <string name="rooms_label">Rooms:</string>
+    <string name="items_label">Items:</string>
 
 </resources>
