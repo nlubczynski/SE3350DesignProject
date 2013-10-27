@@ -40,10 +40,8 @@ public class MainMenu extends Activity {
 		try {
 			XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
 			FireAlertApplication a = (FireAlertApplication)getApplication();
-			a.setFranchise( reader.parseXML() );
-			Franchise franchise = a.getFranchise();
-			franchise.getId();
-			reader.writeXML( franchise );
+			a.setLocation( reader.parseXML() );
+			reader.writeXML( (Franchise) a.getLocation() );
 		}catch (XmlPullParserException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
