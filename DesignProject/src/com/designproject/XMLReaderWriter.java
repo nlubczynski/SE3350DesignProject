@@ -1,21 +1,27 @@
 package com.designproject;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlSerializer;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
+import android.util.Xml;
 
+import com.designproject.Equipment.node;
 /**
  * 
  * @author NikLubz and Jessica
  *
  */
-public class XMLReader {
+public class XMLReaderWriter {
 
 	private Franchise franchise;
 	private Context context;
@@ -25,9 +31,173 @@ public class XMLReader {
 	 * @param String pathToXMLFile - the path to the XML file being used
 	 * @throws XmlPullParserException
 	 */
-	public XMLReader( Context context ) throws XmlPullParserException{
+	public XMLReaderWriter( Context context ) throws XmlPullParserException{
 		// The application context
 		this.context = context;
+	}
+	
+	public boolean writeXML(Franchise franchise){
+		
+		XmlSerializer serializer = Xml.newSerializer();
+		StringWriter writer = new StringWriter();
+		
+		try {
+	        serializer.setOutput(writer);
+	        serializer.startDocument("UTF-8", true);
+	        
+	        // Franchise 
+	        // <Franchisee id="1001" name="Darwin Fleming">
+	        serializer.startTag( "", "Franchisee");
+	        serializer.attribute( "", "id", String.valueOf( franchise.getId() ) );
+	        serializer.attribute( "", "name", franchise.getOwnerName() );
+	        // Clients 
+	        for( Client client: franchise.getClients() ){
+		        // <Client id="1001-01" name="North Bay Inc" address="North Bay, Muskoka, Parry Sound, Orillia">
+	        	serializer.startTag( "", "Client");
+	        	serializer.attribute( "", "id", String.valueOf( client.getId() ) );
+	        	serializer.attribute( "", "name", client.getName() );
+	        	serializer.attribute( "", "address", client.getAddress() );
+	        	//Contracts
+	        	for( Contract contract: client.getContracts() ){
+	        		// <clientContract id="1001-01-003" No ="1234" startDate ="01/01/2013" endDate ="31/12/2014" terms="">
+	        		serializer.startTag("", "clientContract");
+	        		serializer.attribute( "", "id", contract.getId() );
+	        		serializer.attribute( "", "No", String.valueOf( contract.getNo() ) );
+	        		// start date to ints
+	        		int day = contract.getStartDate().get( Calendar.DAY_OF_MONTH );
+	        		int month = contract.getStartDate().get( Calendar.MONTH ) + 1;
+	        		int year = contract.getStartDate().get( Calendar.YEAR );
+	        		
+	        		// need to make sure that day, month, hour, and minutes are not single digits
+	        		// hourString and minute string are used in the next level of loop
+	        		String dayString, monthString, hourString, minuteString;
+        			if(day < 10)
+        				dayString = "0" + day;
+        			else
+        				dayString = String.valueOf( day );
+        			if(month < 10)
+        				monthString = "0" + month;
+        			else
+        				monthString = String.valueOf( month );
+	        		
+	        		serializer.attribute("", "startDate", dayString + "/" + monthString + "/" + year );
+	        		// end date to ints
+	        		day = contract.getEndDate().get( Calendar.DAY_OF_MONTH );
+	        		month = contract.getEndDate().get( Calendar.MONTH ) + 1;
+	        		year = contract.getEndDate().get( Calendar.YEAR );
+	        		
+	        		// need to make sure that day, month, hour, and minutes are not single digits
+        			if(day < 10)
+        				dayString = "0" + day;
+        			else
+        				dayString = String.valueOf( day );
+        			if(month < 10)
+        				monthString = "0" + month;
+        			else
+        				monthString = String.valueOf( month );
+	        		
+	        		serializer.attribute("", "endDate", dayString + "/" + monthString + "/" + year );
+	        		serializer.attribute("", "terms", contract.getTerms() );
+	        		// Buildings
+	        		for( Building building: contract.getBuildings() ){
+	        			// <ServiceAddress id="S1" address="123 Sesame Street" postalCode="N6G 2P4" contact="" city="London" 
+	        			// province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20131009 09:49PM">
+	        			serializer.startTag( "", "ServiceAddress" );
+	        			serializer.attribute( "", "id", building.getId() );
+	        			serializer.attribute( "", "address", building.getAddress() );
+	        			serializer.attribute("", "postalCode", building.getPostalCode() );
+	        			serializer.attribute( "", "contact", building.getContact() );
+	        			serializer.attribute( "", "city", building.getCity() );
+	        			serializer.attribute( "", "province", building.getProvince() );
+	        			serializer.attribute( "", "country", building.getCountry() );
+	        			serializer.attribute( "", "InspectorID", building.getLastInspectedBy() );
+	        			// Time Stamp ints
+	        			day = building.getTimeStamp().get( Calendar.DAY_OF_MONTH );
+        				month = building.getTimeStamp().get( Calendar.MONTH ) + 1;	        				
+	        			year = building.getTimeStamp().get( Calendar.YEAR );
+	        			int hour = building.getTimeStamp().get( Calendar.HOUR);
+	        			int minute = building.getTimeStamp().get( Calendar.MINUTE );
+	        			String am_pm = building.getTimeStamp().get( Calendar.AM_PM ) == Calendar.AM ? "AM" : "PM";
+	        			
+	        			// need to make sure that day, month, hour, and minutes are not single digits
+	        			if(day < 10)
+	        				dayString = "0" + day;
+	        			else
+	        				dayString = String.valueOf( day );
+	        			if(month < 10)
+	        				monthString = "0" + month;
+	        			else
+	        				monthString = String.valueOf( month );
+	        			if(hour < 10)
+	        				hourString = "0" + hour;
+	        			else
+	        				hourString = String.valueOf( hour );
+	        			if(minute < 10)
+	        				minuteString = "0" + minute;
+	        			else
+	        				minuteString = String.valueOf( minute );
+	        			
+	        			serializer.attribute( "", "testTimeStamp", year + monthString + dayString + " " 
+	        					+ hourString + ":" + minuteString + am_pm);
+	        			// Floors
+	        			for(Floor floor: building.getFloors() ){
+	        				// <Floor name="First Floor">
+	        				serializer.startTag( "", "Floor" );
+	        				serializer.attribute( "", "name", floor.getName() );
+	        				// Rooms
+	        				for(Room room: floor.getRooms() ){
+	        					// <Room id="R1" No="1">
+	        					serializer.startTag( "", "Room");
+	        					serializer.attribute( "", "id", room.getId() );
+	        					serializer.attribute( "", "No", String.valueOf( room.getRoomNo() ) );
+	        					// Equipment
+	        					for(Equipment equipment: room.getEquipment() ){
+	        						// <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+	        						serializer.startTag( "", equipment.getName() );
+	        						serializer.attribute( "", "id", equipment.getID() );
+	        						serializer.attribute( "", "location", equipment.getLocation() );
+	        						for( node attribute: equipment.getAttributes() )
+	        							serializer.attribute( "", attribute.getName() , attribute.getValue() );
+	        						// Inspection elements
+	        						for(int i = 0; i < equipment.getInspectionElements().length; i++){
+	        							// <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
+	        							serializer.startTag("", "inspectionElement_" + String.valueOf( i + 1 ) );
+	        							serializer.attribute( "", "name", equipment.getInspectionElements()[i].getName() );
+	        							serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].hasBeenTested() == false ? "" :
+	        									equipment.getInspectionElements()[i].getTestResult() == true ? "PASS" : "FAIL" );
+	        							serializer.attribute( "", "testNote", equipment.getInspectionElements()[i].getTestNotes() );
+	        							serializer.endTag( "", "inspectionElement_" + String.valueOf( i + 1 ) );
+	        						}
+	        						serializer.endTag( "", equipment.getName() );
+	        					}
+	        					serializer.endTag( "", "Room" );
+	        				}
+	        				serializer.endTag( "", "Floor" );
+	        			}
+	        			serializer.endTag( "", "ServiceAddress" );
+	        		}
+	        		serializer.endTag( "", "clientContract");
+	        	}
+	        	serializer.endTag( "", "Client");
+	        }
+	        serializer.endTag( "", "Franchisee" );        
+	        serializer.endDocument();
+		} catch (Exception e) {
+	        return false;
+	    } 
+
+		// Write the file to "XMLOut.xml"
+		File file = new File(context.getFilesDir(), "XMLOut.xml");
+		FileWriter out;
+		try {
+			out = new FileWriter(file);
+			out.write( writer.toString() );
+			out.close();
+		} catch (IOException e) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public Franchise parseXML() throws XmlPullParserException, IOException{
@@ -112,7 +282,7 @@ public class XMLReader {
 			return null;
 		
 		// Initialize the variables
-		int id = 0;
+		String id = "0";
 		String ownerName = "John Smith";
 		
 		// find the number of attributes (should be 2)
@@ -121,7 +291,7 @@ public class XMLReader {
 		// Loop through these attributes and set the id and owner name values
 		for(int i = 0; i < numOfAttributes; i++)
 			if( parser.getAttributeName( i ).equals( "id" ) )
-				id = Integer.valueOf( parser.getAttributeValue(i) );
+				id = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "name" ) )
 				ownerName = parser.getAttributeValue(i);
 		
@@ -146,15 +316,15 @@ public class XMLReader {
 		// Initialize variables
 		String name = "ACME Inc.";
 		String address = "123 Fake Street";
-		int id = 0;
+		String id = "0";
 		
 		// find the number of attributes (should be 3)
 		int numOfAttributes = parser.getAttributeCount();
 				
 		// Loop through these attributes and set the id, name, and address values
 		for(int i = 0; i < numOfAttributes; i++)
-			if( parser.getAttributeName( i ) == "id" )
-				id = Integer.valueOf( parser.getAttributeValue(i) );
+			if( parser.getAttributeName( i ).equals( "id" ) )
+				id = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "name" ) )
 				name = parser.getAttributeValue(i);
 			else if( parser.getAttributeName( i ).equals( "address" ) )
@@ -188,7 +358,7 @@ public class XMLReader {
 		// Initialize variables
 		String terms = "ACME Inc.";
 		String id = "0";
-		int no = 0;
+		String no = "0";
 		GregorianCalendar startDate = null;
 		GregorianCalendar endDate = null;
 		
@@ -200,7 +370,7 @@ public class XMLReader {
 			if( parser.getAttributeName( i ).equals( "id"  ) )
 				id = parser.getAttributeValue(i);
 			else if( parser.getAttributeName( i ).equals( "No" ) )
-				no = Integer.valueOf( parser.getAttributeValue(i) );
+				no = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "terms" ) )
 				terms = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "startDate" ) ){
@@ -288,7 +458,9 @@ public class XMLReader {
 				
 				int am_pm = temp[1].substring(5,7).equals("PM") ? Calendar.PM : Calendar.AM;
 				
-				timeStamp = new GregorianCalendar(year, month, day, hour, minute);				
+				timeStamp = new GregorianCalendar(year, month, day);
+				timeStamp.set(Calendar.HOUR, hour);
+				timeStamp.set(Calendar.MINUTE, minute);
 				timeStamp.set(Calendar.AM_PM, am_pm);
 				
 			}
@@ -322,7 +494,7 @@ public class XMLReader {
 	
 	private Room roomParser( XmlPullParser rmParser, Floor lastFloor ){		
 		// Create Room Object
-		Room roomObject = new Room("", 0);
+		Room roomObject = new Room("", "0");
 		
 		// Expected - 2 attributes (id, No)
 		int counter = rmParser.getAttributeCount();
@@ -333,7 +505,7 @@ public class XMLReader {
 				roomObject.setId( rmParser.getAttributeValue( i ) );
 			else if ( rmParser.getAttributeName( i ).equals( "No" ) )				
 				//TODO: what if room no is null?
-				roomObject.setRoomNo( Integer.parseInt( rmParser.getAttributeValue( i ) ) );
+				roomObject.setRoomNo( rmParser.getAttributeValue( i ) );
 		}
 
 		// Add Room to Above Floor
@@ -347,7 +519,7 @@ public class XMLReader {
 		// Varying number of expected attributes
 		int counter = equipParser.getAttributeCount();
 		
-		for ( int i = 1; i < counter; i++ )
+		for ( int i = 0; i < counter; i++ )
 			equipObject.addAttribute( equipParser.getAttributeName( i ), equipParser.getAttributeValue( i ) );
 
 		// Equipment equipObject = new Equipment(equipParser.getAttributeValue(0));

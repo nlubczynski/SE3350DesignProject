@@ -1,7 +1,6 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 
@@ -17,17 +16,17 @@ public class Franchise {
 	 * clients: A list of the clients that a franchise currently has
 	 * inspectors: A list of the inspectors a franchise has at it's disposal
 	 */
-	private	int id;
+	private	String id;
 	private String ownerName;
 	private ArrayList<Client> clients;
 	private ArrayList<Inspector> inspectors;
 	
 	/**
 	 * Constructor
-	 * @param int id - The franchise id
+	 * @param String id - The franchise id
 	 * @param String name - The franchise owner's name
 	 */
-	public Franchise(int id, String name){
+	public Franchise(String id, String name){
 		this.id = id;
 		this.ownerName = name;
 		this.clients = new ArrayList<Client>();
@@ -56,10 +55,19 @@ public class Franchise {
 		
 		return true;		
 	}
-	public int getId(){
+	/**
+	 * 
+	 * @return String ID - the id for the Franchise
+	 */
+	public String getId(){
 		return id;
 	}
-	public boolean setId(int newId){
+	/**
+	 * 
+	 * @param String newId - the new id
+	 * @return Boolean result - whether the id was changed or not
+	 */
+	public boolean setId(String newId){
 		try{
 			id = newId;
 		}
@@ -83,7 +91,13 @@ public class Franchise {
 	 * @return Client [] - This clients from a franchise
 	 */
 	public Client[] getClients(){
-		return Arrays.copyOf(clients.toArray(), clients.toArray().length, Client[].class);
+
+		Client[] returnArray = new Client[ clients.size() ];
+		
+		for(int i = 0; i < clients.size(); i++)
+			returnArray[i] = clients.get(i);
+		
+		return returnArray;
 	}
 	
 	/**

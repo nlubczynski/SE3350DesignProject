@@ -1,7 +1,10 @@
 package com.designproject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+
+import org.joda.time.Interval;
 
 import android.os.Bundle;
 import android.app.ListActivity;
@@ -16,19 +19,15 @@ import android.os.Build;
 
 public class InspectionView extends ListActivity {
 
-	// for storing the information. Loaded with dummy content
-	private String[][] inspectionInformation =
-		{
-			{"McDonalds", "10/12/2013"},
-			{"Wendys", "10/15/2013"}
-		};
-	
-	// Adapters are used to bind to data. I want 2d so craete my own
+	// for storing the information.
+	private ArrayList<String []> inspectionInformationArray;
+	// Adapters are used to bind to data. I want 2d so create my own
 	private SimpleAdapter simpleAdapter;
 	
 	//Create arraylist which will hold the string data
 	ArrayList<HashMap<String, String>> listInformationString = new 
 			ArrayList<HashMap<String, String>>();
+	Franchise mFranchise;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +36,41 @@ public class InspectionView extends ListActivity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+		mFranchise = (Franchise)a.getLocation(); 
+		
+		inspectionInformationArray = new ArrayList<String []>();
+		
 		populateListInformation();
 	}
 
 	private void populateListInformation() 
 	{
 		//TODO: take in data from model classes and write to the member variables
+		String clientName;
+		String contractDueDate;
+		
+		for(Client client : mFranchise.getClients())
+		{
+			clientName = client.getName();
+			
+    		for(Contract contract : client.getContracts())
+    		{
+    			Calendar startDateCalendar = contract.getStartDate();
+    			Calendar endDateCalendar = contract.getEndDate();
+    			String terms = contract.getTerms();
+    			
+    			Interval nextInspectionInterval = HelperMethods.returnNextInspectionInterval(startDateCalendar, endDateCalendar, terms);
+    			
+    			contractDueDate = nextInspectionInterval.getEnd()
+    					.toLocalDate()
+    					.toString();
+    			
+    			String[] s = {clientName, contractDueDate};
+    			inspectionInformationArray.add(s);
+    			
+    		}
+		}
 		
 		bindListView();
 	}
@@ -51,11 +79,11 @@ public class InspectionView extends ListActivity {
 	{
 		HashMap<String,String> item;
 		
-		for(int i=0; i<inspectionInformation.length; i++)
+		for(String [] inspectionInformation : inspectionInformationArray)
 		{
 			item = new HashMap<String, String>();
-			item.put("line1", inspectionInformation[i][0]);
-			item.put("line2", inspectionInformation[i][1]);
+			item.put("line1", inspectionInformation[0]);
+			item.put("line2", inspectionInformation[1]);
 			listInformationString.add(item);
 		}
 		

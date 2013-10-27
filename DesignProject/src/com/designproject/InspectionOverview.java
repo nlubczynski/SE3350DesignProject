@@ -2,22 +2,62 @@ package com.designproject;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
 public class InspectionOverview extends Activity {
 
+    private TabHost myTabHost;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_inspection_overview);
+		setContentView(R.layout.activity_inspection_overview_parent);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		//Set up the tabs dynamically
+		setUpTabs();
+		
+	}
+	
+	private void setUpTabs()
+	{
+		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
+		myTabHost.setup();
+		
+		
+		
+		for(int i = 0 ; i<3; i++)
+		{
+			TabSpec ts1 = myTabHost.newTabSpec("TAB_TAG_1");
+			ts1.setIndicator("Tab1");
+			ts1.setContent(new TabHost.TabContentFactory(){
+				public View createTabContent(String tag)
+				{     
+					LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					View view = inflater.inflate(R.layout.inspection_overview_layout, null);
+					
+					return view;
+					}       
+				});
+			myTabHost.addTab(ts1);
+			if(i%2==0)
+			{
+				TextView textView = (TextView)findViewById(R.id.textViewAddress);
+				textView.setText("115 Edgevalley Circle");
+				}        
+			}
 	}
 
 	/**

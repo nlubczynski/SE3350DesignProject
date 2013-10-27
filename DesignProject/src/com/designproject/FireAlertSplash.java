@@ -1,29 +1,18 @@
 package com.designproject;
 
-import java.util.Hashtable;
-import java.util.Map;
 
 import com.designproject.R;
-import com.designproject.R.animator;
-import com.designproject.R.id;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 
 import android.os.Bundle;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 public class FireAlertSplash extends Activity {
 	

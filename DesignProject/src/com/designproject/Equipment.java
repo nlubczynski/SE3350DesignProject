@@ -1,7 +1,6 @@
 package com.designproject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 
@@ -115,7 +114,12 @@ public class Equipment {
 	 * @return InspectionElement[] elements - the inspection elements for a piece of equipment
 	 */
 	public InspectionElement[] getInspectionElements(){
-		return Arrays.copyOf(elements.toArray(), elements.toArray().length, InspectionElement[].class);
+		InspectionElement[] returnArray = new InspectionElement[ elements.size() ];
+		
+		for(int i = 0; i < elements.size(); i++)
+			returnArray[i] = elements.get(i);
+		
+		return returnArray;
 	}
 	/**
 	 * @return String name - return the name of the equipment
@@ -144,10 +148,10 @@ public class Equipment {
 	 */
 	public boolean addAttribute(String name, String value){
 		try{
-			if(name == "id"){
+			if( name.equals("id") ){
 				this.setID(value);
 			}
-			else if(name == "location"){
+			else if( name.equals("location") ){
 				this.setLocation(value);
 			}
 			else{
@@ -165,7 +169,12 @@ public class Equipment {
 	 * @return node[] - An array of all the attributes
 	 */
 	public node[] getAttributes(){
-		return Arrays.copyOf(attributes.toArray(), attributes.toArray().length, node[].class);
+		node[] returnArray = new node[ attributes.size() ];
+		
+		for(int i = 0; i < attributes.size(); i++)
+			returnArray[i] = attributes.get(i);
+		
+		return returnArray;
 	}
 	
 	/**
