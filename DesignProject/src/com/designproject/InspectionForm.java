@@ -57,7 +57,9 @@ public class InspectionForm extends Activity implements OnGestureListener {
 		equipment.addInspectionElement(new InspectionElement("Signage"));
 		equipment.addInspectionElement(new InspectionElement("Collar"));
 		equipment.addInspectionElement(new InspectionElement("Hose"));
-		
+		 
+		//FireAlertApplication app = new FireAlertApplication();
+		//final Equipment equipment = (Equipment) app.getLocation();
 		
 		// Set title, id and page number
 		setTitle(equipment.getName());

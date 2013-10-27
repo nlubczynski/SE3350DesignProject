@@ -73,6 +73,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
         </activity>
+        <activity
+            android:name="com.designproject.InspectionForm"
+            android:label="@string/title_activity_inspection_form"
+            android:parentActivityName="com.designproject.InspectionForm" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.designproject.InspectionView" />
+        </activity>
     </application>
 
 </manifest>

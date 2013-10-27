@@ -29,6 +29,7 @@
     <string name="title_activity_inspection_overview">InspectionOverview</string>
     <string name="title_activity_equipment_inspection_list">EquipmentInspectionList</string>
     <string name="title_activity_inspection_overview_v2">InspectionOverviewV2</string>
+    <string name="title_activity_inspection_form">Inspection Form</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Closed</string>
 
