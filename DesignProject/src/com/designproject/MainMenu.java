@@ -53,17 +53,13 @@ public class MainMenu extends Activity {
         System.out.println("end");
         
         setContentView(R.layout.activity_main_menu);
-<<<<<<< HEAD
    
         mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-=======
+
         
         setupNavigationDrawer();
->>>>>>> branch 'master' of https://github.com/nlubczynski/DesignProject.git
-        
-<<<<<<< HEAD
         // Set the adapater for the list view
         mDrawerList.setAdapter((new ArrayAdapter<String>(this,
         		R.layout.drawer_list_item, mDrawerListTitles)));
@@ -74,9 +70,8 @@ public class MainMenu extends Activity {
         Intent inspectionForm = new Intent(MainMenu.this, InspectionForm.class);
      	inspectionForm.putExtra("Page Number", 1);
      	startActivity(inspectionForm);
-=======
+
         calculateDates();
->>>>>>> branch 'master' of https://github.com/nlubczynski/DesignProject.git
     }
 
     private void setupNavigationDrawer()
