@@ -5,21 +5,15 @@ import java.io.IOException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.designproject.R;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -46,7 +40,6 @@ public class MainMenu extends Activity {
 		System.out.println("end");
         
         setContentView(R.layout.activity_main_menu);
-        
    
         mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,6 +51,10 @@ public class MainMenu extends Activity {
         
         // Set the adapter for this list view
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        
+        Intent inspectionForm = new Intent(MainMenu.this, InspectionForm.class);
+     	inspectionForm.putExtra("Page Number", 1);
+     	startActivity(inspectionForm);
     }
 
 
@@ -78,7 +75,7 @@ public class MainMenu extends Activity {
     	startActivity(loginScreen);
     }
     
-    /* The click listner for ListView in the navigation drawer */
+    /* The click listener for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

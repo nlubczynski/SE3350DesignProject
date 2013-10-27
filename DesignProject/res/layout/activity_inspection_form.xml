@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:id="@+id/inspect_form"
     tools:context=".InspectionForm" >
-
+    
     <LinearLayout
         android:id="@+id/inspect_form_info"
         android:layout_width="fill_parent"

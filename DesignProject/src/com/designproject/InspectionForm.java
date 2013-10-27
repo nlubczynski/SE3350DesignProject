@@ -6,27 +6,33 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class InspectionForm extends Activity {
-	private int pageNum;
-
-	@Override
+public class InspectionForm extends Activity implements OnGestureListener {
+	private int pageNum, numPages;
+	private GestureDetector gDetector;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inspection_form);
+		gDetector = new GestureDetector(this);
 		
-final Activity activity = this;
+		final Activity activity = this;
+		
+		 Intent mIntent = getIntent();
+		 pageNum = mIntent.getIntExtra("Page Number", 0);
 		
 		// Initialize equipment (for testing purposes only)
 		final Equipment equipment = new Equipment("Fire Extinguisher");
-		/*
 		equipment.setID("2");
 		equipment.setLocation("First floor under staircase");
 		equipment.addAttribute("model", "Model7899");
@@ -50,15 +56,14 @@ final Activity activity = this;
 		equipment.addInspectionElement(new InspectionElement("Pull Pin"));
 		equipment.addInspectionElement(new InspectionElement("Signage"));
 		equipment.addInspectionElement(new InspectionElement("Collar"));
-		equipment.addInspectionElement(new InspectionElement("Hose"));*/
+		equipment.addInspectionElement(new InspectionElement("Hose"));
 		
 		
 		// Set title, id and page number
 		setTitle(equipment.getName());
 		final InspectionElement[] elements = equipment.getInspectionElements();
 		final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
-		final int numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
-		pageNum = 1;
+		numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
 	
 		TextView idView = new TextView(activity);
 		String id = equipment.getID();
@@ -72,18 +77,19 @@ final Activity activity = this;
 		
 		final Button submit = new Button(activity);
 		final TextView pageView = new TextView(activity);
+		final LinearLayout form = (LinearLayout) findViewById(R.id.inspect_form);
+		
+        submit.setGravity(Gravity.BOTTOM);
 		if (numPages > 1)
 		{
 			pageView.setText("Page "+pageNum+" of "+numPages);
-			
-			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-	                0, LayoutParams.MATCH_PARENT, 1);
-			pageView.setGravity(Gravity.RIGHT);
-			header.addView(pageView, lparams);
-			submit.setText("Next");
+			header.addView(pageView);
 		}
-		else
+		if (pageNum == numPages)
+		{
 			submit.setText("Submit");
+			form.addView(submit);
+		}
 		
 		// Set location value and more info button
 		final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
@@ -134,16 +140,13 @@ final Activity activity = this;
 		// Populate form
 		final LinearLayout content = (LinearLayout) findViewById(R.id.inspect_form_content);
 		
-		for(int i = 0; i < Math.min(8,elements.length); i++)
+		for(int i = (pageNum - 1) * 8; i < Math.min((pageNum * 8), elements.length); i++)
 		{
 			CheckBox cb = new CheckBox(activity);
 	     	cb.setText(elements[i].getName());
-	     	content.addView(cb);
+	     	content.addView(cb, (i - (8 * (pageNum - 1))));
 		}
-	
-		LinearLayout form = (LinearLayout) findViewById(R.id.inspect_form);
-        submit.setGravity(Gravity.BOTTOM);
-		form.addView(submit);
+		
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	//Get and save data
@@ -153,27 +156,9 @@ final Activity activity = this;
 	            	content.removeView(cbView);
             	}
             	
-            	if (submit.getText().toString() == "Submit")
-            	{
-            		content.removeView(submit);
-	            	Intent intent = new Intent(activity, FireAlertSplash.class);
-	            	startActivity(intent);
-            	}
-            	else
-            	{
-            		pageNum++;
-            		pageView.setText("Page "+pageNum+" of "+numPages);
-            		if (pageNum == numPages)
-            			submit.setText("Submit");
-            		
-            		// Populate next form
-            		for(int i = (pageNum - 1) * 8; i < Math.min((pageNum * 8), elements.length); i++)
-            		{
-            			CheckBox cb = new CheckBox(activity);
-            	     	cb.setText(elements[i].getName());
-            	     	content.addView(cb, (i - (8 * (pageNum - 1))));
-            		}
-            	}
+            	content.removeView(submit);
+	            Intent intent = new Intent(activity, EquipmentInspectionList.class);
+	            startActivity(intent);
             }
         });
 	}
@@ -183,6 +168,61 @@ final Activity activity = this;
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.inspection_form, menu);
 		return true;
+	}
+
+	public boolean onDown(MotionEvent arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean onFling(MotionEvent start, MotionEvent finish, float xVelocity, float yVelocity) {
+		// Left swipe
+		if (start.getRawX() < finish.getRawX()) {
+			if (pageNum > 1)
+			{
+				Intent previousPage = new Intent(InspectionForm.this, InspectionForm.class);
+		     	previousPage.putExtra("Page Number", --pageNum);
+		     	InspectionForm.this.overridePendingTransition(R.animator.slide_in_right, R.animator.slide_out_left);
+		     	startActivity(previousPage);
+			}
+		} 
+		// Right swipe
+		else {
+			if (pageNum < numPages)
+			{
+		     	Intent nextPage = new Intent(InspectionForm.this, InspectionForm.class);
+		     	nextPage.putExtra("Page Number", ++pageNum);
+		     	InspectionForm.this.overridePendingTransition(R.animator.slide_in_left, R.animator.slide_out_right);
+		     	startActivity(nextPage);
+			}
+		}
+		return true;
+	}
+
+	public void onLongPress(MotionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
+			float arg3) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void onShowPress(MotionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean onSingleTapUp(MotionEvent arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent me) {
+		return gDetector.onTouchEvent(me);
 	}
 
 }
