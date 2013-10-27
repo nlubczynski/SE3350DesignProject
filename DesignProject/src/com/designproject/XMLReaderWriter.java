@@ -87,12 +87,25 @@ public class XMLReaderWriter {
 	        			serializer.attribute( "", "InspectorID", building.getLastInspectedBy() );
 	        			// Time Stamp ints
 	        			day = building.getTimeStamp().get( Calendar.DAY_OF_MONTH );
+	        			//need to make sure that day and month are not single digits
+	        			String dayString;
+	        			if(day < 10)
+	        				dayString = "0" + day;
+	        			else
+	        				dayString = String.valueOf( day );
+	        			
 	        			month = building.getTimeStamp().get( Calendar.DAY_OF_MONTH ) + 1;
+	        			String monthString;
+	        			if(month < 10)
+	        				monthString = "0" + month;
+	        			else
+	        				monthString = String.valueOf( month );
+	        				
 	        			year = building.getTimeStamp().get( Calendar.YEAR );
-	        			int hour = building.getTimeStamp().get( Calendar.HOUR );
+	        			int hour = building.getTimeStamp().get( Calendar.HOUR);
 	        			int minute = building.getTimeStamp().get( Calendar.MINUTE );
 	        			String am_pm = building.getTimeStamp().get( Calendar.AM_PM ) == Calendar.AM ? "AM" : "PM";
-	        			serializer.attribute( "", "testTimeStamp", year + month + day + " " 
+	        			serializer.attribute( "", "testTimeStamp", year + monthString + dayString + " " 
 	        					+ hour + ":" + minute + am_pm);
 	        			// Floors
 	        			for(Floor floor: building.getFloors() ){
