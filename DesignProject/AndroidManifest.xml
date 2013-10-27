@@ -9,11 +9,10 @@
         android:targetSdkVersion="15" />
 
     <application
+        android:name="com.designproject.FireAlertApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" 
-        android:name="com.designproject.FireAlertApplication">
-
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.designproject.FireAlertSplash"
             android:label="@string/title_activity_fire_alert_splash" >
@@ -65,6 +64,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionOverview" />
+        </activity>
+        <activity
+            android:name="com.designproject.InspectionOverviewCollection"
+            android:label="@string/title_activity_inspection_overview_v2"
+            android:parentActivityName="com.designproject.InspectionView" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.designproject.InspectionView" />
         </activity>
     </application>
 
