@@ -148,10 +148,10 @@ public class Equipment {
 	 */
 	public boolean addAttribute(String name, String value){
 		try{
-			if(name == "id"){
+			if( name.equals("id") ){
 				this.setID(value);
 			}
-			else if(name == "location"){
+			else if( name.equals("location") ){
 				this.setLocation(value);
 			}
 			else{
