@@ -37,7 +37,7 @@ public class InspectionView extends ListActivity {
 		setupActionBar();
 		
 		FireAlertApplication a = (FireAlertApplication)getApplication();
-		mFranchise = a.getFranchise(); 
+		mFranchise = (Franchise)a.getLocation(); 
 		
 		inspectionInformationArray = new ArrayList<String []>();
 		
