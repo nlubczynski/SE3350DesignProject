@@ -38,40 +38,30 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 Equipment equipment = (Equipment) app.getLocation();
                 
                 content = (LinearLayout) findViewById(R.id.inspect_form_content);
+                final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
+                final LinearLayout form = (LinearLayout) findViewById(R.id.inspect_form);
+                final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
+                final LinearLayout header2 = (LinearLayout) findViewById(R.id.inspect_form_header2);
+                
                 elements = equipment.getInspectionElements();
                 populateContent(equipment, content);
                 
-                // Set title, id and page number
+                // Set header
                 setTitle(equipment.getName());
-                final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
-                
-                final Button submit = new Button(InspectionForm.this);
-                final TextView pageView = new TextView(InspectionForm.this);
-                final LinearLayout form = (LinearLayout) findViewById(R.id.inspect_form);
-                
                 final TextView typeView = new TextView(InspectionForm.this);
                 typeView.setText(equipment.getName());
                 header.addView(typeView);
                 
-                //TODO
-                submit.setGravity(Gravity.BOTTOM);
+                final TextView pageView = new TextView(InspectionForm.this);
                 if (numPages > 1)
                 {
                         pageView.setText("Page "+pageNum+" of "+numPages);
                         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                    0, LayoutParams.MATCH_PARENT, 1);
+                        		0, LayoutParams.MATCH_PARENT, 1);
                         pageView.setGravity(Gravity.RIGHT);
                         header.addView(pageView, lparams);
                 }
-                if (pageNum == numPages)
-                {
-                        submit.setText("Submit");
-                        form.addView(submit);
-                }
                 
-                // Set location value and more info button
-                final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
-                final LinearLayout header2 = (LinearLayout) findViewById(R.id.inspect_form_header2);
                 TextView locationView = new TextView(InspectionForm.this);
                 String location = equipment.getLocation();
                 if (location != null)
@@ -91,6 +81,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         header2.addView(idView, lparams);
                 }
                 
+                //More Info button
                 final node[] attributes = equipment.getAttributes();
                 if(attributes.length > 2)
                 {
@@ -128,17 +119,24 @@ public class InspectionForm extends Activity implements OnGestureListener {
                                             }
                                     }
                                     moreInfo.setText("More Info");
-                                    
                             }
                     }
                 });
                 }
                 
-            submit.setOnClickListener(new View.OnClickListener() {
-	            public void onClick(View view) {
-	                finish();
-	            }
-	        });
+              //TODO
+                final Button submit = new Button(InspectionForm.this);
+                submit.setGravity(Gravity.BOTTOM);
+                if (pageNum == numPages)
+                {
+                        submit.setText("Submit");
+                        form.addView(submit);
+                }
+                submit.setOnClickListener(new View.OnClickListener() {
+    	            public void onClick(View view) {
+    	                finish();
+    	            }
+    	        });
         }
 
         @Override
@@ -272,7 +270,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
         		}
 	                
                 final InspectionElement[] elements = equipment.getInspectionElements();
-                numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
+                numPages = 1;
             	// Populate form
                 for(int i = 0; i < 4; i++)
                 {
@@ -301,7 +299,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
         		}
                 
                 final InspectionElement[] elements = equipment.getInspectionElements();
-                numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
+                numPages = 1;
                 Log.i("debugger", "Elements length: "+elements.length);
                 
             	// Populate form
