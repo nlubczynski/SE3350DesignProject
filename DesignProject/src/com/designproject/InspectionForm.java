@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -125,12 +126,16 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 });
                 }
                 
-              //TODO
                 final Button submit = new Button(InspectionForm.this);
                 submit.setGravity(Gravity.BOTTOM);
                 if (pageNum == numPages)
                 {
                         submit.setText("Submit");
+                        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        //        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                        //params.weight = 1.0f;
+                        //params.gravity=Gravity.RIGHT;
+                        submit.setGravity(Gravity.RIGHT|Gravity.BOTTOM);
                         form.addView(submit);
                 }
                 submit.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +143,47 @@ public class InspectionForm extends Activity implements OnGestureListener {
     	                finish();
     	            }
     	        });
+                
+                final ImageButton next = new ImageButton(InspectionForm.this);
+                if(pageNum < numPages)
+                {
+                	next.setImageResource(R.drawable.next_page);
+                	next.setBackgroundColor(getResources().getColor(R.color.white));
+                	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    params.weight = 1.0f;
+                    params.gravity=Gravity.RIGHT|Gravity.BOTTOM;
+                	form.addView(next, params);
+                }
+                next.setOnClickListener(new View.OnClickListener() {
+    	            public void onClick(View view) {
+    	            	finish();
+                        Intent nextPage = new Intent(InspectionForm.this, InspectionForm.class);
+                        nextPage.putExtra("Page Number", ++pageNum);
+                        startActivity(nextPage);
+    	            }
+    	        });
+                
+                final ImageButton previous = new ImageButton(InspectionForm.this);
+                if(pageNum == numPages)
+                {
+                	previous.setImageResource(R.drawable.previous_page);
+                	previous.setBackgroundColor(getResources().getColor(R.color.white));
+                	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                    params.weight = 1.0f;
+                    params.gravity=Gravity.LEFT|Gravity.BOTTOM;
+                	form.addView(previous, params);
+                }
+                previous.setOnClickListener(new View.OnClickListener() {
+    	            public void onClick(View view) {
+    	            	finish();
+                        Intent previousPage = new Intent(InspectionForm.this, InspectionForm.class);
+                        previousPage.putExtra("Page Number", --pageNum);
+                        startActivity(previousPage);
+    	            }
+    	        });
+                
         }
 
         @Override
