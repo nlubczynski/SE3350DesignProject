@@ -1,6 +1,10 @@
 package com.designproject;
 
 
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import com.designproject.R;
 
 import android.os.Bundle;
@@ -12,9 +16,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
-public class FireAlertSplash extends Activity {
+public class FireAlertSplash extends Activity implements AnimationListener {
 	
 	static int LOGIN_SCREEN_TIMER= 1000;
     @Override
@@ -35,41 +40,36 @@ public class FireAlertSplash extends Activity {
     
     private void animateWithXML(View view)
     {
-    	Animation anim = AnimationUtils.loadAnimation(this, R.animator.animate);
-        anim.setInterpolator((new  
-                   AccelerateDecelerateInterpolator()));
-        anim.setFillAfter(true);
-        view.setAnimation(anim);
+    	Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.animate);
+        anim.setFillAfter( true );
+        anim.setAnimationListener( this );
+        view.startAnimation( anim );
     	
     }
     
     private void logIn()
     {
-    	Thread loadData = new Thread(){
-    		public void run(){
-    			try{
-    				if(isLogInSaved())
-    				{
-    					Intent openMenu = new Intent(FireAlertSplash.this, MainMenu.class);
-    					openMenu.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-    			    	startActivity(openMenu);
-    			    	}
-    				else
-    				{
-    					View image = findViewById(R.id.imageView1);
-    			    	animateWithXML(image);
-    			    		
-    			    	sleep(LOGIN_SCREEN_TIMER);
-			    		Intent openLoginScreen = new Intent(FireAlertSplash.this,LoginScreen.class);
-    					openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-    					startActivity(openLoginScreen);
-    					}
-    				} catch (InterruptedException e){e.printStackTrace();}
-    			}
-    		};
-    		loadData.start();
-    }
-  
+		if(isLogInSaved()){
+			Intent openMenu = new Intent(FireAlertSplash.this, MainMenu.class);
+			openMenu.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			startActivity(openMenu);
+		}
+		else{
+			View image = findViewById(R.id.imageView1);
+			animateWithXML(image);
+			
+			FireAlertApplication a = (FireAlertApplication)getApplication();
+			try {
+				XMLReaderWriter init = new XMLReaderWriter( getApplicationContext() );
+				a.setLocation( init.parseXML() );
+			} catch (XmlPullParserException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}								
+		}
+	}
+
     private boolean isLogInSaved()
     {
         	SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login",0);
@@ -83,4 +83,26 @@ public class FireAlertSplash extends Activity {
         	
         	return false;
     }
+
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		
+		Intent openLoginScreen = new Intent(FireAlertSplash.this,LoginScreen.class);
+		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		onDestroy();
+		startActivity(openLoginScreen);
+		
+	}
+
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+		
+		
+	}
+
+	@Override
+	public void onAnimationStart(Animation animation) {
+		
+		
+	}
 }
