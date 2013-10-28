@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.view.View.OnKeyListener;
 import android.widget.TextView;
 
 public class LoginScreen extends Activity {
@@ -18,7 +20,20 @@ public class LoginScreen extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login_screen);
-    }
+        
+        // Password on enter button listener
+        // Username is okay - it defaults to taking us to Password
+        this.findViewById(R.id.password).setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if( event.getAction() == KeyEvent.ACTION_DOWN &&	keyCode == KeyEvent.KEYCODE_ENTER)
+					logIn( findViewById(R.layout.activity_login_screen) );
+				return false;
+			}
+        
+        	});
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -29,6 +44,15 @@ public class LoginScreen extends Activity {
     public void logIn(View view)
     {
     	//Check if details are correct
+    	//Get required information
+    	TextView username= (TextView) findViewById(R.id.username);
+    	TextView password= (TextView) findViewById(R.id.password);
+    	
+    	String usernameString = username.getText().toString();
+    	String passwordString = password.getText().toString();
+    	
+    	if( !usernameString.equals("username") || !passwordString.equals("password") )
+    		return;
     	
     	saveUserDetails();
     	

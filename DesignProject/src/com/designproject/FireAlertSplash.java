@@ -14,14 +14,12 @@ import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
 public class FireAlertSplash extends Activity implements AnimationListener {
 	
-	static int LOGIN_SCREEN_TIMER= 1000;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +76,7 @@ public class FireAlertSplash extends Activity implements AnimationListener {
         	String password = sharedPreferenceLogin.getString("Password", "");
         	
             
-        	if(username != "" && password != "")
+        	if(username.equals("username") && password.equals("password"))
         		return true;
         	
         	return false;
