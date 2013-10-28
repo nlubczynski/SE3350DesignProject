@@ -51,10 +51,7 @@ private Room mRoom;
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                            // When clicked, show a toast with the TextView text
-                            Toast.makeText(getApplicationContext(),
-                                ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                            
+                         
                             FireAlertApplication app = (FireAlertApplication) getApplication();
                             app.setLocation(equipment[position]);
                             Intent inspectionForm = new Intent(EquipmentInspectionList.this, InspectionForm.class);
