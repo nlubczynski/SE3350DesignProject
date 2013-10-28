@@ -37,5 +37,6 @@
     <string name="floors_label">Floors:</string>
     <string name="rooms_label">Rooms:</string>
     <string name="items_label">Items:</string>
+    <string name="title_floor_list">Floors</string>
 
 </resources>

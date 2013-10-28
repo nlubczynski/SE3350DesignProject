@@ -126,8 +126,24 @@ public class InspectionOverview extends Activity {
 	
 	public void inspectListener(View view)
 	{
-		Intent openEquipmentInspectionList = new Intent(InspectionOverview.this, EquipmentInspectionList.class);
+
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+		a.setLocation( mContract.getBuildings()[myTabHost.getCurrentTab()] );
+		Intent openEquipmentInspectionList = new Intent(InspectionOverview.this, FloorList.class);
 		startActivity(openEquipmentInspectionList);
+	}
+	@Override
+	public void onResume(){
+		super.onResume();
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+		a.setLocation(mContract);
+	}
+	@Override
+	public void onDestroy(){
+		super.onResume();
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+		a.setLocation(mContract);
+		
 	}
 
 }
