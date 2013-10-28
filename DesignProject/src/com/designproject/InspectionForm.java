@@ -36,6 +36,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                  
                 FireAlertApplication app = (FireAlertApplication) getApplication();
                 Equipment equipment = (Equipment) app.getLocation();
+                //equipment.clearInspectionElements();
                 
                 content = (LinearLayout) findViewById(R.id.inspect_form_content);
                 final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
@@ -204,8 +205,9 @@ public class InspectionForm extends Activity implements OnGestureListener {
         public void populateContent(Equipment equipment, LinearLayout content) {
         	String type = equipment.getName();
         	if (type.equals("Extinguisher")) {
-        		if(equipment.getInspectionElements().length == 0)
+        		if(equipment.getInspectionElements().length < 10)
         		{
+        			equipment.clearInspectionElements();
 	        		equipment.addInspectionElement(new InspectionElement("Hydro Test"));
 	                equipment.addInspectionElement(new InspectionElement("6 Year Insp"));
 	                equipment.addInspectionElement(new InspectionElement("Weight"));
@@ -218,7 +220,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
 	                equipment.addInspectionElement(new InspectionElement("Comments"));
         		}
                 
-                final InspectionElement[] elements = equipment.getInspectionElements();
+                elements = equipment.getInspectionElements();
                 if(pageNum == 1)
                 {
 	                for(int i = 0; i < elements.length - 1; i++)
@@ -235,6 +237,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
 	            	commentsText.setText("Comments");
 	            	content.addView(commentsText, 0);
 	            	EditText comments = new EditText(InspectionForm.this);
+	            	comments.setText(elements[elements.length - 1].getTestNotes());
 	            	content.addView(comments, 1);
                 }
             	numPages = 2;
@@ -251,7 +254,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 if (pageNum == numPages)
                 {
                 	TextView commentsText = new TextView(InspectionForm.this);
-                	commentsText.setText("Comments: ");
+                	commentsText.setText("Comments");
                 	content.addView(commentsText);
                 	EditText comments = new EditText(InspectionForm.this);
                 	content.addView(comments);
@@ -260,8 +263,9 @@ public class InspectionForm extends Activity implements OnGestureListener {
         	}
         	else if (type.equals("FireHoseCabinet"))
         	{
-        		if(equipment.getInspectionElements().length == 0)
+        		if(equipment.getInspectionElements().length < 5)
         		{
+        			equipment.clearInspectionElements();
 	        		equipment.addInspectionElement(new InspectionElement("Cabinet Condition"));
 	                equipment.addInspectionElement(new InspectionElement("Valve Condition"));
 	                equipment.addInspectionElement(new InspectionElement("Hose Re-Rack"));
@@ -269,7 +273,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
 	                equipment.addInspectionElement(new InspectionElement("Comments"));
         		}
 	                
-                final InspectionElement[] elements = equipment.getInspectionElements();
+                elements = equipment.getInspectionElements();
                 numPages = 1;
             	// Populate form
                 for(int i = 0; i < 4; i++)
@@ -281,15 +285,17 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 }
                
                 TextView commentsText = new TextView(InspectionForm.this);
-            	commentsText.setText("Comments: ");
+            	commentsText.setText("Comments");
             	content.addView(commentsText, content.getChildCount());
              	EditText comments = new EditText(InspectionForm.this);
+             	comments.setText(elements[elements.length - 1].getTestNotes());
                	content.addView(comments, content.getChildCount());
         	}
         	else if (type.equals("EmergencyLight"))
         	{
-        		if(equipment.getInspectionElements().length == 0)
+        		if(equipment.getInspectionElements().length < 6)
         		{
+        			equipment.clearInspectionElements();
 	        		equipment.addInspectionElement(new InspectionElement("Requires Service or Repair"));
 	                equipment.addInspectionElement(new InspectionElement("Operation Confirmed"));
 	                equipment.addInspectionElement(new InspectionElement("Number of Heads"));
@@ -298,9 +304,8 @@ public class InspectionForm extends Activity implements OnGestureListener {
 	                equipment.addInspectionElement(new InspectionElement("Comments"));
         		}
                 
-                final InspectionElement[] elements = equipment.getInspectionElements();
+                elements = equipment.getInspectionElements();
                 numPages = 1;
-                Log.i("debugger", "Elements length: "+elements.length);
                 
             	// Populate form
                 for(int i = 0; i < 2; i++)
@@ -316,14 +321,16 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     tv.setText(elements[j].getName());
                     content.addView(tv);
                     EditText et = new EditText(InspectionForm.this);
+                    et.setText(elements[j].getTestNotes());
                     et.setInputType(InputType.TYPE_CLASS_NUMBER);
                     content.addView(et);
                 }
                
                 TextView commentsText = new TextView(InspectionForm.this);
-               	commentsText.setText("Comments: ");
+               	commentsText.setText("Comments");
                	content.addView(commentsText);
                	EditText comments = new EditText(InspectionForm.this);
+               	comments.setText(elements[elements.length - 1].getTestNotes());
                	content.addView(comments);
         	}
         	else if (type.equals("KitchenSuppressionSystem"))
@@ -334,6 +341,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
         
         @Override
     	protected void onDestroy() {
+        	Log.i("debugger", "Elements length: "+elements.length);
         	for(int i = content.getChildCount() - 1; i >= 0; i--)
             {
         		if(content.getChildAt(i) instanceof CheckBox)
@@ -350,15 +358,10 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     	}
                     }
         		}
-        		else if (content.getChildAt(i) instanceof TextView)
+        		else if (content.getChildAt(i) instanceof TextView && !(content.getChildAt(i) instanceof EditText))
         		{
         			TextView tvView = (TextView) content.getChildAt(i);
         			EditText etView = (EditText) content.getChildAt(i + 1);
-        			if(etView == null)
-        			{
-        				Log.i("debugger", "etView is null");
-        			}
-        			else{
         			String text = tvView.getText().toString();
         			String value = "";
         			if(etView.getText() != null)
@@ -373,7 +376,6 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     		element.setTestNotes(value);
                     	}
                     }
-        			}
         		}
         	}
     		super.onDestroy();
