@@ -91,19 +91,27 @@ public class MainMenu extends Activity {
             return super.onCreateOptionsMenu(menu);
     }
     
-    public void signOut(View view)
+    public void signOut()
     {
         SharedPreferences preferences = getSharedPreferences("Login",0);
-        preferences.edit().remove("Username");
-        preferences.edit().remove("Password");
-        
-        Intent loginScreen = new Intent(MainMenu.this, LoginScreen.class);
-        startActivity(loginScreen);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove("Username");
+        editor.remove("Password");
+        if( editor.commit() ){ 
+	        Intent loginScreen = new Intent(MainMenu.this, LoginScreen.class);
+	        startActivity(loginScreen);
+        }
     }
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        /*TODO: this is where functionality for click */
+        // position is the 0-based placement in the toolbox
+    	switch(position){
+    	case 4:
+    		//logout
+    		signOut();
+    		break;    	
+    	}
 
     }
     
