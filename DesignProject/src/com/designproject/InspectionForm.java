@@ -351,9 +351,14 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     }
         		}
         		else if (content.getChildAt(i) instanceof TextView)
-        		{/*
+        		{
         			TextView tvView = (TextView) content.getChildAt(i);
         			EditText etView = (EditText) content.getChildAt(i + 1);
+        			if(etView == null)
+        			{
+        				Log.i("debugger", "etView is null");
+        			}
+        			else{
         			String text = tvView.getText().toString();
         			String value = "";
         			if(etView.getText() != null)
@@ -367,7 +372,8 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     		element.setHasBeenTested();
                     		element.setTestNotes(value);
                     	}
-                    }*/
+                    }
+        			}
         		}
         	}
     		super.onDestroy();
