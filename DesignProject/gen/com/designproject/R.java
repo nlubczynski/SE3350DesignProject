@@ -114,24 +114,27 @@ public final class R {
     public static final class layout {
         public static final int activity_equipment_inspection_list=0x7f030000;
         public static final int activity_fire_alert_splash=0x7f030001;
-        public static final int activity_inspection_form=0x7f030002;
-        public static final int activity_inspection_overview_parent=0x7f030003;
-        public static final int activity_inspection_view=0x7f030004;
-        public static final int activity_login_screen=0x7f030005;
-        public static final int activity_main_menu=0x7f030006;
-        public static final int custom_two_lines=0x7f030007;
-        public static final int drawer_list_item=0x7f030008;
-        public static final int inspection_overview_layout=0x7f030009;
+        public static final int activity_floor_list=0x7f030002;
+        public static final int activity_inspection_form=0x7f030003;
+        public static final int activity_inspection_overview_parent=0x7f030004;
+        public static final int activity_inspection_view=0x7f030005;
+        public static final int activity_login_screen=0x7f030006;
+        public static final int activity_main_menu=0x7f030007;
+        public static final int custom_two_lines=0x7f030008;
+        public static final int drawer_list_item=0x7f030009;
+        public static final int inspection_overview_layout=0x7f03000a;
+        public static final int room_list_item=0x7f03000b;
     }
     public static final class menu {
         public static final int activity_fire_alert_splash=0x7f0c0000;
         public static final int activity_login_screen=0x7f0c0001;
         public static final int activity_main_menu=0x7f0c0002;
         public static final int equipment_inspection_list=0x7f0c0003;
-        public static final int inspection_form=0x7f0c0004;
-        public static final int inspection_overview=0x7f0c0005;
-        public static final int inspection_overview_v2=0x7f0c0006;
-        public static final int inspection_view=0x7f0c0007;
+        public static final int floor_list=0x7f0c0004;
+        public static final int inspection_form=0x7f0c0005;
+        public static final int inspection_overview=0x7f0c0006;
+        public static final int inspection_overview_v2=0x7f0c0007;
+        public static final int inspection_view=0x7f0c0008;
     }
     public static final class string {
         public static final int FireAlertLogo=0x7f0a0004;
@@ -167,6 +170,7 @@ public final class R {
         public static final int title_activity_inspection_view=0x7f0a0017;
         public static final int title_activity_login_screen=0x7f0a0006;
         public static final int title_activity_main_menu=0x7f0a000b;
+        public static final int title_floor_list=0x7f0a0024;
         public static final int title_menu_detail=0x7f0a000c;
         public static final int title_menu_list=0x7f0a000d;
         public static final int username_default=0x7f0a000f;
