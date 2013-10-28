@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,14 +23,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-
-
 public class EquipmentInspectionList extends ListActivity {
 
 private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 private DataReceiver dataScanner = new DataReceiver();
 private EditText editText;
-private String IDvalue;
+private String IDvalue = "";
 private Room mRoom;
         
         @Override
@@ -52,10 +51,7 @@ private Room mRoom;
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                            // When clicked, show a toast with the TextView text
-                            Toast.makeText(getApplicationContext(),
-                                ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                            
+                         
                             FireAlertApplication app = (FireAlertApplication) getApplication();
                             app.setLocation(equipment[position]);
                             Intent inspectionForm = new Intent(EquipmentInspectionList.this, InspectionForm.class);
@@ -63,7 +59,38 @@ private Room mRoom;
                             startActivity(inspectionForm);
                         }
                 });
- 
+                
+                //how many pieces of equipment in the room
+                final int length = equipment.length;
+                
+                //create button to select equipment for inspection
+                Button okButton = (Button) findViewById(R.id.OK);
+
+        		//set action listener for 'Select' button
+        		okButton.setOnClickListener(new View.OnClickListener() 
+        		{
+        			@Override
+        			public void onClick(View v) 
+        			{
+        				//assign String from editText to IDvalue
+        				IDvalue = editText.getText().toString();
+        				
+        				//find which equipment has an id that matches IDvalue
+        				//move to appropriate inspection form
+        				for (int i = 0; i < length; i++)
+        				{
+        					if (IDvalue.equals(equipment[i].getID()))
+        					{
+        						FireAlertApplication a = (FireAlertApplication) getApplication();
+                                a.setLocation(equipment[i]);
+                                Intent inspectionForm = new Intent(EquipmentInspectionList.this, InspectionForm.class);
+                                inspectionForm.putExtra("Page Number", 1);
+                                startActivity(inspectionForm);
+                                break;
+        					}
+        				}
+        			}
+        		});
         }
         
         /**
@@ -82,14 +109,17 @@ private Room mRoom;
                 getMenuInflater().inflate(R.menu.equipment_list, menu);
                 return true;
         }
+        
+        //given Scanner code
         protected void onResume() {
-        	super.onResume();
-        	FireAlertApplication a = (FireAlertApplication)getApplication();
-	    	a.setLocation(mRoom);
         	registerScanner();
         	initialComponent();
+    		super.onResume();
+    		FireAlertApplication a = (FireAlertApplication)getApplication();
+	    	a.setLocation(mRoom);
     	}
 
+        //given Scanner code
     	@Override
     	protected void onDestroy() {
     		super.onResume();
@@ -99,6 +129,7 @@ private Room mRoom;
     		super.onDestroy();
     	}
     	
+    	//given Scanner code
     	private void initialComponent() {
     		//tv_getdata_from_scanner = (TextView)findViewById(R.id.tv_getdata_from_scanner);
     		//tv_getdata_from_edittext  = (TextView)findViewById(R.id.tv_getdata_from_edittext);
@@ -106,6 +137,7 @@ private Room mRoom;
     		editText.addTextChangedListener(textWatcher);
     	}
     	
+    	//given Scanner code
     	private void registerScanner() {
     		dataScanner = new DataReceiver();
     		IntentFilter intentFilter = new IntentFilter();
@@ -113,30 +145,30 @@ private Room mRoom;
     		registerReceiver(dataScanner, intentFilter);
     	}
     	
+    	//given Scanner code
     	private void unregisterReceiver() {
     		if (dataScanner != null) unregisterReceiver(dataScanner);
     	}
     	
+    	//given Scanner code
+    	//catches if text is entered (i.e. from scanner)
     	private TextWatcher textWatcher =  new TextWatcher(){
             public void onTextChanged(CharSequence s, int start, int before, int count){}
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
         	public void afterTextChanged(Editable s){
         		//tv_getdata_from_edittext.setText("Get data from EditText : " + editText.getText().toString());
-    		
+        		
+        		/*
     			//check if entered ID is valid 
     			if ( editText.getText().toString() != null && !(editText.getText().toString().isEmpty()))
     			{
     				//assign entered value to ID value
     				IDvalue = editText.getText().toString();
-    			
-    				//move to appropriate inspection form
-    			}
-    			else
-    			{	
-    			}
+    			}*/
         	}
         }; 
         
+        //given Scanner code
     	private class DataReceiver extends BroadcastReceiver {
     		String content = "";
     		@Override
@@ -144,21 +176,12 @@ private Room mRoom;
     			if (intent.getAction().equals(ACTION_CONTENT_NOTIFY)) {
     				Bundle bundle = new Bundle();
     				bundle  = intent.getExtras();
-    				content = bundle.getString("CONTENT");
-    				//tv_getdata_from_scanner.setText("Get data from Scanner : " + content);
     				
-    				/*
-    				//check if scanned data is valid
-    				if ( content != null && !(content.isEmpty()))
-    				{
-    					//assign scanned value to ID value
-    					IDvalue = content;
-    					
-    					//move to appropriate inspection form
-    				}
-    				else
-    				{	
-    				}*/
+    				//data that Scanner picks up is assigned to "content"
+    				//EditText that has <requestFocus/> tag will be updated with "content" value
+    				content = bundle.getString("CONTENT");
+    				
+    				//tv_getdata_from_scanner.setText("Get data from Scanner : " + content);
     			}		
     		}
     	}
