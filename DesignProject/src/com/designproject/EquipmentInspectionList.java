@@ -29,6 +29,7 @@ private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 private DataReceiver dataScanner = new DataReceiver();
 private EditText editText;
 private String IDvalue = "";
+private Room mRoom;
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,9 @@ private String IDvalue = "";
                 setupActionBar();
                 
                 FireAlertApplication a = (FireAlertApplication)getApplication();
-                final Equipment[] equipment = ((Room)a.getLocation()).getEquipment();
+                a = (FireAlertApplication)getApplication();
+                mRoom = (Room)a.getLocation();
+                final Equipment[] equipment = mRoom.getEquipment();
                 
                 setListAdapter(new ArrayAdapter<Equipment>(this, R.layout.equipment_list_item, equipment));
                  
@@ -51,7 +54,13 @@ private String IDvalue = "";
                             // When clicked, show a toast with the TextView text
                             Toast.makeText(getApplicationContext(),
                                 ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-                        }                        
+                            
+                            FireAlertApplication app = (FireAlertApplication) getApplication();
+                            app.setLocation(equipment[position]);
+                            Intent inspectionForm = new Intent(EquipmentInspectionList.this, InspectionForm.class);
+                            inspectionForm.putExtra("Page Number", 1);
+                            startActivity(inspectionForm);
+                        }
                 });
                 
                 //how many pieces of equipment in the room
@@ -109,12 +118,17 @@ private String IDvalue = "";
         	registerScanner();
         	initialComponent();
     		super.onResume();
+    		FireAlertApplication a = (FireAlertApplication)getApplication();
+	    	a.setLocation(mRoom);
     	}
 
         //given Scanner code
     	@Override
     	protected void onDestroy() {
+    		super.onResume();
     		unregisterReceiver();
+    		FireAlertApplication a = (FireAlertApplication)getApplication();
+    		a.setLocation(mRoom);
     		super.onDestroy();
     	}
     	
