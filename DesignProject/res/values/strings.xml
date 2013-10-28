@@ -37,6 +37,8 @@
     <string name="floors_label">Floors:</string>
     <string name="rooms_label">Rooms:</string>
     <string name="items_label">Items:</string>
-    <string name="title_floor_list">Floors</string>
+    <string name="title_room_list">Rooms To Be Inspected</string>
+    <string name="numOfEl">Number of Elements: </string>
+    <string name="RoomLabel">"Room: "</string>
 
 </resources>

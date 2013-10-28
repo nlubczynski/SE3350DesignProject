@@ -129,7 +129,7 @@ public class InspectionOverview extends Activity {
 
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation( mContract.getBuildings()[myTabHost.getCurrentTab()] );
-		Intent openEquipmentInspectionList = new Intent(InspectionOverview.this, FloorList.class);
+		Intent openEquipmentInspectionList = new Intent(InspectionOverview.this, RoomList.class);
 		startActivity(openEquipmentInspectionList);
 	}
 	@Override
