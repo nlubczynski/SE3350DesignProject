@@ -73,6 +73,15 @@ public class InspectionElement {
 	public boolean hasBeenTested(){
 		return this.hasBeenTested;
 	}
+	
+	/**
+	 * 
+	 * @return void - sets whether or not this element has been inspected
+	 */
+	public void setHasBeenTested(){
+		this.hasBeenTested = true;
+	}
+	
 	/**
 	 * @return String testNotes - returns the current test notes
 	 */

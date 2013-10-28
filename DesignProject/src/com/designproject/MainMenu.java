@@ -68,11 +68,6 @@ public class MainMenu extends Activity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         calculateDates();
-        //Commenting out Kirsten's Code
-        /*
-        Intent inspectionForm = new Intent(MainMenu.this, InspectionForm.class);
-        inspectionForm.putExtra("Page Number", 1);
-        startActivity(inspectionForm);*/
     }
 
     private void setupNavigationDrawer()
