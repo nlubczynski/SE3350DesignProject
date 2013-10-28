@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 
 public class HelperMethods {
 
@@ -17,6 +18,7 @@ public class HelperMethods {
 	 */
 	public final static	ArrayList<DateTime> getInspectionDueDates(DateTime startDateTime, DateTime endDateTime, String terms)
 	{
+		/*TODO: should probably make this work off of days and not months */
 		ArrayList<DateTime> checkDates = new ArrayList<DateTime>();
 		
 		//Total days between start of contract and end of contract
@@ -64,12 +66,14 @@ public class HelperMethods {
 		
 		DateTime nextInspectionPeriodStartDate = startDateTime;
 		DateTime nextInspectionPeriodEndDate = inspectionDueDates.get(0);
+		
+		LocalDate todayLocalDate = today.toLocalDate();
 
 		for(DateTime inspectionDueDate : inspectionDueDates )
 		{
 			nextInspectionPeriodEndDate = inspectionDueDate;
 			
-			if(today.isBefore(inspectionDueDate) || today.equals(inspectionDueDate))
+			if(today.isBefore(inspectionDueDate) || todayLocalDate.isEqual(inspectionDueDate.toLocalDate()))
 				break;
 			
 			nextInspectionPeriodStartDate = inspectionDueDate;

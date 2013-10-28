@@ -94,9 +94,7 @@ public class InspectionView extends ListActivity {
 		
 		simpleAdapter =  new SimpleAdapter(this,listInformationString, R.layout.custom_two_lines,
 				new String[] {"line1", "line2", "line3"},
-				new int[] {R.id.clientName,
-				R.id.dueDate,
-				R.id.textViewIdValue});
+				new int[] {R.id.clientName, R.id.dueDate, R.id.textViewIdValue});
 		
 		///bind the data
 		setListAdapter(simpleAdapter);
@@ -145,7 +143,7 @@ public class InspectionView extends ListActivity {
 		
 		//The view is a listView and its second child element is a relative layout. 
 		//So I cast that relativeLayout as a ViewGroup and get its child.
-		TextView contractIdChild = (TextView)((ViewGroup)((ViewGroup)view).getChildAt(1)).getChildAt(1);
+		TextView contractIdChild = (TextView)((ViewGroup)((ViewGroup)view).getChildAt(1)).getChildAt(0);
 		String contractId = contractIdChild.getText().toString();
 
 

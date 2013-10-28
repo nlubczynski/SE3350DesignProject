@@ -1,11 +1,19 @@
 package com.designproject;
 
-import android.os.Bundle;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
@@ -19,6 +27,7 @@ public class InspectionOverview extends Activity {
 
     private TabHost myTabHost;
     private Contract mContract;
+    private Building[] mBuildings;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,7 @@ public class InspectionOverview extends Activity {
 		
 		FireAlertApplication a = (FireAlertApplication)getApplication();
     	mContract = (Contract)a.getLocation();
+		mBuildings = mContract.getBuildings();
 		
 		//Set up the tabs dynamically
 		setUpTabs();
@@ -44,7 +54,7 @@ public class InspectionOverview extends Activity {
 		
 		
 		
-		for(Building building : mContract.getBuildings())
+		for(Building building : mBuildings)
 		{
 			TabSpec ts1 = myTabHost.newTabSpec("TAB_TAG_1");
 			String buildingName = building.getId();
@@ -77,8 +87,9 @@ public class InspectionOverview extends Activity {
 				for(Room room : floor.getRooms())
 				{
 					numberOfInspectionsElements += room.getEquipment().length;
-					
 				}
+				
+				addFloorButton(floor);
 			}
 			
 			textView= (TextView)findViewById(R.id.textViewRoomsValue);
@@ -88,6 +99,17 @@ public class InspectionOverview extends Activity {
 			textView.setText(String.valueOf(numberOfInspectionsElements));
 			      
 			}
+		
+		
+	}
+
+	private void addFloorButton(Floor floor) {
+		LinearLayout linearLayout = (LinearLayout)findViewById(R.id.LinearLayoutFloorButtons);
+		
+		Button button = new Button(this);
+		button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		button.setText(floor.getName());
+		linearLayout.addView(button);
 	}
 
 	/**

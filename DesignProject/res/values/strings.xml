@@ -40,5 +40,6 @@
     <string name="title_room_list">Rooms To Be Inspected</string>
     <string name="numOfEl">Number of Elements: </string>
     <string name="RoomLabel">"Room: "</string>
+    <string name="start_inspection">Start Inspection</string>
 
 </resources>
