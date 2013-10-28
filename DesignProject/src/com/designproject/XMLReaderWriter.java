@@ -160,11 +160,19 @@ public class XMLReaderWriter {
 	        							serializer.attribute( "", attribute.getName() , attribute.getValue() );
 	        						// Inspection elements
 	        						for(int i = 0; i < equipment.getInspectionElements().length; i++){
+	        							//Break on "comments"
+	        							if( equipment.getInspectionElements()[i].getName().equals("Comments") )
+	        								continue;
 	        							// <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
 	        							serializer.startTag("", "inspectionElement_" + String.valueOf( i + 1 ) );
 	        							serializer.attribute( "", "name", equipment.getInspectionElements()[i].getName() );
-	        							serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].hasBeenTested() == false ? "" :
-	        									equipment.getInspectionElements()[i].getTestResult() == true ? "PASS" : "FAIL" );
+	        							//Check for the hardcoded names of elements
+	        							if( equipment.getInspectionElements()[i].getTestNotes().length() > 0 )
+	        								// There is a comment, and that means that we're dealing with a special case
+	        								serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].getTestNotes());
+	        							else
+		        							serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].hasBeenTested() == false ? "" :
+		        									equipment.getInspectionElements()[i].getTestResult() == true ? "PASS" : "FAIL" );
 	        							serializer.attribute( "", "testNote", equipment.getInspectionElements()[i].getTestNotes() );
 	        							serializer.endTag( "", "inspectionElement_" + String.valueOf( i + 1 ) );
 	        						}
