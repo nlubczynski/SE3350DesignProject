@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -77,8 +78,9 @@ public class InspectionOverview extends Activity {
 			String numberOfFloorsString = String.valueOf(building.getFloors().length);
 			textView.setText(numberOfFloorsString);
 			
-			int numberOfRooms=0;
+			int numberOfRooms = 0;
 			int numberOfInspectionsElements = 0;
+			int currentFloor = 0;
 			
 			for(Floor floor : building.getFloors())
 			{
@@ -89,7 +91,7 @@ public class InspectionOverview extends Activity {
 					numberOfInspectionsElements += room.getEquipment().length;
 				}
 				
-				addFloorButton(floor);
+				addFloorButton(floor, currentFloor++);
 			}
 			
 			textView= (TextView)findViewById(R.id.textViewRoomsValue);
@@ -103,12 +105,25 @@ public class InspectionOverview extends Activity {
 		
 	}
 
-	private void addFloorButton(Floor floor) {
+	private void addFloorButton(Floor floor, int buttonNum) {
 		LinearLayout linearLayout = (LinearLayout)findViewById(R.id.LinearLayoutFloorButtons);
 		
 		Button button = new Button(this);
 		button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		button.setText(floor.getName());
+		button.setId( buttonNum );
+		button.setOnClickListener( new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				//Set the application to the floor we're going into
+				FireAlertApplication a = (FireAlertApplication)getApplication();
+				a.setLocation( mBuildings[ myTabHost.getCurrentTab() ].getFloors()[ v.getId() ] );
+				Intent openRoomList = new Intent(InspectionOverview.this, RoomList.class);
+				startActivity(openRoomList);				
+			}
+
+		});
 		linearLayout.addView(button);
 	}
 
@@ -146,14 +161,6 @@ public class InspectionOverview extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void inspectListener(View view)
-	{
-
-		FireAlertApplication a = (FireAlertApplication)getApplication();
-		a.setLocation( mContract.getBuildings()[myTabHost.getCurrentTab()] );
-		Intent openEquipmentInspectionList = new Intent(InspectionOverview.this, RoomList.class);
-		startActivity(openEquipmentInspectionList);
-	}
 	@Override
 	public void onResume(){
 		super.onResume();

@@ -96,6 +96,13 @@ public class Equipment {
 	}
 	
 	/**
+	 * Overriding toString
+	 */
+	public String toString(){
+		return this.getName();
+	}
+	
+	/**
 	 * 
 	 * @param InspectionElement e - the inspection element to add
 	 * @return Boolean result - whether or not the inspection element was added.

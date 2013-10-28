@@ -3,9 +3,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/lighter_light_grey" >"
-    <ListView 
+    android:background="@color/lighter_light_grey" >
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:id="@+id/android:list" />
+        android:ems="10" 
+		android:inputType="text" >
+        <requestFocus />
+    </EditText>
+
+<ListView
+    android:id="@+id/android:list"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent" />
+
 </LinearLayout>

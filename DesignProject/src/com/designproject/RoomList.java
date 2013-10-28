@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -14,9 +15,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 
 public class RoomList extends ListActivity {
+	
+	Room [] rooms;
+	Floor mFloor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,8 @@ public class RoomList extends ListActivity {
 		setupActionBar();
 		
 		FireAlertApplication a = (FireAlertApplication)getApplication();
-		Room[] rooms = ((Building)a.getLocation()).getFloors()[0].getRooms();
+		mFloor = (Floor)a.getLocation();
+		rooms = mFloor.getRooms();
 		
 		ArrayList<HashMap<String,String>> listInformationString = new ArrayList<HashMap<String,String>>();
 		HashMap<String,String> item;
@@ -46,21 +52,25 @@ public class RoomList extends ListActivity {
 				R.id.numOfElementsValue});
 		
 		///bind the data
-		setListAdapter(simpleAdapter);
-		 
-		ListView listView = getListView();
-		listView.setTextFilterEnabled(true);
- 
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-			    // When clicked, show a toast with the TextView text
-			    Toast.makeText(getApplicationContext(),
-				((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-			}			
-		});
- 
+		setListAdapter(simpleAdapter); 
+	}
+	
+	public void roomItemListener(View view)
+	{
+		View base =  ((ViewGroup)view).getChildAt(0);
+		View second = ((ViewGroup)base).getChildAt(1);
+		String text = (String) ((TextView)second).getText();
+		
+		for(Room r: rooms)
+			if( r.getRoomNo().equals(text) ){
+				FireAlertApplication a = (FireAlertApplication)getApplication();
+				a.setLocation( r );
+				break;
+			}
+		
+		Intent openInspectionOverview= new Intent(RoomList.this, EquipmentInspectionList.class);
+    	startActivity(openInspectionOverview);
+		
 	}
 	
 	/**
@@ -80,4 +90,17 @@ public class RoomList extends ListActivity {
 		return true;
 	}
 
+	@Override
+	public void onResume(){
+		super.onResume();
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+		a.setLocation(mFloor);
+	}
+	@Override
+	public void onDestroy(){
+		super.onResume();
+		FireAlertApplication a = (FireAlertApplication)getApplication();
+		a.setLocation(mFloor);
+		
+	}
 }
