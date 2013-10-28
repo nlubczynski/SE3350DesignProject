@@ -18,6 +18,12 @@ public class Floor {
 	}
 
 	/**
+	 * Overriding the toString method
+	 */
+	public String toString(){
+		return this.getName();
+	}
+	/**
 	 * @return String name - return the Floor name
 	 */
 	public String getName() {

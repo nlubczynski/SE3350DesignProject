@@ -81,6 +81,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
         </activity>
+        <activity
+            android:name="com.designproject.RoomList"
+            android:label="@string/title_room_list"
+            android:parentActivityName="com.designproject.InspectionOverview" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.designproject.InspectionOverview" />
+        </activity>
     </application>
 
 </manifest>

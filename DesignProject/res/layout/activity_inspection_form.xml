@@ -19,22 +19,22 @@
         android:padding="10dp" >
         
         <LinearLayout
-	        android:id="@+id/inspect_form_header"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" />
+                android:id="@+id/inspect_form_header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
         
         <LinearLayout
-	        android:id="@+id/inspect_form_header2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" />
+                android:id="@+id/inspect_form_header2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
 
     </LinearLayout>
     
     <LinearLayout
-    	android:id="@+id/inspect_form_content"
-    	android:layout_width="fill_parent"
+            android:id="@+id/inspect_form_content"
+            android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
     

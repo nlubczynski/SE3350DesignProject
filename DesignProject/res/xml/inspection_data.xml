@@ -37,6 +37,40 @@
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
+          <Room id="R2" No="2">
+            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+              <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
+              <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
+              <inspectionElement_3 name="Weight" testResult="" testNote=""/>
+              <inspectionElement_4 name="Bracket" testResult="" testNote=""/>
+              <inspectionElement_5 name="Gauge" testResult="" testNote=""/>
+              <inspectionElement_6 name="Pull Pin" testResult="" testNote=""/>
+              <inspectionElement_7 name="Signage" testResult="" testNote=""/>
+              <inspectionElement_8 name="Collar" testResult="" testNote=""/>
+              <inspectionElement_9 name="Hose" testResult="" testNote=""/>
+            </Extinguisher>
+            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+              <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
+              <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
+              <inspectionElement_3 name="Weight" testResult="" testNote=""/>
+              <inspectionElement_4 name="Bracket" testResult="" testNote=""/>
+              <inspectionElement_5 name="Gauge" testResult="" testNote=""/>
+              <inspectionElement_6 name="Pull Pin" testResult="" testNote=""/>
+              <inspectionElement_7 name="Signage" testResult="" testNote=""/>
+              <inspectionElement_8 name="Collar" testResult="" testNote=""/>
+              <inspectionElement_9 name="Hose" testResult="" testNote=""/>
+            </Extinguisher>            
+            <FireHoseCabinet id="77207" location="Staircase D">
+              <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
+              <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
+              <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
+              <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
+            </FireHoseCabinet>                    
+            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+              <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
+              <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
+            </EmergencyLight>        
+          </Room>
         </Floor>
       </ServiceAddress>
     </clientContract>
