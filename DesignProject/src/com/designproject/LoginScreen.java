@@ -29,6 +29,15 @@ public class LoginScreen extends Activity {
     public void logIn(View view)
     {
     	//Check if details are correct
+    	//Get required information
+    	TextView username= (TextView) findViewById(R.id.username);
+    	TextView password= (TextView) findViewById(R.id.password);
+    	
+    	String usernameString = username.getText().toString();
+    	String passwordString = password.getText().toString();
+    	
+    	if( !usernameString.equals("username") || !passwordString.equals("password") )
+    		return;
     	
     	saveUserDetails();
     	
