@@ -66,26 +66,23 @@ public class InspectionForm extends Activity implements OnGestureListener {
 		final InspectionElement[] elements = equipment.getInspectionElements();
 		final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
 		numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
-	
-		TextView idView = new TextView(activity);
-		String id = equipment.getID();
-		if (id != null)
-		{
-			idView.setText("ID: "+id);
-			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-	                0, LayoutParams.MATCH_PARENT, 1);
-			header.addView(idView, lparams);
-		}
 		
 		final Button submit = new Button(activity);
 		final TextView pageView = new TextView(activity);
 		final LinearLayout form = (LinearLayout) findViewById(R.id.inspect_form);
 		
+		final TextView typeView = new TextView(activity);
+		typeView.setText(equipment.getName());
+		header.addView(typeView);
+		
         submit.setGravity(Gravity.BOTTOM);
 		if (numPages > 1)
 		{
 			pageView.setText("Page "+pageNum+" of "+numPages);
-			header.addView(pageView);
+			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    0, LayoutParams.MATCH_PARENT, 1);
+			pageView.setGravity(Gravity.RIGHT);
+			header.addView(pageView, lparams);
 		}
 		if (pageNum == numPages)
 		{
@@ -95,20 +92,39 @@ public class InspectionForm extends Activity implements OnGestureListener {
 		
 		// Set location value and more info button
 		final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
+		final LinearLayout header2 = (LinearLayout) findViewById(R.id.inspect_form_header2);
 		TextView locationView = new TextView(activity);
 		String location = equipment.getLocation();
 		if (location != null)
 		{
-			locationView.setText("Location: "+location);
-			info.addView(locationView);
+			locationView.setText(location);
+			header2.addView(locationView);
 		}
 		
+		TextView idView = new TextView(activity);
+		String id = equipment.getID();
+		if (id != null)
+		{
+			idView.setText("ID: "+id);
+			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                    0, LayoutParams.MATCH_PARENT, 1);
+			idView.setGravity(Gravity.RIGHT);
+			header2.addView(idView, lparams);
+		}
+		
+		final LinearLayout content = (LinearLayout) findViewById(R.id.inspect_form_content);
 		final node[] attributes = equipment.getAttributes();
 		if(attributes.length > 2)
 		{
 			final Button moreInfo = new Button(activity);
 			moreInfo.setText("More Info");
-			info.addView(moreInfo);
+			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
+                    LayoutParams.WRAP_CONTENT, 1);
+			moreInfo.setTextSize(10);
+			moreInfo.setBackgroundColor(getResources().getColor(R.color.light_grey));
+			lparams.height = 40;
+			lparams.gravity = Gravity.RIGHT;
+			info.addView(moreInfo, lparams);
 	        moreInfo.setOnClickListener(new View.OnClickListener() {
 	            public void onClick(View view) {
 	            	if (moreInfo.getText().equals("More Info"))
@@ -120,6 +136,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
 			            	info.addView(attributeView, i+2);
 		            	}
 		            	moreInfo.setText("Less Info");
+		            	content.setBackgroundColor(getResources().getColor(R.color.white));
 	            	}
 	            	
 	            	else
@@ -133,6 +150,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
 		            		}
 		            	}
 		            	moreInfo.setText("More Info");
+		            	
 	            	}
 	            }
 	        });
@@ -140,8 +158,6 @@ public class InspectionForm extends Activity implements OnGestureListener {
 		
 		
 		// Populate form
-		final LinearLayout content = (LinearLayout) findViewById(R.id.inspect_form_content);
-		
 		for(int i = (pageNum - 1) * 8; i < Math.min((pageNum * 8), elements.length); i++)
 		{
 			CheckBox cb = new CheckBox(activity);

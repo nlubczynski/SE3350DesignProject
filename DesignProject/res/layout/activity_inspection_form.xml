@@ -23,6 +23,12 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="horizontal" />
+        
+        <LinearLayout
+	        android:id="@+id/inspect_form_header2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" />
 
     </LinearLayout>
     
