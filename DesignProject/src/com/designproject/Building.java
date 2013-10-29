@@ -20,6 +20,7 @@ public class Building {
 	private String lastInspectedBy;
 	private GregorianCalendar timeStamp;
 	private ArrayList<Floor> floors;
+	private boolean completed;
 	
 	public Building(String id, String address, String postalCode, String city, String province, String country, String contact, String lastInspectedBy, GregorianCalendar timeStamp){
 		this.id = id;
@@ -32,6 +33,7 @@ public class Building {
 		this.contact = contact;
 		this.lastInspectedBy = lastInspectedBy;
 		this.floors = new ArrayList<Floor>();
+		this.completed = false;
 	}
 
 	/**
@@ -232,4 +234,20 @@ public class Building {
 		return this.floors.add( floor );
 	}
 
+	/**
+	 * @return boolean completed - returns whether a building has been completely inspected
+	 */
+	public boolean isCompleted() {
+		if(!completed)
+		{
+			boolean allFloorsComplete = true;
+			for (Floor f : floors)
+			{
+				if(!f.isCompleted())
+					allFloorsComplete = false;
+			}
+			completed = allFloorsComplete;
+		}
+		return completed;
+	}
 }

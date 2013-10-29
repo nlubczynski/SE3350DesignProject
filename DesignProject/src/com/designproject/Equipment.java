@@ -14,6 +14,7 @@ public class Equipment {
 	private node location;
 	private ArrayList<node> attributes;
 	private ArrayList<InspectionElement> elements;
+	private boolean completed;
 	
 	/**
 	 * A node class for equipment
@@ -93,6 +94,7 @@ public class Equipment {
 		this.elements = new ArrayList<InspectionElement>();
 		this.id = new node("id","");
 		this.location = new node("location","");
+		this.completed = false;
 	}
 	
 	/**
@@ -242,5 +244,12 @@ public class Equipment {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * @return boolean completed - returns whether an equipment has been completely inspected
+	 */
+	public boolean isCompleted() {
+		return completed;		
 	}
 }

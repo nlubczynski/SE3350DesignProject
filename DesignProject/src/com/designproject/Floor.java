@@ -11,10 +11,12 @@ public class Floor {
 
 	private String name;
 	private ArrayList<Room> rooms;
+	private boolean completed;
 	
 	public Floor(String name){
 		this.name = name;
 		this.rooms = new ArrayList<Room>();
+		this.completed = false;
 	}
 
 	/**
@@ -62,5 +64,19 @@ public class Floor {
 	 */
 	public boolean addRoom(Room room) {
 		return this.rooms.add( room );
+	}
+	
+	/**
+	 * @return boolean completed - returns whether a floor has been completely inspected
+	 */
+	public boolean isCompleted() {
+		return completed;		
+	}
+
+	/**
+	 * @param boolean completed - whether a floor has been completely inspected
+	 */
+	public void complete(boolean completed) {
+		this.completed = completed;
 	}
 }
