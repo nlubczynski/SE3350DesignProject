@@ -27,6 +27,9 @@ public class InspectionOverview extends Activity {
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inspection_overview_parent);
 		// Show the Up button in the action bar.
@@ -155,6 +158,9 @@ public class InspectionOverview extends Activity {
 	
 	@Override
 	public void onResume(){
+		// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
