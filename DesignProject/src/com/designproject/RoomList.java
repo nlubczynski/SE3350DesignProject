@@ -5,14 +5,17 @@ import java.util.HashMap;
 
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
+import android.view.View;
 
 public class RoomList extends ListActivity {
 	
@@ -46,10 +49,9 @@ public class RoomList extends ListActivity {
 		}
 		
 		SimpleAdapter simpleAdapter =  new SimpleAdapter(this,listInformationString, R.layout.room_list_item,
-				new String[] {"line1", "line2", "line3"},
-				new int[] {R.id.RoomNameValue,
-				R.id.RoomIDValue,
-				R.id.numOfElementsValue});
+			new String[] {"line1", "line2", "line3"},
+			new int[] {R.id.RoomNameValue, R.id.RoomIDValue, R.id.numOfElementsValue}
+		);
 		
 		///bind the data
 		setListAdapter(simpleAdapter); 
@@ -97,6 +99,36 @@ public class RoomList extends ListActivity {
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mFloor);
+		
+		ListView listView = getListView();
+		if(listView.getChildCount() == rooms.length)
+		{
+			for(int i = 0; i < rooms.length; i++)
+			{
+				View listElement = (ViewGroup)listView.getChildAt(i);
+				if (rooms[i].isCompleted())
+				{
+	        		View toBeColored = (View)((ViewGroup)listElement).getChildAt(0);
+	        		TextView textToBeColored1 = (TextView)((ViewGroup) toBeColored).getChildAt(0);
+	        		TextView textToBeColored2 = (TextView)((ViewGroup) toBeColored).getChildAt(1);
+	        		textToBeColored1.setTextColor(getResources().getColor(R.color.green));
+	        		textToBeColored2.setTextColor(getResources().getColor(R.color.green));
+				}
+				else
+				{
+					Equipment[] equipment = rooms[i].getEquipment();
+					int incompleteCount = 0;
+					for(int j = 0; j < equipment.length; j++)
+					{
+						if(!equipment[j].isCompleted())
+							incompleteCount++;
+					}
+					View toBeUpdated = (View)((ViewGroup)listElement).getChildAt(2);
+					TextView textToChange = (TextView)((ViewGroup) toBeUpdated).getChildAt(1);
+					textToChange.setText(Integer.toString(incompleteCount));
+				}
+			}
+		}
 	}
 	@Override
 	public void onDestroy(){

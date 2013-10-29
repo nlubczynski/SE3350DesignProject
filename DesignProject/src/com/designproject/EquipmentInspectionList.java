@@ -146,8 +146,8 @@ private ListView listView;
         //given Scanner code
     	@Override
     	protected void onDestroy() {
-    		super.onResume();
     		unregisterReceiver();
+    		super.onResume();
     		FireAlertApplication a = (FireAlertApplication)getApplication();
     		a.setLocation(mRoom);
     		super.onDestroy();
