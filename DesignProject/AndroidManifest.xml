@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="10" />
 
     <application
         android:name="com.designproject.FireAlertApplication"
@@ -60,7 +60,8 @@
         <activity
             android:name="com.designproject.EquipmentInspectionList"
             android:label="@string/title_activity_equipment_inspection_list"
-            android:parentActivityName="com.designproject.InspectionOverview" >
+            android:parentActivityName="com.designproject.InspectionOverview" 
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionOverview" />
