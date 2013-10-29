@@ -63,7 +63,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 {
                         pageView.setText("Page "+pageNum+" of "+numPages);
                         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                        		0, LayoutParams.FILL_PARENT, 1);
+                        		0, LayoutParams.MATCH_PARENT, 1);
                         pageView.setGravity(Gravity.RIGHT);
                         header.addView(pageView, lparams);
                 }
@@ -148,7 +148,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 	next.setImageResource(R.drawable.next_page);
                 	next.setBackgroundColor(getResources().getColor(R.color.white));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+                            LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                         params.weight = 1.0f;
                         params.gravity=Gravity.RIGHT;
                 	footer.addView(next, params);
@@ -168,7 +168,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 	previous.setImageResource(R.drawable.previous_page);
                 	previous.setBackgroundColor(getResources().getColor(R.color.white));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+                            LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                         params.weight = 1.0f;
                         params.gravity=Gravity.LEFT;
                 	footer.addView(previous, params);
@@ -355,33 +355,38 @@ public class InspectionForm extends Activity implements OnGestureListener {
         		}
                 
                 elements = equipment.getInspectionElements();
-                numPages = 1;
+                numPages = 2;
                 
             	// Populate form
-                for(int i = 0; i < 2; i++)
+                if(pageNum == 1)
                 {
-                     CheckBox cb = new CheckBox(InspectionForm.this);
-                     cb.setText(elements[i].getName());
-                     cb.setChecked(elements[i].getTestResult());
-                     content.addView(cb);
+	                for(int i = 0; i < 2; i++)
+	                {
+	                     CheckBox cb = new CheckBox(InspectionForm.this);
+	                     cb.setText(elements[i].getName());
+	                     cb.setChecked(elements[i].getTestResult());
+	                     content.addView(cb);
+	                }
+	                for (int j = 2; j < elements.length - 1; j++)
+	                {
+	                	TextView tv = new TextView(InspectionForm.this);
+	                    tv.setText(elements[j].getName());
+	                    content.addView(tv);
+	                    EditText et = new EditText(InspectionForm.this);
+	                    et.setText(elements[j].getTestNotes());
+	                    et.setInputType(InputType.TYPE_CLASS_NUMBER);
+	                    content.addView(et);
+	                }
                 }
-                for (int j = 2; j < elements.length - 1; j++)
+                else
                 {
-                	TextView tv = new TextView(InspectionForm.this);
-                    tv.setText(elements[j].getName());
-                    content.addView(tv);
-                    EditText et = new EditText(InspectionForm.this);
-                    et.setText(elements[j].getTestNotes());
-                    et.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    content.addView(et);
+	                TextView commentsText = new TextView(InspectionForm.this);
+	               	commentsText.setText("Comments");
+	               	content.addView(commentsText);
+	               	EditText comments = new EditText(InspectionForm.this);
+	               	comments.setText(elements[elements.length - 1].getTestNotes());
+	               	content.addView(comments);
                 }
-               
-                TextView commentsText = new TextView(InspectionForm.this);
-               	commentsText.setText("Comments");
-               	content.addView(commentsText);
-               	EditText comments = new EditText(InspectionForm.this);
-               	comments.setText(elements[elements.length - 1].getTestNotes());
-               	content.addView(comments);
         	}
         	else if (type.equals("KitchenSuppressionSystem"))
         	{
