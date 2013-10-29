@@ -59,7 +59,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 {
                         pageView.setText("Page "+pageNum+" of "+numPages);
                         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                        		0, LayoutParams.MATCH_PARENT, 1);
+                        		0, LayoutParams.FILL_PARENT, 1);
                         pageView.setGravity(Gravity.RIGHT);
                         header.addView(pageView, lparams);
                 }
@@ -93,7 +93,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     		LayoutParams.WRAP_CONTENT, 1);
                     moreInfo.setTextSize(10);
                     moreInfo.setBackgroundColor(getResources().getColor(R.color.light_grey));
-                    lparams.height = 40;
+                    lparams.height = 50;
                     lparams.gravity = Gravity.RIGHT;
                     info.addView(moreInfo, lparams);
                     moreInfo.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +262,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 elements = equipment.getInspectionElements();
                 if(pageNum == 1)
                 {
-	                for(int i = 0; i < elements.length - 1; i++)
+	                for(int i = 0; i < 6; i++)
 	                {
 	                     CheckBox cb = new CheckBox(InspectionForm.this);
 	                     cb.setText(elements[i].getName());
@@ -272,12 +272,19 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 }
                 else
                 {
+                	for(int i = 6; i < elements.length - 1; i++)
+	                {
+	                     CheckBox cb = new CheckBox(InspectionForm.this);
+	                     cb.setText(elements[i].getName());
+	                     cb.setChecked(elements[i].getTestResult());
+	                     content.addView(cb);
+	                }
 	                TextView commentsText = new TextView(InspectionForm.this);
 	            	commentsText.setText("Comments");
-	            	content.addView(commentsText, 0);
+	            	content.addView(commentsText);
 	            	EditText comments = new EditText(InspectionForm.this);
 	            	comments.setText(elements[elements.length - 1].getTestNotes());
-	            	content.addView(comments, 1);
+	            	content.addView(comments);
                 }
             	numPages = 2;
                 /*
