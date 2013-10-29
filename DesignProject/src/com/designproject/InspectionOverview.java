@@ -47,9 +47,6 @@ public class InspectionOverview extends Activity {
 		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
 		myTabHost.setup();
 		
-		
-		
-		
 		for(Building building : mBuildings)
 		{
 			TabSpec ts1 = myTabHost.newTabSpec("TAB_TAG_1");

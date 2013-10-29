@@ -41,6 +41,7 @@ private Equipment[] equipment;
                 a = (FireAlertApplication)getApplication();
                 mRoom = (Room)a.getLocation();
                 equipment = mRoom.getEquipment();
+                setTitle("Room: "+mRoom.getRoomNo());
                 
                 setListAdapter(new ArrayAdapter<Equipment>(this, R.layout.equipment_list_item, equipment));
                  
