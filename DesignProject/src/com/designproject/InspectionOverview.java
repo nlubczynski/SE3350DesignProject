@@ -1,23 +1,27 @@
 package com.designproject;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
@@ -27,8 +31,6 @@ public class InspectionOverview extends Activity {
     private TabHost myTabHost;
     private Contract mContract;
     private Building[] mBuildings;
-    private int mCurrentTag;
-    boolean semaphore;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,42 +48,88 @@ public class InspectionOverview extends Activity {
 		
 		//Set up the tabs dynamically
 		setUpTabs(0);
-		
-		
 	}
 	
 	private void setUpTabs(int currentTabIndex)
-	{
-		semaphore = true;
-		
+	{		
 		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
 
+		//setup must be called whenever tabs are created and added
 		myTabHost.setup();
 
-		
-		final Building buildingClicked = mBuildings[currentTabIndex];
 		int tag = 0;
 
-		for(Building building : mBuildings)
+		for(final Building building : mBuildings)
 		{
 			TabSpec ts1 = myTabHost.newTabSpec(String.valueOf(tag));
 			tag++;
 			
-			final String buildingName = building.getId();
+			// Get the context so the once in createTabContent you have it
+			final Context context = this;
+			
+			//Set tab name
+			String buildingName = building.getId();
 			ts1.setIndicator("Building: " + buildingName);
+			
+			//Set up content of each tab. This will inflate a view which has only labels.
+			//Each corresponding value for the labels is made progmatically then added to its respective linear layout
 			ts1.setContent(new TabHost.TabContentFactory(){
 				public View createTabContent(String tag)
 				{
+					//Set the paramaters for the new text fields
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+			               0, LayoutParams.WRAP_CONTENT);
+			            params.weight=2f;
+			            //params.setMargins(0, 0, 0, 10);
+				       
 					LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					View view = inflater.inflate(R.layout.inspection_overview_layout, null);
-					((TextView)view.findViewById(R.id.textViewAddress)).setText(buildingClicked.getAddress());
-					((TextView)view.findViewById(R.id.textViewFloorsValue)).setText(String.valueOf(buildingClicked.getFloors().length));
+					View view = inflater.inflate(R.layout.inspection_overview_container, null);
 					
+					//Define a linearlayout
+					LinearLayout layout1 = null;
+					
+					//Get necessary linearLayout and add necessary view
+					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(0));
+					TextView textViewBuildingStatus = new TextView(context);
+					textViewBuildingStatus.setTextAppearance(context, android.R.attr.textAppearanceLarge);
+					textViewBuildingStatus.setLayoutParams(params);
+					textViewBuildingStatus.setGravity(Gravity.RIGHT);
+					
+					//Check if building is complete
+					boolean isBuildingComplete = false;
+					if(isBuildingComplete)
+					{
+						textViewBuildingStatus.setText("COMPLETE");
+						textViewBuildingStatus.setTextColor(Color.GREEN);
+					}
+					else
+					{
+						textViewBuildingStatus.setText("INCOMPLETE");
+						textViewBuildingStatus.setTextColor(Color.RED);
+					}
+					
+					layout1.addView(textViewBuildingStatus);
+					
+					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(1));
+					TextView textViewAddress = new TextView(context);
+					textViewAddress.setText(building.getAddress());
+					textViewAddress.setLayoutParams(params);
+					textViewAddress.setGravity(Gravity.RIGHT);
+					layout1.addView(textViewAddress);
+					
+					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(2));
+					TextView  textViewFloor = new TextView(context);
+					textViewFloor.setText(String.valueOf(building.getFloors().length));
+					textViewFloor.setLayoutParams(params);
+					textViewFloor.setGravity(Gravity.RIGHT);
+					layout1.addView(textViewFloor);
+								
 					int numberOfRooms = 0;
 					int numberOfInspectionsElements = 0;
 					int currentFloor = 0;
 					
-					for(Floor floor : buildingClicked.getFloors())
+					//loop through floors and buildings to get required fields
+					for(Floor floor : building.getFloors())
 					{
 						numberOfRooms += floor.getRooms().length;
 						
@@ -90,53 +138,37 @@ public class InspectionOverview extends Activity {
 							numberOfInspectionsElements += room.getEquipment().length;
 						}
 						
-						LinearLayout ll = ((LinearLayout)view.findViewById(R.id.LinearLayoutFloorButtons));
-
-
-						//if((buildingName).equals(buildingClicked.getId()))
-							addFloorButton(floor, currentFloor++, ll);
-						
+						// layout is not available in addFloorButton so get it and pass it in
+						LinearLayout linearLayoutFloorButtonContainer = ((LinearLayout)view.findViewById(R.id.LinearLayoutFloorButtons));
+						addFloorButton(floor, currentFloor++, linearLayoutFloorButtonContainer);
 					}
 					
-					((TextView)view.findViewById(R.id.textViewRoomsValue)).setText(String.valueOf(numberOfRooms));
-					((TextView)view.findViewById(R.id.textViewItemsValue)).setText(String.valueOf(numberOfInspectionsElements));
+					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(3));
+					TextView  textViewRooms = new TextView(context);
+					textViewRooms.setText(String.valueOf(numberOfRooms));
+					textViewRooms.setLayoutParams(params);
+					textViewRooms.setGravity(Gravity.RIGHT);
+					layout1.addView(textViewRooms);
+					
+					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(4));
+					TextView  textViewInspectionElements = new TextView(context);
+					textViewInspectionElements.setText(String.valueOf(numberOfInspectionsElements));
+					textViewInspectionElements.setLayoutParams(params);
+					textViewInspectionElements.setGravity(Gravity.RIGHT);
+					layout1.addView(textViewInspectionElements);
 
 					return view;
 					}       
 				});
 			
 
+			//add tab spec to the tab host
 			myTabHost.addTab(ts1);
 
-			semaphore = false;      
-	}
-		//Set up the tab host click event that changes and reloads the tab
-		myTabHost.setOnTabChangedListener(new OnTabChangeListener(){
-			@Override
-			public void onTabChanged(String tabId) {
-			// TODO Auto-generated method stub
-				if(semaphore)
-					return;
-				
-				String selectedTab = myTabHost.getCurrentTabTag();
-				
-				if(!selectedTab.equals("0"))
-				{
-					mCurrentTag = Integer.parseInt(selectedTab);
-					myTabHost.setCurrentTab(0);
-				}
-				
-				myTabHost.clearAllTabs();
-
-				setUpTabs(mCurrentTag);// selected
-				}
-			});
 		}
-			
+	}
 
-	private void addFloorButton(Floor floor, int buttonNum, LinearLayout ll) {
-		//LinearLayout linearLayout = (LinearLayout)findViewById(R.id.LinearLayoutFloorButtons);
-		//HorizontalScrollView hsv= (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
+	private void addFloorButton(Floor floor, int buttonNum, LinearLayout linearLayoutFloorButtonContainer) {
 		Button button = new Button(this);
 		button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		button.setText(floor.getName());
@@ -154,7 +186,7 @@ public class InspectionOverview extends Activity {
 
 		});
 		
-		ll.addView(button);
+		linearLayoutFloorButtonContainer.addView(button);
 	}
 
 	/**
@@ -205,6 +237,23 @@ public class InspectionOverview extends Activity {
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
+		
+	}
+	
+	public void buttonListener(View view)
+	{
+		
+		try {
+			XMLReaderWriter out = new XMLReaderWriter(this);
+			
+			FireAlertApplication a = (FireAlertApplication)getApplication();
+			
+			
+			out.writeXML((Franchise) a.franchise);
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

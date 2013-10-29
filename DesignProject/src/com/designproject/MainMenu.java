@@ -47,6 +47,7 @@ public class MainMenu extends Activity {
 			FireAlertApplication a = (FireAlertApplication)getApplication();
 			a.setLocation( reader.parseXML() );
 			mFranchise = (Franchise) a.getLocation();
+			a.franchise = mFranchise;
 			reader.writeXML( (Franchise) a.getLocation() );
         }catch (XmlPullParserException e) {
             e.printStackTrace();
