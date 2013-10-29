@@ -32,6 +32,9 @@ public class InspectionOverview extends Activity {
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inspection_overview_parent);
 		// Show the Up button in the action bar.
@@ -54,10 +57,11 @@ public class InspectionOverview extends Activity {
 		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
 
 		myTabHost.setup();
+
 		
 		final Building buildingClicked = mBuildings[currentTabIndex];
 		int tag = 0;
-		
+
 		for(Building building : mBuildings)
 		{
 			TabSpec ts1 = myTabHost.newTabSpec(String.valueOf(tag));
@@ -189,6 +193,9 @@ public class InspectionOverview extends Activity {
 	
 	@Override
 	public void onResume(){
+		// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);

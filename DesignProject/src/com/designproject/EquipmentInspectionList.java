@@ -10,8 +10,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -22,6 +20,7 @@ import android.content.IntentFilter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EquipmentInspectionList extends ListActivity {
 
@@ -30,9 +29,13 @@ private DataReceiver dataScanner = new DataReceiver();
 private EditText editText;
 private String IDvalue = "";
 private Room mRoom;
+private Equipment[] equipment;
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+        	// Check if Logged in
+            HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        	
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_equipment_inspection_list);
                 setupActionBar();
@@ -40,7 +43,8 @@ private Room mRoom;
                 FireAlertApplication a = (FireAlertApplication)getApplication();
                 a = (FireAlertApplication)getApplication();
                 mRoom = (Room)a.getLocation();
-                final Equipment[] equipment = mRoom.getEquipment();
+                equipment = mRoom.getEquipment();
+                setTitle("Room: "+mRoom.getRoomNo());
                 
                 setListAdapter(new ArrayAdapter<Equipment>(this, R.layout.equipment_list_item, equipment));
                  
@@ -112,10 +116,31 @@ private Room mRoom;
         
         //given Scanner code
         protected void onResume() {
+        	// Check if Logged in
+            HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        	
         	registerScanner();
         	initialComponent();
     		super.onResume();
     		FireAlertApplication a = (FireAlertApplication)getApplication();
+    		if(a.getLocation() instanceof Equipment)
+    		{
+    			Equipment lastInspected = (Equipment) a.getLocation();
+    			int index = -1;
+    			for(int i = 0; i < equipment.length; i++)
+    			{
+    				if(equipment[i].getID().equals(lastInspected.getID()))
+    				{
+    					index = i;
+    				}
+    			}
+    			if(index != -1)
+    			{
+	    			ListView listView = getListView();
+	    			TextView toColour = (TextView)listView.getChildAt(index);
+	    			toColour.setTextColor(getResources().getColor(R.color.green));
+    			}
+    		}
 	    	a.setLocation(mRoom);
     	}
 

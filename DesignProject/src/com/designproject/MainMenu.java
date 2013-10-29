@@ -15,7 +15,6 @@ import com.designproject.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.Menu;
@@ -36,8 +35,12 @@ public class MainMenu extends Activity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        
         super.onCreate(savedInstanceState);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         
         try {
         	XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
@@ -69,7 +72,13 @@ public class MainMenu extends Activity {
 
         calculateDates();
     }
-
+    
+    @Override
+    public void onResume(){
+    	// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+    	super.onResume();
+    }
     private void setupNavigationDrawer()
     {
          mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
@@ -91,19 +100,21 @@ public class MainMenu extends Activity {
             return super.onCreateOptionsMenu(menu);
     }
     
-    public void signOut(View view)
+    public void signOut()
     {
-        SharedPreferences preferences = getSharedPreferences("Login",0);
-        preferences.edit().remove("Username");
-        preferences.edit().remove("Password");
-        
-        Intent loginScreen = new Intent(MainMenu.this, LoginScreen.class);
-        startActivity(loginScreen);
+    	// Replace current code with LogOutHelper code
+    	HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
     }
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        /*TODO: this is where functionality for click */
+        // position is the 0-based placement in the toolbox
+    	switch(position){
+    	case 4:
+    		//logout
+    		signOut();
+    		break;    	
+    	}
 
     }
     

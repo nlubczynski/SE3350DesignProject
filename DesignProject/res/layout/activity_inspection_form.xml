@@ -35,7 +35,20 @@
     <LinearLayout
             android:id="@+id/inspect_form_content"
             android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
+       		android:layout_height="wrap_content"
+        	android:orientation="vertical" />
+    
+    <LinearLayout
+            android:id="@+id/inspect_form_end_of_content"
+            android:layout_width="fill_parent"
+       		android:layout_height="0dip"
+       		android:layout_weight="1"
+        	android:orientation="vertical" />
+    
+    <LinearLayout
+            android:id="@+id/inspect_form_footer"
+            android:layout_width="fill_parent"
+       		android:layout_height="wrap_content"
+        	android:orientation="vertical" />
     
 </LinearLayout>

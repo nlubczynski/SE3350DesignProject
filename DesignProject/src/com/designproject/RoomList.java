@@ -21,9 +21,13 @@ public class RoomList extends ListActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_list);
 		setupActionBar();
+		
 		
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		mFloor = (Floor)a.getLocation();
@@ -88,6 +92,8 @@ public class RoomList extends ListActivity {
 
 	@Override
 	public void onResume(){
+		// Check if Logged in
+        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mFloor);

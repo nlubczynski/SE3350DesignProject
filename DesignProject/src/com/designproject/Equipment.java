@@ -116,6 +116,10 @@ public class Equipment {
 		}
 		return true;
 	}
+	
+	public void clearInspectionElements() {
+		this.elements.clear();
+	}
 	/**
 	 * 
 	 * @return InspectionElement[] elements - the inspection elements for a piece of equipment
