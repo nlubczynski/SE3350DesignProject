@@ -9,6 +9,7 @@ import com.designproject.R;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
@@ -22,9 +23,30 @@ public class FireAlertSplash extends Activity implements AnimationListener {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_fire_alert_splash);
+        
+        //TODO REMOVE TEMPORARY CODE
+        // TEMPORARY CODE TO CREATE USERS FOR TESTING
+        
+        
+        // Gets a shared preference called 'login' if it doesn't exist it will create it
+    	SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login", Context.MODE_PRIVATE);
+    	
+    	// To edit you need to call the shared preference editor
+    	SharedPreferences.Editor editor = sharedPreferenceLogin.edit();
+    	
+    	// Create a user with name "username" and password "password"
+    	editor.putString("username", "password");
+
+    	//commit changes
+    	editor.commit();
+    	
+    	
+        //TODO REMOVE TEMPORARY CODE
+        // END OF TEMPORARY CODE
         
         logIn();
     }
@@ -70,16 +92,16 @@ public class FireAlertSplash extends Activity implements AnimationListener {
 
     private boolean isLogInSaved()
     {
-        	SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login",0);
-        	
-        	String username = sharedPreferenceLogin.getString("Username", "");
-        	String password = sharedPreferenceLogin.getString("Password", "");
-        	
-            
-        	if(username.equals("username") && password.equals("password"))
-        		return true;
-        	
-        	return false;
+    	// Get the shared preferences
+    	SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login", Context.MODE_PRIVATE);
+    	// Get the logged in user, or "NO_CURRENT_USER" if no one is logged in
+    	String username = sharedPreferenceLogin.getString("CurrentUser", "NO_CURRENT_USER");        	
+        // Check this returned user
+    	if( username.equals("NO_CURRENT_USER") )
+    		// Not logged in
+    		return false;
+    	
+    	return true;
     }
 
 	@Override
@@ -89,7 +111,8 @@ public class FireAlertSplash extends Activity implements AnimationListener {
 		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		onDestroy();
 		startActivity(openLoginScreen);
-		
+		finish();
+		overridePendingTransition(0, 0);
 	}
 
 	@Override

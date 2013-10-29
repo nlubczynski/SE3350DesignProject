@@ -2,6 +2,7 @@ package com.designproject;
 
 import com.designproject.Equipment.node;
 import com.designproject.R;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
@@ -27,6 +28,9 @@ public class InspectionForm extends Activity implements OnGestureListener {
         private LinearLayout content;
         
         protected void onCreate(Bundle savedInstanceState) {
+        	// Check if Logged in
+            HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+            
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_inspection_form);
                 gDetector = new GestureDetector(this);
@@ -383,6 +387,14 @@ public class InspectionForm extends Activity implements OnGestureListener {
         	{
         		
         	}
+        }
+        
+        @Override
+        public void onResume(){
+        	// Check if Logged in
+            HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+            
+            super.onResume();
         }
         
         @Override

@@ -33,6 +33,9 @@ private Equipment[] equipment;
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+        	// Check if Logged in
+            HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        	
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_equipment_inspection_list);
                 setupActionBar();
@@ -113,6 +116,9 @@ private Equipment[] equipment;
         
         //given Scanner code
         protected void onResume() {
+        	// Check if Logged in
+            HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+        	
         	registerScanner();
         	initialComponent();
     		super.onResume();
