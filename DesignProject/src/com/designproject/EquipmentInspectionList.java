@@ -130,18 +130,23 @@ private ListView listView;
     		// Set the location back to the room
     		FireAlertApplication a = (FireAlertApplication)getApplication();
     		a.setLocation(mRoom);
-    		
-    		// Set checked elements to green
-			for(int index = 0; index < mRoom.getEquipment().length; index++){
+   
+			updateStatus();
+    	}
+
+        private void updateStatus() {
+        	for(int index = 0; index < mRoom.getEquipment().length; index++){
 				if( mRoom.getEquipment()[index].isCompleted() ){
 					ListView listView = getListView();
-	    			TextView toColour = (TextView)listView.getChildAt( index );
-	    			toColour.setTextColor( getResources().getColor(R.color.green) );
+					if(listView.getChildCount() > 0)
+					{
+		    			TextView toColour = (TextView)listView.getChildAt( index );
+		    			toColour.setTextColor( getResources().getColor(R.color.green) );
+					}
 				}
 			}
-	    	
-    	}
-        
+			
+		}
   
         //given Scanner code
     	@Override
