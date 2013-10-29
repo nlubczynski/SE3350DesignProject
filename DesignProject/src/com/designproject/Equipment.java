@@ -250,6 +250,16 @@ public class Equipment {
 	 * @return boolean completed - returns whether an equipment has been completely inspected
 	 */
 	public boolean isCompleted() {
+		if(!completed)
+		{
+			boolean allElementsComplete = true;
+			for (InspectionElement ie : elements)
+			{
+				if(!ie.hasBeenTested())
+					allElementsComplete = false;
+			}
+			completed = allElementsComplete;
+		}
 		return completed;		
 	}
 }

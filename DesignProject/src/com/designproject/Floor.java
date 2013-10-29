@@ -70,13 +70,16 @@ public class Floor {
 	 * @return boolean completed - returns whether a floor has been completely inspected
 	 */
 	public boolean isCompleted() {
+		if(!completed)
+		{
+			boolean allRoomsComplete = true;
+			for (Room r : rooms)
+			{
+				if(!r.isCompleted())
+					allRoomsComplete = false;
+			}
+			completed = allRoomsComplete;
+		}
 		return completed;		
-	}
-
-	/**
-	 * @param boolean completed - whether a floor has been completely inspected
-	 */
-	public void complete(boolean completed) {
-		this.completed = completed;
 	}
 }

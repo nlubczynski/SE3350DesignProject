@@ -92,14 +92,17 @@ public class Room {
 	 * @return boolean completed - returns whether a room has been completely inspected
 	 */
 	public boolean isCompleted() {
-		return completed;		
-	}
-
-	/**
-	 * @param boolean completed - whether a room has been completely inspected
-	 */
-	public void complete(boolean completed) {
-		this.completed = completed;
+		if(!completed)
+		{
+			boolean allEquipmentComplete = true;
+			for (Equipment e : equipment)
+			{
+				if(!e.isCompleted())
+					allEquipmentComplete = false;
+			}
+			completed = allEquipmentComplete;
+		}
+		return completed;	
 	}
 
 }
