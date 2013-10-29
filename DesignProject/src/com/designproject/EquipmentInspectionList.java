@@ -126,26 +126,26 @@ private ListView listView;
         	registerScanner();
         	initialComponent();
     		super.onResume();
+    		
+    		// Set the location back to the room
     		FireAlertApplication a = (FireAlertApplication)getApplication();
-    		if(a.getLocation() instanceof Equipment)
-    		{
+    		a.setLocation(mRoom);
+    		
+
     			Equipment lastInspected = (Equipment) a.getLocation();
     			int index = -1;
-    			for(int i = 0; i < equipment.length; i++)
-    			{
+    			for(int i = 0; i < equipment.length; i++){
     				if(equipment[i].getID().equals(lastInspected.getID()))
     				{
     					index = i;
     				}
     			}
-    			if(index != -1)
-    			{
+    			if(index != -1){
 	    			ListView listView = getListView();
 	    			TextView toColour = (TextView)listView.getChildAt(index);
 	    			toColour.setTextColor(getResources().getColor(R.color.green));
     			}
-    		}
-	    	a.setLocation(mRoom);
+	    	
     	}
 
         //given Scanner code
