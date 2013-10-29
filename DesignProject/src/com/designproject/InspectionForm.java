@@ -138,6 +138,11 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 }
                 submit.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
+    	            	
+    	            	// Set everything to complete
+    	            	for(InspectionElement e: elements)
+    	            		e.setHasBeenTested();
+    	            	
     	                finish();
     	            }
     	        });
@@ -404,6 +409,17 @@ public class InspectionForm extends Activity implements OnGestureListener {
         
         @Override
     	protected void onDestroy() {
+        	updateData();
+    		super.onDestroy();
+    	}
+        
+        @Override
+		public void finish(){
+        	updateData();
+        	super.finish();
+        }
+        
+        private void updateData(){
         	for(int i = content.getChildCount() - 1; i >= 0; i--)
             {
         		if(content.getChildAt(i) instanceof CheckBox)
@@ -416,7 +432,6 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     	if(element.getName().equals(text))
                     	{
                     		element.setTestResult(value);
-                    		element.setHasBeenTested();
                     	}
                     }
         		}
@@ -434,12 +449,10 @@ public class InspectionForm extends Activity implements OnGestureListener {
                     {
                     	if(element.getName().equals(text))
                     	{
-                    		element.setHasBeenTested();
                     		element.setTestNotes(value);
                     	}
                     }
         		}
         	}
-    		super.onDestroy();
-    	}
+        }
 }

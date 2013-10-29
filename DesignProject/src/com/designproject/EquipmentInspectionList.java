@@ -132,19 +132,13 @@ private ListView listView;
     		a.setLocation(mRoom);
     		
 
-    			Equipment lastInspected = (Equipment) a.getLocation();
-    			int index = -1;
-    			for(int i = 0; i < equipment.length; i++){
-    				if(equipment[i].getID().equals(lastInspected.getID()))
-    				{
-    					index = i;
-    				}
-    			}
-    			if(index != -1){
-	    			ListView listView = getListView();
-	    			TextView toColour = (TextView)listView.getChildAt(index);
-	    			toColour.setTextColor(getResources().getColor(R.color.green));
-    			}
+			for(int index = 0; index < mRoom.getEquipment().length; index++){
+				if( mRoom.getEquipment()[index].isCompleted() ){
+					ListView listView = getListView();
+	    			TextView toColour = (TextView)listView.getChildAt( index );
+	    			toColour.setTextColor( getResources().getColor(R.color.green) );
+				}
+			}
 	    	
     	}
 
