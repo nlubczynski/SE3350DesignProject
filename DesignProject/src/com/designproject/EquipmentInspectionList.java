@@ -2,6 +2,7 @@ package com.designproject;
 
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ private EditText editText;
 private String IDvalue = "";
 private Room mRoom;
 private Equipment[] equipment;
+private ListView listView;
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ private Equipment[] equipment;
                 
                 setListAdapter(new ArrayAdapter<Equipment>(this, R.layout.equipment_list_item, equipment));
                  
-                ListView listView = getListView();
+                listView = getListView();
                 listView.setTextFilterEnabled(true);
  
                 listView.setOnItemClickListener(new OnItemClickListener() {
@@ -159,6 +163,7 @@ private Equipment[] equipment;
     		//tv_getdata_from_scanner = (TextView)findViewById(R.id.tv_getdata_from_scanner);
     		//tv_getdata_from_edittext  = (TextView)findViewById(R.id.tv_getdata_from_edittext);
     		editText = (EditText)findViewById(R.id.editText);
+    		editText.setInputType(InputType.TYPE_CLASS_NUMBER);
     		editText.addTextChangedListener(textWatcher);
     	}
     	
@@ -228,4 +233,10 @@ private Equipment[] equipment;
                 return super.onOptionsItemSelected(item);
         }
         
+     // from the link above
+        @Override
+        public void onConfigurationChanged(Configuration newConfig) {
+        	Log.i("debugger", "Onconfigurationchanged called");
+            super.onConfigurationChanged(newConfig);
+        }
 }  
