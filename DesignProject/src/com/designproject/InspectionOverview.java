@@ -46,14 +46,16 @@ public class InspectionOverview extends Activity {
     	mContract = (Contract)a.getLocation();
 		mBuildings = mContract.getBuildings();
 		
-		//Set up the tabs dynamically
-		setUpTabs(0);
+		setUpTabs();
 	}
 	
-	private void setUpTabs(int currentTabIndex)
+	private void setUpTabs()
 	{		
 		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
 
+//		if(myTabHost.getTabWidget().getTabCount() > 0)
+//			myTabHost.clearAllTabs();
+		
 		//setup must be called whenever tabs are created and added
 		myTabHost.setup();
 
@@ -96,8 +98,7 @@ public class InspectionOverview extends Activity {
 					textViewBuildingStatus.setGravity(Gravity.RIGHT);
 					
 					//Check if building is complete
-					boolean isBuildingComplete = false;
-					if(isBuildingComplete)
+					if(building.isCompleted())
 					{
 						textViewBuildingStatus.setText("COMPLETE");
 						textViewBuildingStatus.setTextColor(Color.GREEN);
@@ -161,10 +162,8 @@ public class InspectionOverview extends Activity {
 					}       
 				});
 			
-
 			//add tab spec to the tab host
 			myTabHost.addTab(ts1);
-
 		}
 	}
 
@@ -228,6 +227,10 @@ public class InspectionOverview extends Activity {
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
         
+		//Set up the tabs dynamically
+        myTabHost.clearAllTabs();
+        setUpTabs();
+		
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
@@ -256,5 +259,4 @@ public class InspectionOverview extends Activity {
 		}
 		
 	}
-
 }
