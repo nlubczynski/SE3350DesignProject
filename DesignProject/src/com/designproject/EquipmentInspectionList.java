@@ -20,6 +20,7 @@ import android.content.IntentFilter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EquipmentInspectionList extends ListActivity {
 
@@ -28,6 +29,7 @@ private DataReceiver dataScanner = new DataReceiver();
 private EditText editText;
 private String IDvalue = "";
 private Room mRoom;
+private Equipment[] equipment;
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ private Room mRoom;
                 FireAlertApplication a = (FireAlertApplication)getApplication();
                 a = (FireAlertApplication)getApplication();
                 mRoom = (Room)a.getLocation();
-                final Equipment[] equipment = mRoom.getEquipment();
+                equipment = mRoom.getEquipment();
                 
                 setListAdapter(new ArrayAdapter<Equipment>(this, R.layout.equipment_list_item, equipment));
                  
@@ -114,6 +116,24 @@ private Room mRoom;
         	initialComponent();
     		super.onResume();
     		FireAlertApplication a = (FireAlertApplication)getApplication();
+    		if(a.getLocation() instanceof Equipment)
+    		{
+    			Equipment lastInspected = (Equipment) a.getLocation();
+    			int index = -1;
+    			for(int i = 0; i < equipment.length; i++)
+    			{
+    				if(equipment[i].getID().equals(lastInspected.getID()))
+    				{
+    					index = i;
+    				}
+    			}
+    			if(index != -1)
+    			{
+	    			ListView listView = getListView();
+	    			TextView toColour = (TextView)listView.getChildAt(index);
+	    			toColour.setTextColor(getResources().getColor(R.color.green));
+    			}
+    		}
 	    	a.setLocation(mRoom);
     	}
 
