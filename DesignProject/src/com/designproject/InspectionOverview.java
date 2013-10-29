@@ -14,16 +14,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+
 
 public class InspectionOverview extends Activity {
 
     private TabHost myTabHost;
     private Contract mContract;
     private Building[] mBuildings;
+    private int mCurrentTag;
+    boolean semaphore;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,72 +42,97 @@ public class InspectionOverview extends Activity {
 		mBuildings = mContract.getBuildings();
 		
 		//Set up the tabs dynamically
-		setUpTabs();
+		setUpTabs(0);
 		
 		
 	}
 	
-	private void setUpTabs()
+	private void setUpTabs(int currentTabIndex)
 	{
+		semaphore = true;
+		
 		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
+
 		myTabHost.setup();
 		
-		
-		
+		final Building buildingClicked = mBuildings[currentTabIndex];
+		int tag = 0;
 		
 		for(Building building : mBuildings)
 		{
-			TabSpec ts1 = myTabHost.newTabSpec("TAB_TAG_1");
-			String buildingName = building.getId();
+			TabSpec ts1 = myTabHost.newTabSpec(String.valueOf(tag));
+			tag++;
+			
+			final String buildingName = building.getId();
 			ts1.setIndicator("Building: " + buildingName);
 			ts1.setContent(new TabHost.TabContentFactory(){
 				public View createTabContent(String tag)
-				{     
-					LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				{
+					LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					View view = inflater.inflate(R.layout.inspection_overview_layout, null);
+					((TextView)view.findViewById(R.id.textViewAddress)).setText(buildingClicked.getAddress());
+					((TextView)view.findViewById(R.id.textViewFloorsValue)).setText(String.valueOf(buildingClicked.getFloors().length));
 					
+					int numberOfRooms = 0;
+					int numberOfInspectionsElements = 0;
+					int currentFloor = 0;
+					
+					for(Floor floor : buildingClicked.getFloors())
+					{
+						numberOfRooms += floor.getRooms().length;
+						
+						for(Room room : floor.getRooms())
+						{
+							numberOfInspectionsElements += room.getEquipment().length;
+						}
+						
+						LinearLayout ll = ((LinearLayout)view.findViewById(R.id.LinearLayoutFloorButtons));
+
+
+						//if((buildingName).equals(buildingClicked.getId()))
+							addFloorButton(floor, currentFloor++, ll);
+						
+					}
+					
+					((TextView)view.findViewById(R.id.textViewRoomsValue)).setText(String.valueOf(numberOfRooms));
+					((TextView)view.findViewById(R.id.textViewItemsValue)).setText(String.valueOf(numberOfInspectionsElements));
+
 					return view;
 					}       
 				});
 			
+
 			myTabHost.addTab(ts1);
-			TextView textView = (TextView)findViewById(R.id.textViewAddress);
-			textView.setText(building.getAddress());
-			
-			textView= (TextView)findViewById(R.id.textViewFloorsValue);
-			String numberOfFloorsString = String.valueOf(building.getFloors().length);
-			textView.setText(numberOfFloorsString);
-			
-			int numberOfRooms = 0;
-			int numberOfInspectionsElements = 0;
-			int currentFloor = 0;
-			
-			for(Floor floor : building.getFloors())
-			{
-				numberOfRooms += floor.getRooms().length;
+
+			semaphore = false;      
+	}
+		//Set up the tab host click event that changes and reloads the tab
+		myTabHost.setOnTabChangedListener(new OnTabChangeListener(){
+			@Override
+			public void onTabChanged(String tabId) {
+			// TODO Auto-generated method stub
+				if(semaphore)
+					return;
 				
-				for(Room room : floor.getRooms())
+				String selectedTab = myTabHost.getCurrentTabTag();
+				
+				if(!selectedTab.equals("0"))
 				{
-					numberOfInspectionsElements += room.getEquipment().length;
+					mCurrentTag = Integer.parseInt(selectedTab);
+					myTabHost.setCurrentTab(0);
 				}
 				
-				addFloorButton(floor, currentFloor++);
-			}
-			
-			textView= (TextView)findViewById(R.id.textViewRoomsValue);
-			textView.setText(String.valueOf(numberOfRooms));
-			
-			textView = (TextView)findViewById(R.id.textViewItemsValue);
-			textView.setText(String.valueOf(numberOfInspectionsElements));
-			      
-			}
-		
-		
-	}
+				myTabHost.clearAllTabs();
 
-	private void addFloorButton(Floor floor, int buttonNum) {
-		LinearLayout linearLayout = (LinearLayout)findViewById(R.id.LinearLayoutFloorButtons);
-		
+				setUpTabs(mCurrentTag);// selected
+				}
+			});
+		}
+			
+
+	private void addFloorButton(Floor floor, int buttonNum, LinearLayout ll) {
+		//LinearLayout linearLayout = (LinearLayout)findViewById(R.id.LinearLayoutFloorButtons);
+		//HorizontalScrollView hsv= (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
 		Button button = new Button(this);
 		button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		button.setText(floor.getName());
@@ -119,7 +149,8 @@ public class InspectionOverview extends Activity {
 			}
 
 		});
-		linearLayout.addView(button);
+		
+		ll.addView(button);
 	}
 
 	/**
