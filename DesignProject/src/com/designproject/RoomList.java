@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
-import android.view.View;
 
 public class RoomList extends ListActivity {
 	
@@ -55,6 +54,8 @@ public class RoomList extends ListActivity {
 		
 		///bind the data
 		setListAdapter(simpleAdapter); 
+		
+		updateStatus();
 	}
 	
 	public void roomItemListener(View view)
@@ -72,7 +73,6 @@ public class RoomList extends ListActivity {
 		
 		Intent openInspectionOverview= new Intent(RoomList.this, EquipmentInspectionList.class);
     	startActivity(openInspectionOverview);
-		
 	}
 	
 	/**
@@ -100,9 +100,15 @@ public class RoomList extends ListActivity {
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mFloor);
 		
+		updateStatus();
+	}
+	
+	private void updateStatus() {
+		Log.i("debugger", "Update Status called");
 		ListView listView = getListView();
 		if(listView.getChildCount() == rooms.length)
 		{
+			Log.i("debugger", "List view has children");
 			for(int i = 0; i < rooms.length; i++)
 			{
 				View listElement = (ViewGroup)listView.getChildAt(i);
@@ -114,22 +120,20 @@ public class RoomList extends ListActivity {
 	        		textToBeColored1.setTextColor(getResources().getColor(R.color.green));
 	        		textToBeColored2.setTextColor(getResources().getColor(R.color.green));
 				}
-				else
+				Equipment[] equipment = rooms[i].getEquipment();
+				int incompleteCount = 0;
+				for(int j = 0; j < equipment.length; j++)
 				{
-					Equipment[] equipment = rooms[i].getEquipment();
-					int incompleteCount = 0;
-					for(int j = 0; j < equipment.length; j++)
-					{
-						if(!equipment[j].isCompleted())
-							incompleteCount++;
-					}
-					View toBeUpdated = (View)((ViewGroup)listElement).getChildAt(2);
-					TextView textToChange = (TextView)((ViewGroup) toBeUpdated).getChildAt(1);
-					textToChange.setText(Integer.toString(incompleteCount));
+					if(!equipment[j].isCompleted())
+						incompleteCount++;
 				}
+				View toBeUpdated = (View)((ViewGroup)listElement).getChildAt(2);
+				TextView textToChange = (TextView)((ViewGroup) toBeUpdated).getChildAt(1);
+				textToChange.setText(Integer.toString(incompleteCount));
 			}
 		}
 	}
+
 	@Override
 	public void onDestroy(){
 		super.onResume();
