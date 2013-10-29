@@ -41,7 +41,8 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 
                 content = (LinearLayout) findViewById(R.id.inspect_form_content);
                 final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
-                final LinearLayout form = (LinearLayout) findViewById(R.id.inspect_form);
+                final LinearLayout endOfContent = (LinearLayout) findViewById(R.id.inspect_form_end_of_content);
+                final LinearLayout footer = (LinearLayout) findViewById(R.id.inspect_form_footer);
                 final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
                 final LinearLayout header2 = (LinearLayout) findViewById(R.id.inspect_form_header2);
                 
@@ -127,16 +128,10 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 }
                 
                 final Button submit = new Button(InspectionForm.this);
-                submit.setGravity(Gravity.BOTTOM);
                 if (pageNum == numPages)
                 {
                         submit.setText("Submit");
-                        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        //        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                        //params.weight = 1.0f;
-                        //params.gravity=Gravity.RIGHT;
-                        submit.setGravity(Gravity.RIGHT|Gravity.BOTTOM);
-                        form.addView(submit);
+                        endOfContent.addView(submit);
                 }
                 submit.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
@@ -150,10 +145,10 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 	next.setImageResource(R.drawable.next_page);
                 	next.setBackgroundColor(getResources().getColor(R.color.white));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                    params.weight = 1.0f;
-                    params.gravity=Gravity.RIGHT|Gravity.BOTTOM;
-                	form.addView(next, params);
+                            LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+                        params.weight = 1.0f;
+                        params.gravity=Gravity.RIGHT;
+                	footer.addView(next, params);
                 }
                 next.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
@@ -165,15 +160,15 @@ public class InspectionForm extends Activity implements OnGestureListener {
     	        });
                 
                 final ImageButton previous = new ImageButton(InspectionForm.this);
-                if(pageNum == numPages)
+                if(pageNum > 1)
                 {
                 	previous.setImageResource(R.drawable.previous_page);
                 	previous.setBackgroundColor(getResources().getColor(R.color.white));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                    params.weight = 1.0f;
-                    params.gravity=Gravity.LEFT|Gravity.BOTTOM;
-                	form.addView(previous, params);
+                            LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+                        params.weight = 1.0f;
+                        params.gravity=Gravity.LEFT;
+                	footer.addView(previous, params);
                 }
                 previous.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
@@ -183,7 +178,6 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         startActivity(previousPage);
     	            }
     	        });
-                
         }
 
         @Override
@@ -387,7 +381,6 @@ public class InspectionForm extends Activity implements OnGestureListener {
         
         @Override
     	protected void onDestroy() {
-        	Log.i("debugger", "Elements length: "+elements.length);
         	for(int i = content.getChildCount() - 1; i >= 0; i--)
             {
         		if(content.getChildAt(i) instanceof CheckBox)
