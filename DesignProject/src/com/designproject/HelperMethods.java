@@ -101,7 +101,7 @@ public class HelperMethods {
 	 *  For Check if logged in, this method will either do nothing (if the user is logged in)
 	 *  or close all activities and call the login screen if they are not
 	 *  <p>
-	 *  This function should be called after setting
+	 *  
 	 * @param id
 	 */
 	public final static void logOutHandler( int id, Context context ){

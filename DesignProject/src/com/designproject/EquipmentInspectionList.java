@@ -28,7 +28,7 @@ import android.widget.TextView;
 public class EquipmentInspectionList extends ListActivity {
 
 private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
-private DataReceiver dataScanner = new DataReceiver();
+private DataReceiver dataScanner = null;
 private EditText editText;
 private String IDvalue = "";
 private Room mRoom;
@@ -147,8 +147,8 @@ private ListView listView;
 			}
 			
 		}
-
-		//given Scanner code
+  
+        //given Scanner code
     	@Override
     	protected void onDestroy() {
     		unregisterReceiver();
@@ -169,15 +169,20 @@ private ListView listView;
     	
     	//given Scanner code
     	private void registerScanner() {
-    		dataScanner = new DataReceiver();
-    		IntentFilter intentFilter = new IntentFilter();
-    		intentFilter.addAction(ACTION_CONTENT_NOTIFY);
-    		registerReceiver(dataScanner, intentFilter);
+    		if(dataScanner == null ){
+	    		dataScanner = new DataReceiver();
+	    		IntentFilter intentFilter = new IntentFilter();
+	    		intentFilter.addAction(ACTION_CONTENT_NOTIFY);
+	    		registerReceiver(dataScanner, intentFilter);
+    		}
     	}
     	
     	//given Scanner code
     	private void unregisterReceiver() {
-    		if (dataScanner != null) unregisterReceiver(dataScanner);
+    		if (dataScanner != null){ 
+    			unregisterReceiver(dataScanner);
+    			dataScanner = null;
+    		}
     	}
     	
     	//given Scanner code

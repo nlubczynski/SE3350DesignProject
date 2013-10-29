@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import android.os.Bundle;
 import android.app.ListActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,11 +103,10 @@ public class RoomList extends ListActivity {
 	}
 	
 	private void updateStatus() {
-		Log.i("debugger", "Update Status called");
 		ListView listView = getListView();
 		if(listView.getChildCount() == rooms.length)
 		{
-			Log.i("debugger", "List view has children");
+
 			for(int i = 0; i < rooms.length; i++)
 			{
 				View listElement = (ViewGroup)listView.getChildAt(i);
