@@ -2,6 +2,7 @@ package com.designproject;
 
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,11 +28,12 @@ import android.widget.TextView;
 public class EquipmentInspectionList extends ListActivity {
 
 private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
-private DataReceiver dataScanner = new DataReceiver();
+private DataReceiver dataScanner = null;
 private EditText editText;
 private String IDvalue = "";
 private Room mRoom;
 private Equipment[] equipment;
+private ListView listView;
         
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ private Equipment[] equipment;
                 
                 setListAdapter(new ArrayAdapter<Equipment>(this, R.layout.equipment_list_item, equipment));
                  
-                ListView listView = getListView();
+                listView = getListView();
                 listView.setTextFilterEnabled(true);
  
                 listView.setOnItemClickListener(new OnItemClickListener() {
@@ -122,33 +126,28 @@ private Equipment[] equipment;
         	registerScanner();
         	initialComponent();
     		super.onResume();
+    		
+    		// Set the location back to the room
     		FireAlertApplication a = (FireAlertApplication)getApplication();
-    		if(a.getLocation() instanceof Equipment)
-    		{
-    			Equipment lastInspected = (Equipment) a.getLocation();
-    			int index = -1;
-    			for(int i = 0; i < equipment.length; i++)
-    			{
-    				if(equipment[i].getID().equals(lastInspected.getID()))
-    				{
-    					index = i;
-    				}
-    			}
-    			if(index != -1)
-    			{
-	    			ListView listView = getListView();
-	    			TextView toColour = (TextView)listView.getChildAt(index);
-	    			toColour.setTextColor(getResources().getColor(R.color.green));
-    			}
-    		}
-	    	a.setLocation(mRoom);
+    		a.setLocation(mRoom);
+    		
+    		// Set checked elements to green
+			for(int index = 0; index < mRoom.getEquipment().length; index++){
+				if( mRoom.getEquipment()[index].isCompleted() ){
+					ListView listView = getListView();
+	    			TextView toColour = (TextView)listView.getChildAt( index );
+	    			toColour.setTextColor( getResources().getColor(R.color.green) );
+				}
+			}
+	    	
     	}
-
+        
+  
         //given Scanner code
     	@Override
     	protected void onDestroy() {
-    		super.onResume();
     		unregisterReceiver();
+    		super.onResume();
     		FireAlertApplication a = (FireAlertApplication)getApplication();
     		a.setLocation(mRoom);
     		super.onDestroy();
@@ -159,20 +158,26 @@ private Equipment[] equipment;
     		//tv_getdata_from_scanner = (TextView)findViewById(R.id.tv_getdata_from_scanner);
     		//tv_getdata_from_edittext  = (TextView)findViewById(R.id.tv_getdata_from_edittext);
     		editText = (EditText)findViewById(R.id.editText);
+    		editText.setInputType(InputType.TYPE_CLASS_NUMBER);
     		editText.addTextChangedListener(textWatcher);
     	}
     	
     	//given Scanner code
     	private void registerScanner() {
-    		dataScanner = new DataReceiver();
-    		IntentFilter intentFilter = new IntentFilter();
-    		intentFilter.addAction(ACTION_CONTENT_NOTIFY);
-    		registerReceiver(dataScanner, intentFilter);
+    		if(dataScanner == null ){
+	    		dataScanner = new DataReceiver();
+	    		IntentFilter intentFilter = new IntentFilter();
+	    		intentFilter.addAction(ACTION_CONTENT_NOTIFY);
+	    		registerReceiver(dataScanner, intentFilter);
+    		}
     	}
     	
     	//given Scanner code
     	private void unregisterReceiver() {
-    		if (dataScanner != null) unregisterReceiver(dataScanner);
+    		if (dataScanner != null){ 
+    			unregisterReceiver(dataScanner);
+    			dataScanner = null;
+    		}
     	}
     	
     	//given Scanner code
@@ -228,4 +233,10 @@ private Equipment[] equipment;
                 return super.onOptionsItemSelected(item);
         }
         
+     // from the link above
+        @Override
+        public void onConfigurationChanged(Configuration newConfig) {
+        	Log.i("debugger", "Onconfigurationchanged called");
+            super.onConfigurationChanged(newConfig);
+        }
 }  

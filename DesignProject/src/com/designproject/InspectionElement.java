@@ -62,8 +62,6 @@ public class InspectionElement {
 		}catch(Exception e){
 			return false;
 		}
-		//mark that we've tested this element
-		this.hasBeenTested = true;
 		return true;
 	}
 	/**

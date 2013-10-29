@@ -12,11 +12,13 @@ public class Room {
 	private String id;
 	private String roomNo;
 	private ArrayList<Equipment> equipment;
+	private boolean completed;
 	
 	public Room(String id, String roomNo){
 		this.id = id;
 		this.roomNo = roomNo;
 		this.equipment = new ArrayList<Equipment>();
+		this.completed = false;
 	}
 
 	/**
@@ -84,6 +86,23 @@ public class Room {
 	 */
 	public boolean addEquipment(Equipment equipment) {
 		return this.equipment.add( equipment );
+	}
+	
+	/**
+	 * @return boolean completed - returns whether a room has been completely inspected
+	 */
+	public boolean isCompleted() {
+		if(!completed)
+		{
+			boolean allEquipmentComplete = true;
+			for (Equipment e : equipment)
+			{
+				if(!e.isCompleted())
+					allEquipmentComplete = false;
+			}
+			completed = allEquipmentComplete;
+		}
+		return completed;	
 	}
 
 }
