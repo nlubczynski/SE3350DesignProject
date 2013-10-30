@@ -228,8 +228,14 @@ public class InspectionOverview extends Activity {
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
         
 		//Set up the tabs dynamically
+        // Store the current tab
+        int currentTab = myTabHost.getCurrentTab();
+        // Set the current tab to 0 so it doesn't crash
+        myTabHost.setCurrentTab(0);
         myTabHost.clearAllTabs();
-        setUpTabs();
+        setUpTabs();        
+        //Restore the current tab
+        myTabHost.setCurrentTab( currentTab );
 		
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
