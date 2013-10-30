@@ -1,9 +1,9 @@
 <Franchisee id="1001" name="Darwin Fleming">
   <Client id="1001-01" name="North Bay Inc" address="North Bay, Muskoka, Parry Sound, Orillia">
     <clientContract id="1001-01-003" No ="1234" startDate ="29/10/2013" endDate ="29/10/2013" terms="">
-      <ServiceAddress id="S1" address="123 Sesame Street" postalCode="N6G 2P4" contact="" city="London" province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20101009 09:49PM">
+      <ServiceAddress id="B1" address="123 Sesame Street" postalCode="N6G 2P4" contact="" city="London" province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20101009 09:49PM">
         <Floor name="First Floor">
-          <Room id="R1" No="1">
+          <Room id="R1" No="10">
             <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
@@ -18,10 +18,10 @@
             </Room>
         </Floor>
       </ServiceAddress>
-            <ServiceAddress id="S2" address="444 Sesame Street" postalCode="N6G 2P4" contact="" city="London" province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20131009 09:49PM">
+            <ServiceAddress id="B2" address="444 Sesame Street" postalCode="N6G 2P4" contact="" city="London" province="Ontario" country="Canada" InspectorID="ID001" testTimeStamp="20131009 09:49PM">
         <Floor name="First Floor">
-          <Room id="R1" No="1">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R1" No="10">
+            <Extinguisher id="33102" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -32,7 +32,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33103" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -54,8 +54,8 @@
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
-          <Room id="R2" No="2">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R2" No="11">
+            <Extinguisher id="33104" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -66,7 +66,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33105" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -77,21 +77,21 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77208" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="88104" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
         </Floor>
         <Floor name="Second Floor">
-          <Room id="RR1" No="10">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R1" No="10">
+            <Extinguisher id="33106" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -102,7 +102,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33107" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -113,19 +113,19 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77209" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="88105" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
-          <Room id="RR2" No="20">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R2" No="21">
+            <Extinguisher id="33108" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -136,7 +136,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33109" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -147,21 +147,21 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77210" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="88106" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
         </Floor>
         <Floor name="Third Floor">
-          <Room id="rrR1" No="100">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R1" No="30">
+            <Extinguisher id="33110" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -172,7 +172,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33111" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -183,19 +183,19 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77211" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="88107" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
-          <Room id="Rrr2" No="200">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R2" No="31">
+            <Extinguisher id="33112" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -206,7 +206,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33113" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -217,21 +217,21 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77200" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="88111" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
         </Floor>
-        <Floor name="fouth Floor">
-          <Room id="rrRR1" No="1000000">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+        <Floor name="Fourth Floor">
+          <Room id="R1" No="40">
+            <Extinguisher id="33121" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -242,7 +242,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="33122" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -253,19 +253,19 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77277" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="88114" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
           </Room>
-          <Room id="rrrrrRR2" No="200000000000">
-            <Extinguisher id="33101" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
+          <Room id="R2" No="41">
+            <Extinguisher id="12546" location="East Stair" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -276,7 +276,7 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>
-            <Extinguisher id="33102" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
+            <Extinguisher id="3315462" location="Elev Lobby" size="10" type="ABC" model="Amerex" serialNo="s123">
               <inspectionElement_1 name="Hydro Test" testResult="" testNote=""/>
               <inspectionElement_2 name="6 Year Insp" testResult="" testNote=""/>
               <inspectionElement_3 name="Weight" testResult="" testNote=""/>
@@ -287,13 +287,13 @@
               <inspectionElement_8 name="Collar" testResult="" testNote=""/>
               <inspectionElement_9 name="Hose" testResult="" testNote=""/>
             </Extinguisher>            
-            <FireHoseCabinet id="77207" location="Staircase D">
+            <FireHoseCabinet id="77124" location="Staircase D">
               <inspectionElement_1 name="Cabinet Condition" testResult="" testNote=""/>
               <inspectionElement_2 name="Valve Condition" testResult="" testNote=""/>
               <inspectionElement_3 name="Hose Re-Rack" testResult="" testNote=""/>
               <inspectionElement_4 name="HT Due" testResult="" testNote=""/>
             </FireHoseCabinet>                    
-            <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
+            <EmergencyLight id="881456" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>        
