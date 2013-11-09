@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import android.os.Bundle;
 import android.app.ListActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
