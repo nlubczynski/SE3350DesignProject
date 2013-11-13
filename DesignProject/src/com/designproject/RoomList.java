@@ -52,9 +52,7 @@ public class RoomList extends ListActivity {
 		);
 		
 		///bind the data
-		setListAdapter(simpleAdapter); 
-		
-		updateStatus();
+		setListAdapter(simpleAdapter);
 	}
 	
 	public void roomItemListener(View view)
@@ -99,14 +97,19 @@ public class RoomList extends ListActivity {
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mFloor);
 		
-		updateStatus();
+		ListView listView = getListView();
+		listView.post(new Runnable() {
+		    @Override
+		    public void run() {
+		        updateStatus();
+		    }
+		});
 	}
 	
 	private void updateStatus() {
 		ListView listView = getListView();
 		if(listView.getChildCount() == rooms.length)
 		{
-
 			for(int i = 0; i < rooms.length; i++)
 			{
 				View listElement = (ViewGroup)listView.getChildAt(i);

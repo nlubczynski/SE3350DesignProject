@@ -131,7 +131,12 @@ private ListView listView;
     		FireAlertApplication a = (FireAlertApplication)getApplication();
     		a.setLocation(mRoom);
    
-			updateStatus();
+    		listView.post(new Runnable() {
+    		    @Override
+    		    public void run() {
+    		        updateStatus();
+    		    }
+    		});
     	}
 
         private void updateStatus() {
