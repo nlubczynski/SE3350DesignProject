@@ -253,8 +253,7 @@ public class InspectionOverview extends Activity {
 	{
 		
 		try {
-			XMLReaderWriter out = new XMLReaderWriter(this);
-			
+			XMLReaderWriter out = new XMLReaderWriter(this);			
 			FireAlertApplication a = (FireAlertApplication)getApplication();			
 			out.writeXML(a.getFranchise());
 		} catch (XmlPullParserException e) {
