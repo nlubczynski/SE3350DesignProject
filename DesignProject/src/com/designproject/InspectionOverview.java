@@ -255,10 +255,8 @@ public class InspectionOverview extends Activity {
 		try {
 			XMLReaderWriter out = new XMLReaderWriter(this);
 			
-			FireAlertApplication a = (FireAlertApplication)getApplication();
-			
-			
-			out.writeXML((Franchise) a.franchise);
+			FireAlertApplication a = (FireAlertApplication)getApplication();			
+			out.writeXML(a.getFranchise());
 		} catch (XmlPullParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

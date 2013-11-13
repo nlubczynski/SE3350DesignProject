@@ -36,7 +36,7 @@ public class XMLReaderWriter {
 		this.context = context;
 	}
 	
-	public boolean writeXML(Franchise franchise){
+	boolean writeXML(Franchise franchise){
 		
 		XmlSerializer serializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
