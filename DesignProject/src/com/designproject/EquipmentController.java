@@ -21,7 +21,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class InspectionForm extends Activity implements OnGestureListener {
+public class EquipmentController extends Activity implements OnGestureListener {
         private int pageNum, numPages;
         private GestureDetector gDetector;
         private InspectionElement[] elements;
@@ -54,11 +54,11 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 
                 // Set header
                 setTitle(equipment.getName());
-                final TextView typeView = new TextView(InspectionForm.this);
+                final TextView typeView = new TextView(EquipmentController.this);
                 typeView.setText(equipment.getName());
                 header.addView(typeView);
                 
-                final TextView pageView = new TextView(InspectionForm.this);
+                final TextView pageView = new TextView(EquipmentController.this);
                 if (numPages > 1)
                 {
                         pageView.setText("Page "+pageNum+" of "+numPages);
@@ -68,7 +68,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         header.addView(pageView, lparams);
                 }
                 
-                TextView locationView = new TextView(InspectionForm.this);
+                TextView locationView = new TextView(EquipmentController.this);
                 String location = equipment.getLocation();
                 if (location != null)
                 {
@@ -76,7 +76,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         header2.addView(locationView);
                 }
                 
-                TextView idView = new TextView(InspectionForm.this);
+                TextView idView = new TextView(EquipmentController.this);
                 String id = equipment.getID();
                 if (id != null)
                 {
@@ -91,7 +91,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 final node[] attributes = equipment.getAttributes();
                 if(attributes.length > 2)
                 {
-                	final Button moreInfo = new Button(InspectionForm.this);
+                	final Button moreInfo = new Button(EquipmentController.this);
                     moreInfo.setText("More Info");
                     LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
                     		LayoutParams.WRAP_CONTENT, 1);
@@ -106,7 +106,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         {
                         	for(int i = 0; i < attributes.length; i++)
                             {
-                        		TextView attributeView = new TextView(InspectionForm.this);
+                        		TextView attributeView = new TextView(EquipmentController.this);
                                 attributeView.setText(attributes[i].getName()+": "+attributes[i].getValue());
                                 info.addView(attributeView, i+2);
                             }
@@ -130,7 +130,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 });
                 }
                 
-                final Button submit = new Button(InspectionForm.this);
+                final Button submit = new Button(EquipmentController.this);
                 if (pageNum == numPages)
                 {
                         submit.setText("Submit");
@@ -147,7 +147,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
     	            }
     	        });
                 
-                final ImageButton next = new ImageButton(InspectionForm.this);
+                final ImageButton next = new ImageButton(EquipmentController.this);
                 if(pageNum < numPages)
                 {
                 	next.setImageResource(R.drawable.next_page);
@@ -161,13 +161,13 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 next.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
     	            	finish();
-                        Intent nextPage = new Intent(InspectionForm.this, InspectionForm.class);
+                        Intent nextPage = new Intent(EquipmentController.this, EquipmentController.class);
                         nextPage.putExtra("Page Number", ++pageNum);
                         startActivity(nextPage);
     	            }
     	        });
                 
-                final ImageButton previous = new ImageButton(InspectionForm.this);
+                final ImageButton previous = new ImageButton(EquipmentController.this);
                 if(pageNum > 1)
                 {
                 	previous.setImageResource(R.drawable.previous_page);
@@ -181,7 +181,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 previous.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
     	            	finish();
-                        Intent previousPage = new Intent(InspectionForm.this, InspectionForm.class);
+                        Intent previousPage = new Intent(EquipmentController.this, EquipmentController.class);
                         previousPage.putExtra("Page Number", --pageNum);
                         startActivity(previousPage);
     	            }
@@ -206,7 +206,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         if (pageNum > 1)
                         {
                         	finish();
-                            Intent previousPage = new Intent(InspectionForm.this, InspectionForm.class);
+                            Intent previousPage = new Intent(EquipmentController.this, EquipmentController.class);
                             previousPage.putExtra("Page Number", --pageNum);
                             startActivity(previousPage);
                         }
@@ -216,7 +216,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                         if (pageNum < numPages)
                         {
                         	finish();
-                             Intent nextPage = new Intent(InspectionForm.this, InspectionForm.class);
+                             Intent nextPage = new Intent(EquipmentController.this, EquipmentController.class);
                              nextPage.putExtra("Page Number", ++pageNum);
                              startActivity(nextPage);
                         }
@@ -273,7 +273,7 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 {
 	                for(int i = 0; i < 6; i++)
 	                {
-	                     CheckBox cb = new CheckBox(InspectionForm.this);
+	                     CheckBox cb = new CheckBox(EquipmentController.this);
 	                     cb.setText(elements[i].getName());
 	                     cb.setChecked(elements[i].getTestResult());
 	                     content.addView(cb);
@@ -283,15 +283,15 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 {
                 	for(int i = 6; i < elements.length - 1; i++)
 	                {
-	                     CheckBox cb = new CheckBox(InspectionForm.this);
+	                     CheckBox cb = new CheckBox(EquipmentController.this);
 	                     cb.setText(elements[i].getName());
 	                     cb.setChecked(elements[i].getTestResult());
 	                     content.addView(cb);
 	                }
-	                TextView commentsText = new TextView(InspectionForm.this);
+	                TextView commentsText = new TextView(EquipmentController.this);
 	            	commentsText.setText("Comments");
 	            	content.addView(commentsText);
-	            	EditText comments = new EditText(InspectionForm.this);
+	            	EditText comments = new EditText(EquipmentController.this);
 	            	comments.setText(elements[elements.length - 1].getTestNotes());
 	            	content.addView(comments);
                 }
@@ -333,16 +333,16 @@ public class InspectionForm extends Activity implements OnGestureListener {
             	// Populate form
                 for(int i = 0; i < 4; i++)
                 {
-                     CheckBox cb = new CheckBox(InspectionForm.this);
+                     CheckBox cb = new CheckBox(EquipmentController.this);
                      cb.setText(elements[i].getName());
                      cb.setChecked(elements[i].getTestResult());
                      content.addView(cb);
                 }
                
-                TextView commentsText = new TextView(InspectionForm.this);
+                TextView commentsText = new TextView(EquipmentController.this);
             	commentsText.setText("Comments");
             	content.addView(commentsText, content.getChildCount());
-             	EditText comments = new EditText(InspectionForm.this);
+             	EditText comments = new EditText(EquipmentController.this);
              	comments.setText(elements[elements.length - 1].getTestNotes());
                	content.addView(comments, content.getChildCount());
         	}
@@ -367,17 +367,17 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 {
 	                for(int i = 0; i < 2; i++)
 	                {
-	                     CheckBox cb = new CheckBox(InspectionForm.this);
+	                     CheckBox cb = new CheckBox(EquipmentController.this);
 	                     cb.setText(elements[i].getName());
 	                     cb.setChecked(elements[i].getTestResult());
 	                     content.addView(cb);
 	                }
 	                for (int j = 2; j < elements.length - 1; j++)
 	                {
-	                	TextView tv = new TextView(InspectionForm.this);
+	                	TextView tv = new TextView(EquipmentController.this);
 	                    tv.setText(elements[j].getName());
 	                    content.addView(tv);
-	                    EditText et = new EditText(InspectionForm.this);
+	                    EditText et = new EditText(EquipmentController.this);
 	                    et.setText(elements[j].getTestNotes());
 	                    et.setInputType(InputType.TYPE_CLASS_NUMBER);
 	                    content.addView(et);
@@ -385,10 +385,10 @@ public class InspectionForm extends Activity implements OnGestureListener {
                 }
                 else
                 {
-	                TextView commentsText = new TextView(InspectionForm.this);
+	                TextView commentsText = new TextView(EquipmentController.this);
 	               	commentsText.setText("Comments");
 	               	content.addView(commentsText);
-	               	EditText comments = new EditText(InspectionForm.this);
+	               	EditText comments = new EditText(EquipmentController.this);
 	               	comments.setText(elements[elements.length - 1].getTestNotes());
 	               	content.addView(comments);
                 }

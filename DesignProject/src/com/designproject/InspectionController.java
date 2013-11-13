@@ -19,7 +19,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 
-public class InspectionView extends ListActivity {
+public class InspectionController extends ListActivity {
 
 	// for storing the information.
 	private ArrayList<String []> inspectionInformationArray;
@@ -165,7 +165,7 @@ public class InspectionView extends ListActivity {
 			    }	
 		}
 		
-		Intent openInspectionOverview= new Intent(InspectionView.this, InspectionOverview.class);
+		Intent openInspectionOverview= new Intent(InspectionController.this, ContractController.class);
     	//openInspectionView.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
     	startActivity(openInspectionOverview);
 		

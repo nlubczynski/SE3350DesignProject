@@ -26,7 +26,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 
-public class InspectionOverview extends Activity {
+public class ContractController extends Activity {
 
     private TabHost myTabHost;
     private Contract mContract;
@@ -179,7 +179,7 @@ public class InspectionOverview extends Activity {
 				//Set the application to the floor we're going into
 				FireAlertApplication a = (FireAlertApplication)getApplication();
 				a.setLocation( mBuildings[ myTabHost.getCurrentTab() ].getFloors()[ v.getId() ] );
-				Intent openRoomList = new Intent(InspectionOverview.this, RoomList.class);
+				Intent openRoomList = new Intent(ContractController.this, FloorController.class);
 				startActivity(openRoomList);				
 			}
 

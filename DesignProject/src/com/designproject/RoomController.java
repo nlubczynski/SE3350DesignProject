@@ -25,7 +25,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class EquipmentInspectionList extends ListActivity {
+public class RoomController extends ListActivity {
 
 private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 private DataReceiver dataScanner = null;
@@ -62,7 +62,7 @@ private ListView listView;
                          
                             FireAlertApplication app = (FireAlertApplication) getApplication();
                             app.setLocation(equipment[position]);
-                            Intent inspectionForm = new Intent(EquipmentInspectionList.this, InspectionForm.class);
+                            Intent inspectionForm = new Intent(RoomController.this, EquipmentController.class);
                             inspectionForm.putExtra("Page Number", 1);
                             startActivity(inspectionForm);
                         }
@@ -91,7 +91,7 @@ private ListView listView;
         					{
         						FireAlertApplication a = (FireAlertApplication) getApplication();
                                 a.setLocation(equipment[i]);
-                                Intent inspectionForm = new Intent(EquipmentInspectionList.this, InspectionForm.class);
+                                Intent inspectionForm = new Intent(RoomController.this, EquipmentController.class);
                                 inspectionForm.putExtra("Page Number", 1);
                                 startActivity(inspectionForm);
                                 break;

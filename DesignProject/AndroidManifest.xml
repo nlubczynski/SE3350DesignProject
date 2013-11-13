@@ -42,7 +42,7 @@
                 android:value=".MenuListActivity" />
         </activity>
         <activity
-            android:name="com.designproject.InspectionView"
+            android:name="com.designproject.InspectionController"
             android:label="@string/title_activity_inspection_view"
             android:parentActivityName="com.designproject.MainMenu" >
             <meta-data
@@ -50,17 +50,17 @@
                 android:value="com.designproject.MainMenu" />
         </activity>
         <activity
-            android:name="com.designproject.InspectionOverview"
+            android:name="com.designproject.ContractController"
             android:label="@string/title_activity_inspection_overview"
-            android:parentActivityName="com.designproject.InspectionView" >
+            android:parentActivityName="com.designproject.InspectionController" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
         </activity>
         <activity
-            android:name="com.designproject.EquipmentInspectionList"
+            android:name="com.designproject.RoomController"
             android:label="@string/title_activity_equipment_inspection_list"
-            android:parentActivityName="com.designproject.InspectionOverview" 
+            android:parentActivityName="com.designproject.ContractController" 
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -69,23 +69,23 @@
         <activity
             android:name="com.designproject.InspectionOverviewCollection"
             android:label="@string/title_activity_inspection_overview_v2"
-            android:parentActivityName="com.designproject.InspectionView" >
+            android:parentActivityName="com.designproject.InspectionController" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
         </activity>
         <activity
-            android:name="com.designproject.InspectionForm"
+            android:name="com.designproject.EquipmentController"
             android:label="@string/title_activity_inspection_form"
-            android:parentActivityName="com.designproject.InspectionForm" >
+            android:parentActivityName="com.designproject.EquipmentController" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
         </activity>
         <activity
-            android:name="com.designproject.RoomList"
+            android:name="com.designproject.FloorController"
             android:label="@string/title_room_list"
-            android:parentActivityName="com.designproject.InspectionOverview" >
+            android:parentActivityName="com.designproject.ContractController" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionOverview" />

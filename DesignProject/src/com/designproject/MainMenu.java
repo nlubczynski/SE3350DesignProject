@@ -122,7 +122,7 @@ public class MainMenu extends Activity {
     public void inspectionClickListener(View view)
     {
         
-        Intent openInspectionView = new Intent(MainMenu.this, InspectionView.class);
+        Intent openInspectionView = new Intent(MainMenu.this, InspectionController.class);
         //openInspectionView.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(openInspectionView);
     }

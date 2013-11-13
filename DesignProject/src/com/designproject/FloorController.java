@@ -15,7 +15,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 
-public class RoomList extends ListActivity {
+public class FloorController extends ListActivity {
 	
 	Room [] rooms;
 	Floor mFloor;
@@ -70,7 +70,7 @@ public class RoomList extends ListActivity {
 				break;
 			}
 		
-		Intent openInspectionOverview= new Intent(RoomList.this, EquipmentInspectionList.class);
+		Intent openInspectionOverview= new Intent(FloorController.this, RoomController.class);
     	startActivity(openInspectionOverview);
 	}
 	
