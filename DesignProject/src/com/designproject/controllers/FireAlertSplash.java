@@ -1,11 +1,17 @@
-package com.designproject;
+package com.designproject.controllers;
 
 
 import java.io.IOException;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.designproject.FireAlertApplication;
 import com.designproject.R;
+import com.designproject.R.animator;
+import com.designproject.R.id;
+import com.designproject.R.layout;
+import com.designproject.R.menu;
+import com.designproject.models.XMLReaderWriter;
 
 import android.os.Bundle;
 import android.app.Activity;

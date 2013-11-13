@@ -1,7 +1,18 @@
-package com.designproject;
+package com.designproject.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.designproject.FireAlertApplication;
+import com.designproject.R;
+import com.designproject.R.color;
+import com.designproject.R.id;
+import com.designproject.R.layout;
+import com.designproject.R.menu;
+import com.designproject.models.Equipment;
+import com.designproject.models.Floor;
+import com.designproject.models.HelperMethods;
+import com.designproject.models.Room;
 
 import android.os.Bundle;
 import android.app.ListActivity;

@@ -1,5 +1,7 @@
 package com.designproject;
 
+import com.designproject.models.Franchise;
+
 import android.app.Application;
 
 public class FireAlertApplication extends Application {

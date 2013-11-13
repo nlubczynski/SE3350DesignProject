@@ -1,4 +1,4 @@
-package com.designproject;
+package com.designproject.models;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +15,9 @@ import android.content.Context;
 import android.content.res.XmlResourceParser;
 import android.util.Xml;
 
-import com.designproject.Equipment.node;
+import com.designproject.R;
+import com.designproject.R.xml;
+import com.designproject.models.Equipment.node;
 /**
  * 
  * @author NikLubz and Jessica
@@ -36,7 +38,7 @@ public class XMLReaderWriter {
 		this.context = context;
 	}
 	
-	boolean writeXML(Franchise franchise){
+	public boolean writeXML(Franchise franchise){
 		
 		XmlSerializer serializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();

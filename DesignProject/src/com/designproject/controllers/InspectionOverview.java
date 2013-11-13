@@ -1,7 +1,23 @@
-package com.designproject;
+package com.designproject.controllers;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+
+
+
+
+
+import com.designproject.FireAlertApplication;
+import com.designproject.R;
+import com.designproject.R.id;
+import com.designproject.R.layout;
+import com.designproject.R.menu;
+import com.designproject.models.Building;
+import com.designproject.models.Contract;
+import com.designproject.models.Floor;
+import com.designproject.models.HelperMethods;
+import com.designproject.models.Room;
+import com.designproject.models.XMLReaderWriter;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

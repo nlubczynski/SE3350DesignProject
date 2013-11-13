@@ -1,6 +1,9 @@
-package com.designproject;
+package com.designproject.controllers;
 
 import com.designproject.R;
+import com.designproject.R.id;
+import com.designproject.R.layout;
+import com.designproject.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;

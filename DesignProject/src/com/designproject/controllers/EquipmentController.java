@@ -1,6 +1,15 @@
-package com.designproject;
+package com.designproject.controllers;
 
-import com.designproject.Equipment.node;
+import com.designproject.R.color;
+import com.designproject.R.drawable;
+import com.designproject.R.id;
+import com.designproject.R.layout;
+import com.designproject.R.menu;
+import com.designproject.models.Equipment;
+import com.designproject.models.HelperMethods;
+import com.designproject.models.InspectionElement;
+import com.designproject.models.Equipment.node;
+import com.designproject.FireAlertApplication;
 import com.designproject.R;
 
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.designproject;
+package com.designproject.models;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+
+import com.designproject.controllers.LoginScreen;
 
 import android.content.Context;
 import android.content.Intent;

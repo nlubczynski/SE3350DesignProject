@@ -1,4 +1,4 @@
-package com.designproject;
+package com.designproject.models;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
