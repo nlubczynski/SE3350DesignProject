@@ -43,12 +43,16 @@ public class MainMenu extends Activity {
         
         
         try {
+        	//Create the reader writer
         	XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
-			FireAlertApplication a = (FireAlertApplication)getApplication();
-			a.setLocation( reader.parseXML() );
+			// Get out applciation
+        	FireAlertApplication a = (FireAlertApplication)getApplication();
+			// Parse the xml and set the franchise to our application
+        	a.setFranchise( reader.parseXML() );
+			//We're currently in the franchise
+        	a.setLocation( a.getFranchise() );
+        	//Set the local variable for franchise
 			mFranchise = (Franchise) a.getLocation();
-			a.franchise = mFranchise;
-			reader.writeXML( (Franchise) a.getLocation() );
         }catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
