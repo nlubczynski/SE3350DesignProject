@@ -35,6 +35,7 @@ public class EquipmentController extends Activity implements OnGestureListener {
         private GestureDetector gDetector;
         private InspectionElement[] elements;
         private LinearLayout content;
+        private Equipment equipment;
         
         protected void onCreate(Bundle savedInstanceState) {
         	// Check if Logged in
@@ -48,7 +49,7 @@ public class EquipmentController extends Activity implements OnGestureListener {
                 pageNum = mIntent.getIntExtra("Page Number", 0);
                  
                 FireAlertApplication app = (FireAlertApplication) getApplication();
-                Equipment equipment = (Equipment) app.getLocation();
+                equipment = (Equipment) app.getLocation();
                 //equipment.clearInspectionElements();
                 
                 content = (LinearLayout) findViewById(R.id.inspect_form_content);
