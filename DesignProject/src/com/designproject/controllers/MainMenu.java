@@ -11,10 +11,6 @@ import org.joda.time.LocalDate;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.designproject.R;
-import com.designproject.R.array;
-import com.designproject.R.id;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 import com.designproject.models.Client;
 import com.designproject.models.Contract;
 import com.designproject.models.Franchise;

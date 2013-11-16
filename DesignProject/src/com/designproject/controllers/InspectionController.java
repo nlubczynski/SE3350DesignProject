@@ -8,9 +8,6 @@ import org.joda.time.Interval;
 
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
-import com.designproject.R.id;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 import com.designproject.models.Client;
 import com.designproject.models.Contract;
 import com.designproject.models.Franchise;

@@ -5,10 +5,6 @@ import java.util.HashMap;
 
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
-import com.designproject.R.color;
-import com.designproject.R.id;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 import com.designproject.models.Equipment;
 import com.designproject.models.Floor;
 import com.designproject.models.HelperMethods;
