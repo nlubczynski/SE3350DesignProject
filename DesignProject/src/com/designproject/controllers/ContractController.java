@@ -8,9 +8,6 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
-import com.designproject.R.id;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 import com.designproject.models.Building;
 import com.designproject.models.Contract;
 import com.designproject.models.Floor;
@@ -26,6 +23,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,8 +34,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 
@@ -113,6 +113,7 @@ public class ContractController extends Activity {
 					textViewBuildingStatus.setGravity(Gravity.RIGHT);
 					
 					//Check if building is complete
+					
 					if(building.isCompleted())
 					{
 						textViewBuildingStatus.setText("COMPLETE");
@@ -123,7 +124,6 @@ public class ContractController extends Activity {
 						textViewBuildingStatus.setText("INCOMPLETE");
 						textViewBuildingStatus.setTextColor(Color.RED);
 					}
-					
 					layout1.addView(textViewBuildingStatus);
 					
 					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(1));
@@ -258,7 +258,7 @@ public class ContractController extends Activity {
 		
 	}
 	
-	public void buttonListener(View view)
+	public void submitButtonListener(View view)
 	{
 		
 		try {

@@ -2,11 +2,6 @@ package com.designproject.controllers;
 
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
-import com.designproject.R.color;
-import com.designproject.R.id;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
-import com.designproject.models.Building;
 import com.designproject.models.Equipment;
 import com.designproject.models.HelperMethods;
 import com.designproject.models.Room;
@@ -141,7 +136,12 @@ public class RoomController extends ListActivity {
 		FireAlertApplication a = (FireAlertApplication) getApplication();
 		a.setLocation(mRoom);
 
-		updateStatus();
+		listView.post(new Runnable() {
+			 @Override
+			 public void run() {
+			 	updateStatus();
+			 }
+		});
 	}
 
 	private void updateStatus() {
@@ -155,7 +155,6 @@ public class RoomController extends ListActivity {
 				}
 			}
 		}
-
 	}
 
 	// given Scanner code
