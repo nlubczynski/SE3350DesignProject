@@ -263,6 +263,7 @@ public class ContractController extends Activity {
 			
 			FireAlertApplication a = (FireAlertApplication)getApplication();
 			out.writeXML( a.getFranchise() );
+			view.setEnabled(false);
 		} catch (XmlPullParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
