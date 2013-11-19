@@ -2,10 +2,6 @@ package com.designproject.controllers;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-
-
-
-
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
 import com.designproject.models.Building;
@@ -104,7 +100,7 @@ public class ContractController extends Activity {
 					
 					//Get necessary linearLayout and add necessary view
 					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(0));
-					TextView textViewBuildingStatus = new TextView(context);
+					final TextView textViewBuildingStatus = new TextView(context);
 					textViewBuildingStatus.setTextAppearance(context, android.R.attr.textAppearanceLarge);
 					textViewBuildingStatus.setLayoutParams(params);
 					textViewBuildingStatus.setGravity(Gravity.RIGHT);
@@ -169,6 +165,29 @@ public class ContractController extends Activity {
 					textViewInspectionElements.setLayoutParams(params);
 					textViewInspectionElements.setGravity(Gravity.RIGHT);
 					layout1.addView(textViewInspectionElements);
+					
+					layout1 = (LinearLayout)(((ViewGroup)view).getChildAt(5));
+					Button  submitButton = new Button(context);
+					submitButton.setText(R.string.submit_building);
+					submitButton.setTag(building.getId());
+					submitButton.setEnabled(false);
+					submitButton.setOnClickListener(new Button.OnClickListener() {  
+				        public void onClick(View v)
+			            {
+				        	try {
+				    			XMLReaderWriter out = new XMLReaderWriter(context);
+				    			
+				    			FireAlertApplication a = (FireAlertApplication)getApplication();
+				    			out.writeXML( a.getFranchise() );
+				    			v.setEnabled(false);
+				    			textViewBuildingStatus.setText("SENT");
+				    		} catch (XmlPullParserException e) {
+				    			// TODO Auto-generated catch block
+				    			e.printStackTrace();
+				    		}
+			            }
+			         });
+					layout1.addView(submitButton);
 
 					return view;
 					}       
@@ -246,28 +265,19 @@ public class ContractController extends Activity {
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
+		
+		for(Building building : mBuildings) {
+			if (building.isCompleted()) {
+				View parent = findViewById(R.id.LinearLayout1);
+				Button submitButton = (Button) parent.findViewWithTag(building.getId());
+				submitButton.setEnabled(true);
+			}
+		}
 	}
 	@Override
 	public void onDestroy(){
 		super.onResume();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
-		
-	}
-	
-	public void submitButtonListener(View view)
-	{
-		
-		try {
-			XMLReaderWriter out = new XMLReaderWriter(this);
-			
-			FireAlertApplication a = (FireAlertApplication)getApplication();
-			out.writeXML( a.getFranchise() );
-			view.setEnabled(false);
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 }

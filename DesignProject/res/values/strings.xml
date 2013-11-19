@@ -42,5 +42,6 @@
     <string name="RoomLabel">"Room: "</string>
     <string name="start_inspection">Start Inspection</string>
     <string name="select_equipment">Select</string>
+    <string name="submit_building">Submit Building</string>
 
 </resources>

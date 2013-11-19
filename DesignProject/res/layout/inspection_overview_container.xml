@@ -189,20 +189,6 @@
             android:layout_margin="@dimen/default_margin_2x" >
 
         </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="submitButtonListener"
-                android:text="Submit Building" />
-        </TableRow>
     </TableLayout>
 
 </LinearLayout>
