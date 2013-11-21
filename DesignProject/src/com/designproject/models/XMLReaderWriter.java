@@ -3,12 +3,9 @@ package com.designproject.models;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -23,7 +20,6 @@ import android.os.Environment;
 import android.util.Xml;
 
 import com.designproject.R;
-import com.designproject.R.xml;
 import com.designproject.models.Equipment.node;
 /**
  * 
