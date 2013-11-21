@@ -249,9 +249,9 @@ public class XMLReaderWriter {
 				return out.toString();
 			}
 			else
-				return "FILE NOT FOUND";
+				throw new IOException();
 		}
-		return "FILE NOT FOUND";
+		throw new IOException();
 	}
 	
 	public Franchise parseXML() throws XmlPullParserException, IOException{
