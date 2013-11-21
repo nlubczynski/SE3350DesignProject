@@ -1,8 +1,14 @@
 package com.designproject.models;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -13,6 +19,7 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
+import android.os.Environment;
 import android.util.Xml;
 
 import com.designproject.R;
@@ -195,19 +202,60 @@ public class XMLReaderWriter {
 		} catch (Exception e) {
 	        return false;
 	    } 
-
-		// Write the file to "XMLOut.xml"
-		File file = new File(context.getFilesDir(), "XMLOut.xml");
-		FileWriter out;
-		try {
-			out = new FileWriter(file);
-			out.write( writer.toString() );
-			out.close();
-		} catch (IOException e) {
-			return false;
+		//Write the file
+		if(canWrite()){
+			
+			File sdCard = Environment.getExternalStorageDirectory();
+			File dir = new File (sdCard.getAbsolutePath() + "/FireAlertApp");
+			
+			//It doesn't exist, and we can't make it - we don't have the permissions
+			if( dir.mkdirs() || dir.isDirectory() )
+				return false;
+			
+			File file = new File(dir, "FireAlertData.xml");
+			
+			FileOutputStream os;
+			BufferedOutputStream out;
+			
+			try {
+				os = new FileOutputStream(file);
+				out = new BufferedOutputStream(os);
+				out.write( writer.toString().getBytes() );
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
 		}
+		else
+			return false;
 		
 		return true;
+	}
+	
+	public String getXML() throws IOException{		
+		
+		if(canRead()){
+			File sdCard = Environment.getExternalStorageDirectory();
+			File file = new File(sdCard.getAbsoluteFile() + "/FireAlertApp/" , "FireAlertData.xml");
+			
+			if(file.exists()){			
+				BufferedReader br = new BufferedReader(new FileReader(file));		
+				StringBuilder out = new StringBuilder();
+				
+				String line = br.readLine();
+				while(line != null){
+					out.append(line);
+					line = br.readLine();
+				}
+				
+				br.close();
+				return out.toString();
+			}
+			else
+				return "FILE NOT FOUND";
+		}
+		return "FILE NOT FOUND";
 	}
 	
 	public Franchise parseXML() throws XmlPullParserException, IOException{
@@ -557,5 +605,42 @@ public class XMLReaderWriter {
 		//Add Inspection Element to Above Equipment
 		lastEquipment.addInspectionElement( new InspectionElement( name ) );
 		
+	}
+	private boolean canRead(){
+		
+		boolean mExternalStorageAvailable = false;
+		String state = Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+		    // We can read and write the media
+		    mExternalStorageAvailable = true;
+		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		    // We can only read the media
+		    mExternalStorageAvailable = true;
+		} else {
+		    // Something else is wrong. It may be one of many other states, but all we need
+		    //  to know is we can neither read nor write
+		    mExternalStorageAvailable = false;
+		}
+		
+		return mExternalStorageAvailable;
+	}
+	private boolean canWrite(){
+
+		boolean mExternalStorageWriteable = false;
+		String state = Environment.getExternalStorageState();
+		
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+		    // We can read and write the media
+			mExternalStorageWriteable = true;
+		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		    // We can only read the media
+			mExternalStorageWriteable = true;
+		} else {
+		    // Something else is wrong. It may be one of many other states, but all we need
+		    //  to know is we can neither read nor write
+			mExternalStorageWriteable = false;
+		}
+		return mExternalStorageWriteable;
 	}
 }
