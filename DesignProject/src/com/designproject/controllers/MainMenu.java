@@ -31,18 +31,16 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class MainMenu extends Activity {
+public class MainMenu extends NavigationDrawerActivity {
 
-    private String[] mDrawerListTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
     private Franchise mFranchise;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
-        
+        //super.(savedInstanceState);
+        setContentView(R.layout.activity_main_menu);
         super.onCreate(savedInstanceState);
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         
@@ -64,21 +62,7 @@ public class MainMenu extends Activity {
             e.printStackTrace();
         }
         System.out.println("end");
-        
-        setContentView(R.layout.activity_main_menu);
-   
-        mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        
-        setupNavigationDrawer();
-        // Set the adapater for the list view
-        mDrawerList.setAdapter((new ArrayAdapter<String>(this,
-        		R.layout.drawer_list_item, mDrawerListTitles)));
-        
-        // Set the adapter for this list view
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+       
 
         calculateDates();
     }
@@ -89,19 +73,6 @@ public class MainMenu extends Activity {
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
     	super.onResume();
     }
-    private void setupNavigationDrawer()
-    {
-         mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
-         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-         
-         // Set the adapater for the list view
-         mDrawerList.setAdapter((new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mDrawerListTitles)));
-         
-         // Bind a listener to the drawer list
-         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,36 +81,12 @@ public class MainMenu extends Activity {
             return super.onCreateOptionsMenu(menu);
     }
     
-    public void signOut()
-    {
-    	// Replace current code with LogOutHelper code
-    	HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
-    }
-
-    private void selectItem(int position) {
-        // update the main content by replacing fragments
-        // position is the 0-based placement in the toolbox
-    	switch(position){
-    	case 4:
-    		//logout
-    		signOut();
-    		break;    	
-    	}
-
-    }
-    
     public void inspectionClickListener(View view)
     {
         
         Intent openInspectionView = new Intent(MainMenu.this, InspectionController.class);
         //openInspectionView.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(openInspectionView);
-    }
-    
-    public void imageButtonLogoListener(View view)
-    {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.openDrawer(Gravity.LEFT);
     }
     
     private void calculateDates()
@@ -230,14 +177,6 @@ public class MainMenu extends Activity {
         textViewWeekProgress.setText(doneNextWeek + "/" + dueNextWeek);
         textViewTodayProgress.setText(doneToday + "/" + dueToday);
         textViewMonthProgress.setText(doneNextMonth + "/" + dueNextMonth);
-    }
-    
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
     }
     
     

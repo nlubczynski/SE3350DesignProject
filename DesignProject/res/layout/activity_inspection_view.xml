@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@color/lighter_light_grey" >"
+    android:background="@color/lighter_light_grey" >
     <ListView 
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"

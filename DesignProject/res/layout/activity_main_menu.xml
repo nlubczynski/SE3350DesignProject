@@ -31,8 +31,8 @@
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentLeft="true"
 	            android:layout_alignParentTop="true"
-	            android:src="@drawable/fire_alert_small"
-	            android:onClick="imageButtonLogoListener" />
+	            android:clickable="false"
+	            android:src="@drawable/fire_alert_small" />
 	
 	        <TextView
 	            android:id="@+id/welcomeText"

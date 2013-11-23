@@ -34,19 +34,20 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 
-public class ContractController extends Activity {
+public class ContractController extends NavigationDrawerActivity {
 
     private TabHost myTabHost;
     private Contract mContract;
     private Building[] mBuildings;
     
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
 		
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inspection_overview_parent);
+
+		super.onCreate(savedInstanceState);
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
@@ -60,10 +61,7 @@ public class ContractController extends Activity {
 	private void setUpTabs()
 	{		
 		myTabHost = (TabHost)this.findViewById(android.R.id.tabhost);
-
-//		if(myTabHost.getTabWidget().getTabCount() > 0)
-//			myTabHost.clearAllTabs();
-		
+	
 		//setup must be called whenever tabs are created and added
 		myTabHost.setup();
 
@@ -90,7 +88,6 @@ public class ContractController extends Activity {
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			               0, LayoutParams.WRAP_CONTENT);
 			            params.weight=2f;
-			            //params.setMargins(0, 0, 0, 10);
 				       
 					LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					View view = inflater.inflate(R.layout.inspection_overview_container, null);
