@@ -12,10 +12,10 @@ import com.designproject.models.Room;
 import com.designproject.models.XMLReaderWriter;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -77,7 +77,10 @@ public class ContractController extends NavigationDrawerActivity {
 			
 			//Set tab name
 			String buildingName = building.getId();
-			ts1.setIndicator("Building: " + buildingName);
+//			View tabIndicator =LayoutInflater.from(this).inflate(R.layout.tab_indicator_layout, myTabHost.getTabWidget(), false);
+//			((TextView)(tabIndicator.findViewById(R.id.txtTabLabel))).setText("Building: " + buildingName);
+			
+			ts1.setIndicator("Building: " + buildingName, this.getResources().getDrawable(R.drawable.ic_tab_spec_selected));
 			
 			//Set up content of each tab. This will inflate a view which has only labels.
 			//Each corresponding value for the labels is made progmatically then added to its respective linear layout
@@ -168,6 +171,7 @@ public class ContractController extends NavigationDrawerActivity {
 					submitButton.setText(R.string.submit_building);
 					submitButton.setTag(building.getId());
 					submitButton.setEnabled(false);
+					submitButton.setBackgroundResource(R.drawable.backgrounds);
 					submitButton.setOnClickListener(new Button.OnClickListener() {  
 				        public void onClick(View v)
 			            {
@@ -197,9 +201,15 @@ public class ContractController extends NavigationDrawerActivity {
 
 	private void addFloorButton(Floor floor, int buttonNum, LinearLayout linearLayoutFloorButtonContainer) {
 		Button button = new Button(this);
-		button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		
+		// set button params
+		LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		params.setMargins(5, 5, 5, 5);
+		button.setLayoutParams(params);
+		
 		button.setText(floor.getName());
 		button.setId( buttonNum );
+		button.setBackgroundResource(R.drawable.backgrounds);
 		button.setOnClickListener( new OnClickListener(){
 
 			@Override

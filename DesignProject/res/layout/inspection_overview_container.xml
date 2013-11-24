@@ -145,7 +145,7 @@
             android:layout_marginBottom="@dimen/default_margin_2x" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/txtTabLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin_2x"
