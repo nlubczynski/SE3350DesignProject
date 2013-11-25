@@ -1,15 +1,19 @@
 package com.designproject.controllers;
 
-import com.designproject.R;
-import com.designproject.models.HelperMethods;
-
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.designproject.R;
+import com.designproject.models.HelperMethods;
 
 public class NavigationDrawerActivity extends Activity {
 
@@ -36,9 +40,10 @@ public class NavigationDrawerActivity extends Activity {
          mDrawerList = (ListView) findViewById(R.id.left_drawer);
          
          // Set the adapater for the list view
-         mDrawerList.setAdapter((new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mDrawerListTitles)));
-         
+        // mDrawerList.setAdapter((new ArrayAdapter<String>(this,
+          //      R.layout.drawer_list_item, mDrawerListTitles)));
+         AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
+         mDrawerList.setAdapter(adpClass);
          // Bind a listener to the drawer list
          mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
@@ -68,6 +73,38 @@ public class NavigationDrawerActivity extends Activity {
             selectItem(position);
         }
     }
+    
+    public class AdapterClass  extends ArrayAdapter<String> {
+    	Context context;
+    	private String[] TextValue;
+
+    	public AdapterClass(Context context, String[] mDrawerListTitles) {
+    	    super(context, R.layout.drawer_list_item, mDrawerListTitles);
+    	    this.context = context;
+    	    this.TextValue= mDrawerListTitles;
+
+    	}
+
+
+    	@Override
+    	public View getView(int position, View coverView, ViewGroup parent) {
+    	    // TODO Auto-generated method stub
+
+    	    LayoutInflater inflater = (LayoutInflater) context
+    	            .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    	    View rowView = inflater.inflate(R.layout.drawer_list_item,
+    	            parent, false);
+
+    	    TextView text1 = (TextView)rowView.findViewById(R.id.txtNavDrawer);
+    	    
+    	    //the position corresponds to the text that is outputted
+    	    text1.setText(TextValue[position]);
+
+    	    return rowView;
+
+    	}
+
+    	}
 
 }
 
