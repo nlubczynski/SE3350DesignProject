@@ -2,6 +2,7 @@ package com.designproject.controllers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -26,11 +27,7 @@ public class NavigationDrawerActivity extends Activity {
 		// TODO Auto-generated constructor stub
         super.onCreate(savedInstanceState);
         
-       //setContentView(R.layout.activity_main_menu);
-
-        
         setupNavigationDrawer();
-
 	}
 	
 	private void setupNavigationDrawer()
@@ -39,11 +36,10 @@ public class NavigationDrawerActivity extends Activity {
          mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
          mDrawerList = (ListView) findViewById(R.id.left_drawer);
          
-         // Set the adapater for the list view
-        // mDrawerList.setAdapter((new ArrayAdapter<String>(this,
-          //      R.layout.drawer_list_item, mDrawerListTitles)));
+         // Set the adapater for the list view through custom adapter
          AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
          mDrawerList.setAdapter(adpClass);
+         
          // Bind a listener to the drawer list
          mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
@@ -52,15 +48,25 @@ public class NavigationDrawerActivity extends Activity {
         // update the main content by replacing fragments
         // position is the 0-based placement in the toolbox
     	switch(position){
-    	case 4:
+    	
+    	case 2:
+    		loadSettingsPage();
+    		break;
+    	case 3:
     		//logout
     		signOut();
     		break;    	
     	}
-
     }
     
-    public void signOut()
+    private void loadSettingsPage() {
+		// TODO Auto-generated method stub
+    	
+    	Intent openSettingsPage = new Intent (NavigationDrawerActivity.this, SettingsController.class);
+    	startActivity(openSettingsPage);
+	}
+
+	public void signOut()
     {
     	// Replace current code with LogOutHelper code
     	HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
@@ -85,7 +91,6 @@ public class NavigationDrawerActivity extends Activity {
 
     	}
 
-
     	@Override
     	public View getView(int position, View coverView, ViewGroup parent) {
     	    // TODO Auto-generated method stub
@@ -101,11 +106,8 @@ public class NavigationDrawerActivity extends Activity {
     	    text1.setText(TextValue[position]);
 
     	    return rowView;
-
+    	    }
     	}
-
-    	}
-
 }
 
 

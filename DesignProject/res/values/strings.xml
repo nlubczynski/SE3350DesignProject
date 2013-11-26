@@ -43,5 +43,6 @@
     <string name="start_inspection">Start Inspection</string>
     <string name="select_equipment">Select</string>
     <string name="submit_building">Submit Building</string>
+    <string name="title_activity_settings_controller">SettingsController</string>
 
 </resources>
