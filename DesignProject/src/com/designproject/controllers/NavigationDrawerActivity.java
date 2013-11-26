@@ -91,15 +91,15 @@ public class NavigationDrawerActivity extends Activity {
     	    ImageView image = (ImageView)rowView.findViewById(R.id.imageViewNavDrawer);
     	    
     	    if(position == 0)
-    	    	image.setImageResource(R.drawable.ic_client);
+    	    	image.setImageResource(R.drawable.ic_client_light);
     	    else if(position == 1)
-    	    	image.setImageResource(R.drawable.ic_tab_spec_unselected);
+    	    	image.setImageResource(R.drawable.ic_tab_spec_selected);
     	    else if(position == 2)
-    	    	image.setImageResource(R.drawable.ic_inspection);
+    	    	image.setImageResource(R.drawable.ic_inspection_light);
     	    else if(position == 3)
-    	    	image.setImageResource(R.drawable.ic_settings);
+    	    	image.setImageResource(R.drawable.ic_settings_light);
     	    else if(position == 4)
-    	    	image.setImageResource(R.drawable.ic_logout);
+    	    	image.setImageResource(R.drawable.ic_logout_light);
 
     	    return rowView;
     	    }
