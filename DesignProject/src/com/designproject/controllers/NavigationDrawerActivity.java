@@ -1,14 +1,11 @@
 package com.designproject.controllers;
 
-import com.designproject.FireAlertApplication;
 import com.designproject.R;
-import com.designproject.models.Franchise;
 import com.designproject.models.HelperMethods;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -19,15 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.designproject.R;
-import com.designproject.models.HelperMethods;
-
 public class NavigationDrawerActivity extends Activity {
 
 	private String[] mDrawerListTitles;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-	private Franchise theFranchise;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

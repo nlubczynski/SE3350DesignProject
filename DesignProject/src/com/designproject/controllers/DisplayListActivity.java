@@ -1,11 +1,7 @@
 package com.designproject.controllers;
 
-import java.util.ArrayList;
-
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
-import com.designproject.R.layout;
-import com.designproject.R.menu;
 import com.designproject.models.Client;
 import com.designproject.models.Franchise;
 
@@ -27,7 +23,6 @@ public class DisplayListActivity extends Activity {
 
 	private Franchise theFranchise;
 	private Client [] clients;
-	private Client singleClient;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
