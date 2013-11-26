@@ -15,7 +15,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -87,7 +86,7 @@ public class ContractController extends NavigationDrawerActivity {
 			ts1.setContent(new TabHost.TabContentFactory(){
 				public View createTabContent(String tag)
 				{
-					//Set the paramaters for the new text fields
+					//Set the parameters for the new text fields
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			               0, LayoutParams.WRAP_CONTENT);
 			            params.weight=2f;
@@ -281,10 +280,10 @@ public class ContractController extends NavigationDrawerActivity {
 			}
 		}
 	}
-	@Override
-	public void onDestroy(){
-		super.onResume();
-		FireAlertApplication a = (FireAlertApplication)getApplication();
-		a.setLocation(mContract);
-	}
+//	@Override
+//	public void onDestroy(){
+////		super.onResume();
+////		FireAlertApplication a = (FireAlertApplication)getApplication();
+////		a.setLocation(mContract);
+//	}
 }
