@@ -25,19 +25,20 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EquipmentController extends Activity implements OnGestureListener {
+public class EquipmentController extends NavigationDrawerActivity implements OnGestureListener {
         private int pageNum, numPages;
         private GestureDetector gDetector;
         private InspectionElement[] elements;
         private LinearLayout content;
         private Equipment equipment;
         
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
         	// Check if Logged in
             HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
-            
+            	
+            	setContentView(R.layout.activity_inspection_form);
                 super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_inspection_form);
+                
                 gDetector = new GestureDetector(this);
                 
                 Intent mIntent = getIntent();

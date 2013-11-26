@@ -22,18 +22,17 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 
-public class FloorController extends ListActivity {
+public class FloorController extends NavigationDrawerActivity {
 	
 	Room [] rooms;
 	Floor mFloor;
-	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
-		
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_list);
+		super.onCreate(savedInstanceState);
+
 		setupActionBar();
 		
 		
@@ -57,9 +56,9 @@ public class FloorController extends ListActivity {
 			new String[] {"line1", "line2", "line3"},
 			new int[] {R.id.RoomNameValue, R.id.RoomIDValue, R.id.numOfElementsValue}
 		);
-		
+		ListView myList=(ListView)findViewById(android.R.id.list);
 		///bind the data
-		setListAdapter(simpleAdapter);
+		myList.setAdapter(simpleAdapter);
 	}
 	
 	public void roomItemListener(View view)
@@ -104,8 +103,10 @@ public class FloorController extends ListActivity {
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mFloor);
 		
-		ListView listView = getListView();
-		listView.post(new Runnable() {
+		ListView myList=(ListView)findViewById(android.R.id.list);
+
+		//ListView listView = getListView();
+		myList.post(new Runnable() {
 		    @Override
 		    public void run() {
 		        updateStatus();
@@ -114,12 +115,14 @@ public class FloorController extends ListActivity {
 	}
 	
 	private void updateStatus() {
-		ListView listView = getListView();
-		if(listView.getChildCount() == rooms.length)
+		//ListView listView = getListView();
+		ListView myList=(ListView)findViewById(android.R.id.list);
+
+		if(myList.getChildCount() == rooms.length)
 		{
 			for(int i = 0; i < rooms.length; i++)
 			{
-				View listElement = (ViewGroup)listView.getChildAt(i);
+				View listElement = (ViewGroup)myList.getChildAt(i);
 				if (rooms[i].isCompleted())
 				{
 	        		View toBeColored = (View)((ViewGroup)listElement).getChildAt(0);

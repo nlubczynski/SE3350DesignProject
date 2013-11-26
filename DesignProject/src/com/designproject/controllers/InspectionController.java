@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
@@ -26,7 +27,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 
-public class InspectionController extends ListActivity {
+public class InspectionController extends NavigationDrawerActivity {
 
 	// for storing the information.
 	private ArrayList<String []> inspectionInformationArray;
@@ -39,12 +40,12 @@ public class InspectionController extends ListActivity {
 	Franchise mFranchise;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
-        
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inspection_view);
+		super.onCreate(savedInstanceState);
+
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
@@ -105,9 +106,9 @@ public class InspectionController extends ListActivity {
 		simpleAdapter =  new SimpleAdapter(this,listInformationString, R.layout.custom_two_lines,
 				new String[] {"line1", "line2", "line3"},
 				new int[] {R.id.clientName, R.id.dueDate, R.id.textViewIdValue});
-		
+		ListView myList=(ListView)findViewById(android.R.id.list);
 		///bind the data
-		setListAdapter(simpleAdapter);
+		myList.setAdapter(simpleAdapter);
 		
 	}
 
@@ -188,5 +189,7 @@ public class InspectionController extends ListActivity {
 
 	    FireAlertApplication a = (FireAlertApplication)getApplication();
     	a.setLocation(mFranchise); 	
+	   
 	}
+
 }

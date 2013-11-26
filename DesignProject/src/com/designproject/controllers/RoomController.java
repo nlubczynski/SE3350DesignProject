@@ -31,7 +31,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class RoomController extends ListActivity {
+public class RoomController extends NavigationDrawerActivity {
 
 	private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 	private DataReceiver dataScanner = null;
@@ -39,15 +39,15 @@ public class RoomController extends ListActivity {
 	private String IDvalue = "";
 	private Room mRoom;
 	private Equipment[] equipment;
-	private ListView listView;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// Check if Logged in
 		HelperMethods.logOutHandler(HelperMethods.CHECK_IF_LOGGED_IN, this);
 
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_equipment_inspection_list);
+		super.onCreate(savedInstanceState);
+
 		setupActionBar();
 
 		FireAlertApplication a = (FireAlertApplication) getApplication();
@@ -56,13 +56,14 @@ public class RoomController extends ListActivity {
 		equipment = mRoom.getEquipment();
 		setTitle("Room: " + mRoom.getRoomNo());
 
-		setListAdapter(new ArrayAdapter<Equipment>(this,
+		ListView myList=(ListView)findViewById(android.R.id.list);
+		myList.setAdapter(new ArrayAdapter<Equipment>(this,
 				R.layout.equipment_list_item, equipment));
 
-		listView = getListView();
-		listView.setTextFilterEnabled(true);
+		//listView = getListView();
+		myList.setTextFilterEnabled(true);
 
-		listView.setOnItemClickListener(new OnItemClickListener() {
+		myList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -135,8 +136,8 @@ public class RoomController extends ListActivity {
 		// Set the location back to the room
 		FireAlertApplication a = (FireAlertApplication) getApplication();
 		a.setLocation(mRoom);
-
-		listView.post(new Runnable() {
+		ListView myList=(ListView)findViewById(android.R.id.list);
+		myList.post(new Runnable() {
 			 @Override
 			 public void run() {
 			 	updateStatus();
@@ -145,11 +146,12 @@ public class RoomController extends ListActivity {
 	}
 
 	private void updateStatus() {
+		
 		for (int index = 0; index < mRoom.getEquipment().length; index++) {
 			if (mRoom.getEquipment()[index].isCompleted()) {
-				ListView listView = getListView();
-				if (listView.getChildCount() > 0) {
-					TextView toColour = (TextView) listView.getChildAt(index);
+				ListView myList=(ListView)findViewById(android.R.id.list);
+				if (myList.getChildCount() > 0) {
+					TextView toColour = (TextView) myList.getChildAt(index);
 					toColour.setTextColor(getResources()
 							.getColor(R.color.green));
 				}
