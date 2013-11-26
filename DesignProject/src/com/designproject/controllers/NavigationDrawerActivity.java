@@ -8,6 +8,7 @@ import com.designproject.models.HelperMethods;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -46,15 +47,29 @@ public class NavigationDrawerActivity extends Activity {
          mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
          mDrawerList = (ListView) findViewById(R.id.left_drawer);
          
-         // Set the adapater for the list view
-        // mDrawerList.setAdapter((new ArrayAdapter<String>(this,
-          //      R.layout.drawer_list_item, mDrawerListTitles)));
+         // Set the adapater for the list view through custom adapter
          AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
          mDrawerList.setAdapter(adpClass);
+         
          // Bind a listener to the drawer list
          mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 	
+    private void loadSettingsPage() {
+		// TODO Auto-generated method stub
+    	
+    	Intent openSettingsPage = new Intent (NavigationDrawerActivity.this, SettingsController.class);
+    	startActivity(openSettingsPage);
+	}
+	
+    /* The click listener for ListView in the navigation drawer */
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
+    
     public class AdapterClass  extends ArrayAdapter<String> {
     	Context context;
     	private String[] TextValue;
@@ -65,7 +80,6 @@ public class NavigationDrawerActivity extends Activity {
     	    this.TextValue= mDrawerListTitles;
 
     	}
-
 
     	@Override
     	public View getView(int position, View coverView, ViewGroup parent) {
@@ -82,9 +96,7 @@ public class NavigationDrawerActivity extends Activity {
     	    text1.setText(TextValue[position]);
 
     	    return rowView;
-
-    	}
-
+    	    }
     	}
 
 	private void displayClients()
@@ -121,6 +133,7 @@ public class NavigationDrawerActivity extends Activity {
 			break;
 		//settings?
 		case 3:
+			loadSettingsPage();
 			break;
 		//logout
 		case 4:
@@ -134,13 +147,4 @@ public class NavigationDrawerActivity extends Activity {
 		// Replace current code with LogOutHelper code
 		HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
 	}
-
-	/* The click listener for ListView in the navigation drawer */
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			selectItem(position);
-		}
-	}
-
 }

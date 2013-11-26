@@ -97,6 +97,10 @@
             android:name="com.designproject.controllers.DisplayLocationsActivity"
             android:label="@string/title_activity_display_locations" >
         </activity>
+        <activity
+            android:name="com.designproject.controllers.SettingsController"
+            android:label="@string/title_activity_settings_controller" >
+        </activity>
     </application>
 
 </manifest>
