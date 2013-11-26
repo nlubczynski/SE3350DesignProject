@@ -43,5 +43,7 @@
     <string name="start_inspection">Start Inspection</string>
     <string name="select_equipment">Select</string>
     <string name="submit_building">Submit Building</string>
+    <string name="title_activity_display_list">DisplayListActivity</string>
+    <string name="title_activity_display_locations">List of Locations</string>
 
 </resources>
