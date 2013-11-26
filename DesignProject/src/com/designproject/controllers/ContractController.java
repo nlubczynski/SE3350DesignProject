@@ -76,8 +76,6 @@ public class ContractController extends NavigationDrawerActivity {
 			
 			//Set tab name
 			String buildingName = building.getId();
-//			View tabIndicator =LayoutInflater.from(this).inflate(R.layout.tab_indicator_layout, myTabHost.getTabWidget(), false);
-//			((TextView)(tabIndicator.findViewById(R.id.txtTabLabel))).setText("Building: " + buildingName);
 			
 			ts1.setIndicator("Building: " + buildingName, this.getResources().getDrawable(R.drawable.ic_tab_spec_selected));
 			
@@ -260,15 +258,11 @@ public class ContractController extends NavigationDrawerActivity {
 	}
 	
 	@Override
-	public void onResume(){
+	public void onRestart(){
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
         
-		//Set up the tabs dynamically
-        myTabHost.clearAllTabs();
-        setUpTabs();
-		
-		super.onResume();
+		super.onRestart();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
 		
@@ -280,10 +274,4 @@ public class ContractController extends NavigationDrawerActivity {
 			}
 		}
 	}
-//	@Override
-//	public void onDestroy(){
-////		super.onResume();
-////		FireAlertApplication a = (FireAlertApplication)getApplication();
-////		a.setLocation(mContract);
-//	}
 }
