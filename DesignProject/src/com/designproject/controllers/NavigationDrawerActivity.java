@@ -1,11 +1,8 @@
 package com.designproject.controllers;
 
-import com.designproject.R;
-import com.designproject.models.HelperMethods;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -13,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.designproject.R;
+import com.designproject.models.HelperMethods;
 
 public class NavigationDrawerActivity extends Activity {
 
@@ -87,6 +88,18 @@ public class NavigationDrawerActivity extends Activity {
     	    
     	    //the position corresponds to the text that is outputted
     	    text1.setText(TextValue[position]);
+    	    ImageView image = (ImageView)rowView.findViewById(R.id.imageViewNavDrawer);
+    	    
+    	    if(position == 0)
+    	    	image.setImageResource(R.drawable.ic_client_light);
+    	    else if(position == 1)
+    	    	image.setImageResource(R.drawable.ic_tab_spec_selected);
+    	    else if(position == 2)
+    	    	image.setImageResource(R.drawable.ic_inspection_light);
+    	    else if(position == 3)
+    	    	image.setImageResource(R.drawable.ic_settings_light);
+    	    else if(position == 4)
+    	    	image.setImageResource(R.drawable.ic_logout_light);
 
     	    return rowView;
     	    }
