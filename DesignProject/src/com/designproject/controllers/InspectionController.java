@@ -188,7 +188,5 @@ public class InspectionController extends ListActivity {
 
 	    FireAlertApplication a = (FireAlertApplication)getApplication();
     	a.setLocation(mFranchise); 	
-	   
 	}
-
 }

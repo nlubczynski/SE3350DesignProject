@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutNavDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:layout_margin="@dimen/default_margin" >
+    android:layout_margin="@dimen/default_margin">
 
-</TextView>
+    <ImageView
+        android:id="@+id/imageViewNavDrawer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="12dp"
+        android:gravity="center_vertical"
+        android:src="@drawable/ic_tab_spec_selected" />
+
+    <TextView
+        android:id="@+id/txtNavDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginRight="56dp"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceMedium" >
+
+    </TextView>
+
+</LinearLayout>

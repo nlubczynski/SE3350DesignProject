@@ -31,6 +31,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_alignParentLeft="true"
 	            android:layout_alignParentTop="true"
+	            android:background="@drawable/backgrounds"
 	            android:clickable="false"
 	            android:src="@drawable/fire_alert_small" />
 	
@@ -274,13 +275,13 @@
 	        android:layout_alignParentRight="true"
 	        android:layout_margin="@dimen/default_margin"
 	        android:layout_marginBottom="30dp"
-	        android:background="@color/light_grey"
+	        android:background="@drawable/backgrounds"
 	        android:height="48dp"
+	        android:onClick="inspectionClickListener"
 	        android:padding="@dimen/default_margin"
 	        android:text="@string/Inspect_string"
 	        android:textColor="@color/black"
-	        android:textSize="22dp"
-	        android:onClick="inspectionClickListener" />
+	        android:textSize="22dp" />
 	
 	</RelativeLayout>
 	<ListView android:id="@+id/left_drawer"

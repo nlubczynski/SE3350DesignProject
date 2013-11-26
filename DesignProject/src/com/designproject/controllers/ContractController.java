@@ -12,7 +12,6 @@ import com.designproject.models.Room;
 import com.designproject.models.XMLReaderWriter;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -77,14 +76,15 @@ public class ContractController extends NavigationDrawerActivity {
 			
 			//Set tab name
 			String buildingName = building.getId();
-			ts1.setIndicator("Building: " + buildingName);
+			
+			ts1.setIndicator("Building: " + buildingName, this.getResources().getDrawable(R.drawable.ic_tab_spec_selected));
 			
 			//Set up content of each tab. This will inflate a view which has only labels.
 			//Each corresponding value for the labels is made progmatically then added to its respective linear layout
 			ts1.setContent(new TabHost.TabContentFactory(){
 				public View createTabContent(String tag)
 				{
-					//Set the paramaters for the new text fields
+					//Set the parameters for the new text fields
 					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			               0, LayoutParams.WRAP_CONTENT);
 			            params.weight=2f;
@@ -168,6 +168,7 @@ public class ContractController extends NavigationDrawerActivity {
 					submitButton.setText(R.string.submit_building);
 					submitButton.setTag(building.getId());
 					submitButton.setEnabled(false);
+					submitButton.setBackgroundResource(R.drawable.backgrounds);
 					submitButton.setOnClickListener(new Button.OnClickListener() {  
 				        public void onClick(View v)
 			            {
@@ -197,9 +198,15 @@ public class ContractController extends NavigationDrawerActivity {
 
 	private void addFloorButton(Floor floor, int buttonNum, LinearLayout linearLayoutFloorButtonContainer) {
 		Button button = new Button(this);
-		button.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		
+		// set button params
+		LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		params.setMargins(5, 5, 5, 5);
+		button.setLayoutParams(params);
+		
 		button.setText(floor.getName());
 		button.setId( buttonNum );
+		button.setBackgroundResource(R.drawable.backgrounds);
 		button.setOnClickListener( new OnClickListener(){
 
 			@Override
@@ -251,15 +258,11 @@ public class ContractController extends NavigationDrawerActivity {
 	}
 	
 	@Override
-	public void onResume(){
+	public void onRestart(){
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
         
-		//Set up the tabs dynamically
-        myTabHost.clearAllTabs();
-        setUpTabs();
-		
-		super.onResume();
+		super.onRestart();
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
 		
@@ -270,11 +273,5 @@ public class ContractController extends NavigationDrawerActivity {
 				submitButton.setEnabled(true);
 			}
 		}
-	}
-	@Override
-	public void onDestroy(){
-		super.onResume();
-		FireAlertApplication a = (FireAlertApplication)getApplication();
-		a.setLocation(mContract);
 	}
 }
