@@ -37,7 +37,6 @@ public class NavigationDrawerActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 
 		
-		//getSupportActionBar().setIcon(R.drawable.ic_nav_drawer);
 		setupNavigationDrawer();
 	}
 	
@@ -88,8 +87,9 @@ public class NavigationDrawerActivity extends SherlockActivity {
          //Set the drawer toggle as the DrawerListener
          mDrawerLayout.setDrawerListener(mDrawerToggle);
                 
-         final ActionBar ab = getSupportActionBar();
+        final ActionBar ab = getSupportActionBar();
  		
+		ab.setIcon(R.drawable.ic_nav_drawer);
  		ab.setDisplayHomeAsUpEnabled(showHomeUp);
  		ab.setDisplayUseLogoEnabled(useLogo);
          
