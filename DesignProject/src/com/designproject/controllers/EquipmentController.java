@@ -291,25 +291,6 @@ public class EquipmentController extends NavigationDrawerActivity {
 	            	content.addView(comments);
                 }
             	numPages = 2;
-                /*
-                numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
-            	// Populate form
-                for(int i = (pageNum - 1) * 8; i < Math.min((pageNum * 8), elements.length); i++)
-                {
-                     CheckBox cb = new CheckBox(InspectionForm.this);
-                     cb.setText(elements[i].getName());
-                     content.addView(cb, (i - (8 * (pageNum - 1))));
-                }
-               
-                if (pageNum == numPages)
-                {
-                	TextView commentsText = new TextView(InspectionForm.this);
-                	commentsText.setText("Comments");
-                	content.addView(commentsText);
-                	EditText comments = new EditText(InspectionForm.this);
-                	content.addView(comments);
-                }
-                */
         	}
         	else if (type.equals("FireHoseCabinet"))
         	{
