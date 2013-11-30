@@ -67,6 +67,9 @@ public class NavigationDrawerActivity extends SherlockActivity {
          mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
          mDrawerList = (ListView) findViewById(R.id.left_drawer);
          
+         
+         
+         
          mDrawerToggle = new ActionBarDrawerToggle(
                  this,                  /* host Activity */
                  mDrawerLayout,         /* DrawerLayout object */
@@ -88,10 +91,18 @@ public class NavigationDrawerActivity extends SherlockActivity {
          mDrawerLayout.setDrawerListener(mDrawerToggle);
                 
         final ActionBar ab = getSupportActionBar();
- 		
-		ab.setIcon(R.drawable.ic_nav_drawer);
- 		ab.setDisplayHomeAsUpEnabled(showHomeUp);
- 		ab.setDisplayUseLogoEnabled(useLogo);
+        View actionBarView = getLayoutInflater().inflate(
+                R.layout.action_bar_layout, null);
+        
+        ab.setCustomView(actionBarView);
+        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        ab.setDisplayUseLogoEnabled(true);
+        ab.setDisplayShowTitleEnabled(true);
+        ab.setDisplayShowHomeEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(false);
+ 	
+        
          
          // Set the adapater for the list view through custom adapter
          AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
@@ -219,4 +230,18 @@ public class NavigationDrawerActivity extends SherlockActivity {
 		// Replace current code with LogOutHelper code
 		HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
 	}
+	
+	public void navDrawerButtonListener(View view)
+	{
+		 if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+	        	mDrawerLayout.closeDrawer(mDrawerList);
+	        } else {
+	        	mDrawerLayout.openDrawer(mDrawerList);
+	        }
+	}
+	
+//	public void logoButtonListener(View view)
+//	{
+//		
+//	}
 }
