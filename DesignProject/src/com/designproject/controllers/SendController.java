@@ -1,6 +1,5 @@
 package com.designproject.controllers;
 
-import com.designproject.FireAlertApplication;
 import com.designproject.R;
 import com.designproject.models.Sender;
 import com.designproject.models.XMLReaderWriter;
@@ -9,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,7 +21,7 @@ import org.xmlpull.v1.XmlPullParserException;
 public class SendController extends Activity {
 	
 	Sender sender;
-	boolean connected = false;
+	boolean connected;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -30,6 +30,8 @@ public class SendController extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sender_view);
+		
+		this.setSendButton(false);
 		
 	}
 
@@ -69,7 +71,7 @@ public class SendController extends Activity {
 			toast.show();
 		}
 		else{
-			connected = connect(portNumb, ip);
+			setSendButton(connect(portNumb, ip));
 		}
 	}
 	public void sendClick(View view){
@@ -99,6 +101,7 @@ public class SendController extends Activity {
 			
 			//it worked!
 			sender.close();
+			setSendButton(false);
 			
 		}else{
 			
@@ -140,6 +143,12 @@ public class SendController extends Activity {
 		toast.show();
 		
 		return true;
+	}
+	
+	private void setSendButton(boolean set){
+		connected = set;
+		Button button = (Button)findViewById(R.id.sendButton);
+		button.setEnabled(connected);		
 	}
 	
 	
