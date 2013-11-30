@@ -39,10 +39,12 @@ public class MainMenu extends NavigationDrawerActivity {
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         
+        
+        
         try {
         	//Create the reader writer
         	XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
-			// Get out applciation
+			// Get out application
         	FireAlertApplication a = (FireAlertApplication)getApplication();
 			// Parse the xml and set the franchise to our application
         	a.setFranchise( reader.parseXML() );
@@ -50,13 +52,17 @@ public class MainMenu extends NavigationDrawerActivity {
         	a.setLocation( a.getFranchise() );
         	//Set the local variable for franchise
 			mFranchise = (Franchise) a.getLocation();
+			
+			reader.writeXML(mFranchise);
+			
         }catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("end");
        
+        Intent displayClientList = new Intent(MainMenu.this, SendController.class);
+		startActivity(displayClientList);
 
         calculateDates();
     }

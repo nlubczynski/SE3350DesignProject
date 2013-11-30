@@ -43,6 +43,12 @@
     <string name="start_inspection">Start Inspection</string>
     <string name="select_equipment">Select</string>
     <string name="submit_building">Submit Building</string>
+    <string name="ip_address">IP Address:</string>
+    <string name="port">Port:</string>
+    <string name="scan">Scan</string>
+    <string name="send">Send</string>
+    <string name="connect">Connect</string>
+    <string name="title_activity_send_controller">Send Data</string>
     <string name="title_activity_display_list">DisplayListActivity</string>
     <string name="title_activity_display_locations">List of Locations</string>
     <string name="title_activity_settings_controller">SettingsController</string>
