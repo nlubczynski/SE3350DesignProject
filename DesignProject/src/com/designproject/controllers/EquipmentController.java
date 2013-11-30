@@ -157,7 +157,7 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                 if(pageNum < numPages)
                 {
                 	next.setImageResource(R.drawable.next_page);
-                	next.setBackgroundColor(getResources().getColor(R.color.white));
+                	next.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                         params.weight = 1.0f;
@@ -177,7 +177,7 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                 if(pageNum > 1)
                 {
                 	previous.setImageResource(R.drawable.previous_page);
-                	previous.setBackgroundColor(getResources().getColor(R.color.white));
+                	previous.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                         params.weight = 1.0f;
