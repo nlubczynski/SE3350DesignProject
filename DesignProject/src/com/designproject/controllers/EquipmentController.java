@@ -8,12 +8,9 @@ import com.designproject.FireAlertApplication;
 import com.designproject.R;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -25,9 +22,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EquipmentController extends NavigationDrawerActivity implements OnGestureListener {
+public class EquipmentController extends NavigationDrawerActivity {
         private int pageNum, numPages;
-        private GestureDetector gDetector;
         private InspectionElement[] elements;
         private LinearLayout content;
         private Equipment equipment;
@@ -38,8 +34,6 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
             	
             	setContentView(R.layout.activity_inspection_form);
                 super.onCreate(savedInstanceState);
-                
-                gDetector = new GestureDetector(this);
                 
                 Intent mIntent = getIntent();
                 pageNum = mIntent.getIntExtra("Page Number", 0);
@@ -120,18 +114,18 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                             content.setBackgroundColor(getResources().getColor(R.color.white));
                         }
                             
-                            else
+                        else
+                        {
+                            for(int i = attributes.length - 1; i >= 0; i--)
                             {
-                                    for(int i = attributes.length - 1; i >= 0; i--)
-                                    {
-                                            if(attributes[i].getName() != "id" && attributes[i].getName() != "location")
-                                            {
-                                                    View attributeView = info.getChildAt(i + 2);
-                                                    info.removeView(attributeView);
-                                            }
-                                    }
-                                    moreInfo.setText("More Info");
+                                if(attributes[i].getName() != "id" && attributes[i].getName() != "location")
+                                {
+                                    View attributeView = info.getChildAt(i + 2);
+                                    info.removeView(attributeView);
+                                }
                             }
+                            moreInfo.setText("More Info");
+                        }
                     }
                 });
                 }
@@ -157,7 +151,7 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                 if(pageNum < numPages)
                 {
                 	next.setImageResource(R.drawable.next_page);
-                	next.setBackgroundColor(getResources().getColor(R.color.white));
+                	next.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                         params.weight = 1.0f;
@@ -177,7 +171,7 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                 if(pageNum > 1)
                 {
                 	previous.setImageResource(R.drawable.previous_page);
-                	previous.setBackgroundColor(getResources().getColor(R.color.white));
+                	previous.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
                 	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                             LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                         params.weight = 1.0f;
@@ -251,11 +245,6 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                 return false;
         }
         
-        @Override
-        public boolean onTouchEvent(MotionEvent me) {
-                return gDetector.onTouchEvent(me);
-        }
-        
         public void populateContent(Equipment equipment, LinearLayout content) {
         	String type = equipment.getName();
         	if (type.equals("Extinguisher")) {
@@ -302,25 +291,6 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
 	            	content.addView(comments);
                 }
             	numPages = 2;
-                /*
-                numPages = elements.length / 8 + (elements.length % 8 == 0 ? 0 : 1);
-            	// Populate form
-                for(int i = (pageNum - 1) * 8; i < Math.min((pageNum * 8), elements.length); i++)
-                {
-                     CheckBox cb = new CheckBox(InspectionForm.this);
-                     cb.setText(elements[i].getName());
-                     content.addView(cb, (i - (8 * (pageNum - 1))));
-                }
-               
-                if (pageNum == numPages)
-                {
-                	TextView commentsText = new TextView(InspectionForm.this);
-                	commentsText.setText("Comments");
-                	content.addView(commentsText);
-                	EditText comments = new EditText(InspectionForm.this);
-                	content.addView(comments);
-                }
-                */
         	}
         	else if (type.equals("FireHoseCabinet"))
         	{
