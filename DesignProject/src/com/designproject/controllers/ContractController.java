@@ -101,9 +101,9 @@ public class ContractController extends NavigationDrawerActivity {
 					textViewBuildingStatus.setTextAppearance(context, android.R.attr.textAppearanceLarge);
 					textViewBuildingStatus.setLayoutParams(params);
 					textViewBuildingStatus.setGravity(Gravity.RIGHT);
+					textViewBuildingStatus.setTag(building.getId()+" status");
 					
 					//Check if building is complete
-					
 					if(building.isCompleted())
 					{
 						textViewBuildingStatus.setText("COMPLETE");
@@ -266,11 +266,17 @@ public class ContractController extends NavigationDrawerActivity {
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
 		
+		setUpTabs();
+		
 		for(Building building : mBuildings) {
 			if (building.isCompleted()) {
 				View parent = findViewById(R.id.LinearLayout1);
 				Button submitButton = (Button) parent.findViewWithTag(building.getId());
 				submitButton.setEnabled(true);
+				
+				TextView status = (TextView) parent.findViewWithTag(building.getId()+" status");
+				status.setText("COMPLETE");
+				status.setTextColor(Color.GREEN);
 			}
 		}
 	}
