@@ -205,7 +205,7 @@ public class XMLReaderWriter {
 			File dir = new File (sdCard.getAbsolutePath() + "/FireAlertApp");
 			
 			//It doesn't exist, and we can't make it - we don't have the permissions
-			if( dir.mkdirs() || dir.isDirectory() )
+			if( !(dir.mkdirs() || dir.isDirectory()) )
 				return false;
 			
 			File file = new File(dir, "FireAlertData.xml");
