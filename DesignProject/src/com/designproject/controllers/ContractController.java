@@ -266,8 +266,6 @@ public class ContractController extends NavigationDrawerActivity {
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mContract);
 		
-		setUpTabs();
-		
 		for(Building building : mBuildings) {
 			if (building.isCompleted()) {
 				View parent = findViewById(R.id.LinearLayout1);
