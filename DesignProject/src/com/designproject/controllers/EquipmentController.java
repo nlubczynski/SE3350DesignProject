@@ -8,12 +8,9 @@ import com.designproject.FireAlertApplication;
 import com.designproject.R;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -25,9 +22,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EquipmentController extends NavigationDrawerActivity implements OnGestureListener {
+public class EquipmentController extends NavigationDrawerActivity {
         private int pageNum, numPages;
-        private GestureDetector gDetector;
         private InspectionElement[] elements;
         private LinearLayout content;
         private Equipment equipment;
@@ -38,8 +34,6 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
             	
             	setContentView(R.layout.activity_inspection_form);
                 super.onCreate(savedInstanceState);
-                
-                gDetector = new GestureDetector(this);
                 
                 Intent mIntent = getIntent();
                 pageNum = mIntent.getIntExtra("Page Number", 0);
@@ -120,18 +114,18 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
                             content.setBackgroundColor(getResources().getColor(R.color.white));
                         }
                             
-                            else
+                        else
+                        {
+                            for(int i = attributes.length - 1; i >= 0; i--)
                             {
-                                    for(int i = attributes.length - 1; i >= 0; i--)
-                                    {
-                                            if(attributes[i].getName() != "id" && attributes[i].getName() != "location")
-                                            {
-                                                    View attributeView = info.getChildAt(i + 2);
-                                                    info.removeView(attributeView);
-                                            }
-                                    }
-                                    moreInfo.setText("More Info");
+                                if(attributes[i].getName() != "id" && attributes[i].getName() != "location")
+                                {
+                                    View attributeView = info.getChildAt(i + 2);
+                                    info.removeView(attributeView);
+                                }
                             }
+                            moreInfo.setText("More Info");
+                        }
                     }
                 });
                 }
@@ -249,11 +243,6 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
         public boolean onSingleTapUp(MotionEvent arg0) {
                 // TODO Auto-generated method stub
                 return false;
-        }
-        
-        @Override
-        public boolean onTouchEvent(MotionEvent me) {
-                return gDetector.onTouchEvent(me);
         }
         
         public void populateContent(Equipment equipment, LinearLayout content) {
