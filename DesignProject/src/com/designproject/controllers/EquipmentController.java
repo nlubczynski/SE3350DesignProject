@@ -194,12 +194,12 @@ public class EquipmentController extends NavigationDrawerActivity implements OnG
     	        });
         }
 
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.inspection_form, menu);
-                return true;
-        }
+//        @Override
+//        public boolean onCreateOptionsMenu(Menu menu) {
+//                // Inflate the menu; this adds items to the action bar if it is present.
+//                getMenuInflater().inflate(R.menu.inspection_form, menu);
+//                return true;
+//        }
 
         public boolean onDown(MotionEvent arg0) {
                 // TODO Auto-generated method stub
