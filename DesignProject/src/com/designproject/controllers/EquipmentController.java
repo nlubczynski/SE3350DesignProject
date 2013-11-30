@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -147,36 +148,12 @@ public class EquipmentController extends NavigationDrawerActivity {
     	            }
     	        });
                 
-                final ImageButton next = new ImageButton(EquipmentController.this);
-                if(pageNum < numPages)
-                {
-                	next.setImageResource(R.drawable.next_page);
-                	next.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
-                	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-                        params.weight = 1.0f;
-                        params.gravity=Gravity.RIGHT;
-                	footer.addView(next, params);
-                }
-                next.setOnClickListener(new View.OnClickListener() {
-    	            public void onClick(View view) {
-    	            	finish();
-                        Intent nextPage = new Intent(EquipmentController.this, EquipmentController.class);
-                        nextPage.putExtra("Page Number", ++pageNum);
-                        startActivity(nextPage);
-    	            }
-    	        });
-                
                 final ImageButton previous = new ImageButton(EquipmentController.this);
                 if(pageNum > 1)
                 {
                 	previous.setImageResource(R.drawable.previous_page);
                 	previous.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
-                	LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-                        params.weight = 1.0f;
-                        params.gravity=Gravity.LEFT;
-                	footer.addView(previous, params);
+                	footer.addView(previous);
                 }
                 previous.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
@@ -184,6 +161,28 @@ public class EquipmentController extends NavigationDrawerActivity {
                         Intent previousPage = new Intent(EquipmentController.this, EquipmentController.class);
                         previousPage.putExtra("Page Number", --pageNum);
                         startActivity(previousPage);
+    	            }
+    	        });
+                
+                TextView blank = new TextView(EquipmentController.this);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                params.weight = 1.0f;
+            	footer.addView(blank, params);
+                
+                final ImageButton next = new ImageButton(EquipmentController.this);
+                if(pageNum < numPages)
+                {
+                	next.setImageResource(R.drawable.next_page);
+                	next.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
+                	footer.addView(next);
+                }
+                next.setOnClickListener(new View.OnClickListener() {
+    	            public void onClick(View view) {
+    	            	finish();
+                        Intent nextPage = new Intent(EquipmentController.this, EquipmentController.class);
+                        nextPage.putExtra("Page Number", ++pageNum);
+                        startActivity(nextPage);
     	            }
     	        });
         }
@@ -248,7 +247,7 @@ public class EquipmentController extends NavigationDrawerActivity {
         public void populateContent(Equipment equipment, LinearLayout content) {
         	String type = equipment.getName();
         	if (type.equals("Extinguisher")) {
-        		if(equipment.getInspectionElements().length < 10)
+        		if(equipment.getInspectionElements().length < 9)
         		{
         			equipment.clearInspectionElements();
 	        		equipment.addInspectionElement(new InspectionElement("Hydro Test"));
@@ -260,7 +259,6 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                equipment.addInspectionElement(new InspectionElement("Signage"));
 	                equipment.addInspectionElement(new InspectionElement("Collar"));
 	                equipment.addInspectionElement(new InspectionElement("Hose"));
-	                equipment.addInspectionElement(new InspectionElement("Comments"));
         		}
                 
                 elements = equipment.getInspectionElements();
@@ -283,25 +281,18 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                     cb.setChecked(elements[i].getTestResult());
 	                     content.addView(cb);
 	                }
-	                TextView commentsText = new TextView(EquipmentController.this);
-	            	commentsText.setText("Comments");
-	            	content.addView(commentsText);
-	            	EditText comments = new EditText(EquipmentController.this);
-	            	comments.setText(elements[elements.length - 1].getTestNotes());
-	            	content.addView(comments);
                 }
             	numPages = 2;
         	}
         	else if (type.equals("FireHoseCabinet"))
         	{
-        		if(equipment.getInspectionElements().length < 5)
+        		if(equipment.getInspectionElements().length < 4)
         		{
         			equipment.clearInspectionElements();
 	        		equipment.addInspectionElement(new InspectionElement("Cabinet Condition"));
 	                equipment.addInspectionElement(new InspectionElement("Valve Condition"));
 	                equipment.addInspectionElement(new InspectionElement("Hose Re-Rack"));
 	                equipment.addInspectionElement(new InspectionElement("HT Due"));
-	                equipment.addInspectionElement(new InspectionElement("Comments"));
         		}
 	                
                 elements = equipment.getInspectionElements();
@@ -314,17 +305,10 @@ public class EquipmentController extends NavigationDrawerActivity {
                      cb.setChecked(elements[i].getTestResult());
                      content.addView(cb);
                 }
-               
-                TextView commentsText = new TextView(EquipmentController.this);
-            	commentsText.setText("Comments");
-            	content.addView(commentsText, content.getChildCount());
-             	EditText comments = new EditText(EquipmentController.this);
-             	comments.setText(elements[elements.length - 1].getTestNotes());
-               	content.addView(comments, content.getChildCount());
         	}
         	else if (type.equals("EmergencyLight"))
         	{
-        		if(equipment.getInspectionElements().length < 6)
+        		if(equipment.getInspectionElements().length < 5)
         		{
         			equipment.clearInspectionElements();
 	        		equipment.addInspectionElement(new InspectionElement("Requires Service or Repair"));
@@ -332,46 +316,87 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                equipment.addInspectionElement(new InspectionElement("Number of Heads"));
 	                equipment.addInspectionElement(new InspectionElement("Total Power"));
 	                equipment.addInspectionElement(new InspectionElement("Voltage"));
-	                equipment.addInspectionElement(new InspectionElement("Comments"));
         		}
                 
                 elements = equipment.getInspectionElements();
                 numPages = 2;
                 
             	// Populate form
-                if(pageNum == 1)
-                {
-	                for(int i = 0; i < 2; i++)
-	                {
-	                     CheckBox cb = new CheckBox(EquipmentController.this);
-	                     cb.setText(elements[i].getName());
-	                     cb.setChecked(elements[i].getTestResult());
-	                     content.addView(cb);
-	                }
-	                for (int j = 2; j < elements.length - 1; j++)
-	                {
-	                	TextView tv = new TextView(EquipmentController.this);
-	                    tv.setText(elements[j].getName());
-	                    content.addView(tv);
-	                    EditText et = new EditText(EquipmentController.this);
-	                    et.setText(elements[j].getTestNotes());
-	                    et.setInputType(InputType.TYPE_CLASS_NUMBER);
-	                    content.addView(et);
-	                }
-                }
-                else
-                {
-	                TextView commentsText = new TextView(EquipmentController.this);
-	               	commentsText.setText("Comments");
-	               	content.addView(commentsText);
-	               	EditText comments = new EditText(EquipmentController.this);
-	               	comments.setText(elements[elements.length - 1].getTestNotes());
-	               	content.addView(comments);
+                for(int i = 0; i < 2; i++)
+	            {
+	                 CheckBox cb = new CheckBox(EquipmentController.this);
+	                 cb.setText(elements[i].getName());
+	                 cb.setChecked(elements[i].getTestResult());
+	                 content.addView(cb);
+	            }
+	            for (int j = 2; j < elements.length; j++)
+	            {
+	                TextView tv = new TextView(EquipmentController.this);
+	                tv.setText(elements[j].getName());
+	                content.addView(tv);
+	                EditText et = new EditText(EquipmentController.this);
+	                et.setText(elements[j].getTestNotes());
+	                et.setInputType(InputType.TYPE_CLASS_NUMBER);
+	                content.addView(et);
                 }
         	}
         	else if (type.equals("KitchenSuppressionSystem"))
         	{
-        		
+        		if(equipment.getInspectionElements().length < 41)
+        		{
+        			equipment.clearInspectionElements();
+	        		equipment.addInspectionElement(new InspectionElement("System interlock with building fire alarm"));
+	                equipment.addInspectionElement(new InspectionElement("System discharged"));
+	                equipment.addInspectionElement(new InspectionElement("All seals intact. No evidence of tampering"));
+	                equipment.addInspectionElement(new InspectionElement("All appl properly covered w/ correct nozzles"));
+	                equipment.addInspectionElement(new InspectionElement("Duct & plenum covered w/ correct nozzles"));
+	                equipment.addInspectionElement(new InspectionElement("Checked positioning of all nozzles"));
+	                equipment.addInspectionElement(new InspectionElement("Hood/Duct penetrations sealed"));
+	                equipment.addInspectionElement(new InspectionElement("Grease Accumulation"));
+	                equipment.addInspectionElement(new InspectionElement("Pressue gauge in proper range"));
+	        		equipment.addInspectionElement(new InspectionElement("Checked cartridge weight"));
+	                equipment.addInspectionElement(new InspectionElement("Cylinder hydrostatic test date"));
+	                equipment.addInspectionElement(new InspectionElement("Inspect cylinder and mount"));
+	                equipment.addInspectionElement(new InspectionElement("Operated system from terminal link"));
+	                equipment.addInspectionElement(new InspectionElement("Checked travel of cable and link position"));
+	                equipment.addInspectionElement(new InspectionElement("Fusible links"));
+	                equipment.addInspectionElement(new InspectionElement("Replaced fusible links. Mfg. Date"));
+	                equipment.addInspectionElement(new InspectionElement("Checked and cleaned fusible links"));
+	                equipment.addInspectionElement(new InspectionElement("Checked operation of manual release"));
+	                equipment.addInspectionElement(new InspectionElement("Checked operation of micro-switch"));
+	                equipment.addInspectionElement(new InspectionElement("Checked operation of gas valve"));
+	                equipment.addInspectionElement(new InspectionElement("Piping/conduit securely bracketed"));
+	                equipment.addInspectionElement(new InspectionElement("Nozzle cleaned"));
+	                equipment.addInspectionElement(new InspectionElement("Proper nozzle caps/covers in place"));
+	                equipment.addInspectionElement(new InspectionElement("Proper clearance flame to filters"));
+	                equipment.addInspectionElement(new InspectionElement("Proper seperation between fryers and flame"));
+	                equipment.addInspectionElement(new InspectionElement("Exhaust fan in operating order"));
+	                equipment.addInspectionElement(new InspectionElement("Manual and remote set seals in place"));
+	        		equipment.addInspectionElement(new InspectionElement("System cart. replaced/safety pins removed"));
+	                equipment.addInspectionElement(new InspectionElement("System operational and armed"));
+	                equipment.addInspectionElement(new InspectionElement("Slave system operational and armed"));
+	                equipment.addInspectionElement(new InspectionElement("Fan warning sign on hood"));
+	                equipment.addInspectionElement(new InspectionElement("K class fire extinguisher in cooking area"));
+	                equipment.addInspectionElement(new InspectionElement("2A water type/wet chem type for solid fuel"));
+	                equipment.addInspectionElement(new InspectionElement("Water hose in area of solid fuel appliance"));
+	                equipment.addInspectionElement(new InspectionElement("Proper ABC fire extinguisher for other areas"));
+	                equipment.addInspectionElement(new InspectionElement("Fire extinguisher properly serviced"));
+	                equipment.addInspectionElement(new InspectionElement("Personnel instructed on manual operation sys."));
+	                equipment.addInspectionElement(new InspectionElement("Were system monthly insp. performed"));
+	                equipment.addInspectionElement(new InspectionElement("Personnel instructed on use of fire ext."));
+	                equipment.addInspectionElement(new InspectionElement("Service and certification tag on system"));
+	                equipment.addInspectionElement(new InspectionElement("System installed per U.I. 300 standard"));
+        		}
+              
+                elements = equipment.getInspectionElements();
+                numPages = elements.length / 6 + (elements.length % 6 == 0 ? 0 : 1);
+                for(int j = ((pageNum - 1)*6); j < Math.min((pageNum * 6), elements.length); j++)
+                {
+	               	CheckBox cb = new CheckBox(EquipmentController.this);
+		            cb.setText(elements[j].getName());
+		            cb.setChecked(elements[j].getTestResult());
+		            content.addView(cb);
+                }
         	}
         }
         
