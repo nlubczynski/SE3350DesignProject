@@ -39,7 +39,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/oldPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -51,7 +51,7 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/newPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -62,7 +62,7 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/newPasswordConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -81,6 +81,7 @@
                 android:layout_marginRight="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
                 android:background="@drawable/backgrounds"
+                android:onClick="savePassword"
                 android:text="Save" />
 
             <TextView
@@ -102,7 +103,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
-                android:id="@+id/editText1"
+                android:id="@+id/newUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -115,7 +116,7 @@
             </EditText>
 
             <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/newUserPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -126,7 +127,7 @@
                 android:inputType="textPassword" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/newUserPasswordConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -144,6 +145,7 @@
                 android:layout_marginRight="@dimen/default_margin"
                 android:layout_marginTop="@dimen/default_margin"
                 android:background="@drawable/backgrounds"
+                android:onClick="createUser"
                 android:text="Create User" />
 
         </LinearLayout>

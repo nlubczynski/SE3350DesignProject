@@ -33,7 +33,7 @@ public class FireAlertSplash extends Activity implements AnimationListener {
         //TODO REMOVE TEMPORARY CODE
         // TEMPORARY CODE TO CREATE USERS FOR TESTING
         
-        
+        /*
         // Gets a shared preference called 'login' if it doesn't exist it will create it
     	SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login", Context.MODE_PRIVATE);
     	
@@ -45,7 +45,7 @@ public class FireAlertSplash extends Activity implements AnimationListener {
 
     	//commit changes
     	editor.commit();
-    	
+    	*/
     	
         //TODO REMOVE TEMPORARY CODE
         // END OF TEMPORARY CODE
