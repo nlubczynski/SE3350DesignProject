@@ -6,10 +6,28 @@
 
     <ImageView
         android:id="@+id/imgBtnNav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+     	android:layout_width="wrap_content"
+        android:layout_height="24dp"
         android:onClick="navDrawerButtonListener"
         android:src="@drawable/ic_nav_drawer"
-        android:gravity="center_vertical" />
+        android:layout_gravity="center_vertical" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_launcher"
+        android:onClick="navDrawerLogoButtonListener" />
+
+    <TextView
+        android:id="@+id/navDrawerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/white"
+        android:layout_marginLeft="10dip"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

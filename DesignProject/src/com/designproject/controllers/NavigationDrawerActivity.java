@@ -3,10 +3,14 @@ package com.designproject.controllers;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ActionProvider;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,18 +30,42 @@ public class NavigationDrawerActivity extends SherlockActivity {
 
 	private String[] mDrawerListTitles;
 	private DrawerLayout mDrawerLayout;
-	private ActionBarDrawerToggle mDrawerToggle;
+	//private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mDrawerList;
-	private boolean useLogo = true;
-    private boolean showHomeUp = false;
+	
+	private CharSequence mTitle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated constructor stub
 		super.onCreate(savedInstanceState);
 
-		
-		setupNavigationDrawer();
+		 mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
+         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+         
+         mTitle = getTitle();
+         
+         //Set the adapater for the list view through custom adapter
+         AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
+         mDrawerList.setAdapter(adpClass);
+         
+         // Bind a listener to the drawer list
+         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+         
+         ActionBar actionBar = getSupportActionBar();
+
+         View actionBarView = getLayoutInflater().inflate(
+                     R.layout.action_bar_layout, null);
+
+         actionBar.setCustomView(actionBarView);
+         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+         ((TextView)actionBarView.findViewById(R.id.navDrawerTitle)).setText(mTitle);
+
+         actionBar.setDisplayUseLogoEnabled(false);
+         actionBar.setDisplayShowTitleEnabled(false);
+         actionBar.setDisplayShowHomeEnabled(false);
+         actionBar.setDisplayHomeAsUpEnabled(false);
 	}
 	
     @Override
@@ -49,82 +77,23 @@ public class NavigationDrawerActivity extends SherlockActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    	 if (item.getItemId() == android.R.id.home) {
-
-    	        if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-    	        	mDrawerLayout.closeDrawer(mDrawerList);
-    	        } else {
-    	        	mDrawerLayout.openDrawer(mDrawerList);
-    	        }
-    	    }
-    	
-            return super.onOptionsItemSelected(item);
+     	return super.onOptionsItemSelected(item);
     }
-
-	private void setupNavigationDrawer()
-	{
-         mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
-         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-         
-         
-         
-         
-         mDrawerToggle = new ActionBarDrawerToggle(
-                 this,                  /* host Activity */
-                 mDrawerLayout,         /* DrawerLayout object */
-                 R.drawable.ic_nav_drawer,  /* nav drawer icon to replace 'Up' caret */
-                 R.string.drawer_open,  /* "open drawer" description */
-                 R.string.drawer_close  /* "close drawer" description */
-                 ) {
-        	 
-        	 public void onDrawerClosed(View view) {
-        		 super.onDrawerClosed(view);
-        	    }
-
-        	    public void onDrawerOpened(View drawerView) {
-        	        super.onDrawerOpened(drawerView);
-        	    }
-         };
-                 
-         //Set the drawer toggle as the DrawerListener
-         mDrawerLayout.setDrawerListener(mDrawerToggle);
-                
-        final ActionBar ab = getSupportActionBar();
-        View actionBarView = getLayoutInflater().inflate(
-                R.layout.action_bar_layout, null);
-        
-        ab.setCustomView(actionBarView);
-        ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-
-        ab.setDisplayUseLogoEnabled(true);
-        ab.setDisplayShowTitleEnabled(true);
-        ab.setDisplayShowHomeEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(false);
- 	
-        
-         
-         // Set the adapater for the list view through custom adapter
-         AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
-         mDrawerList.setAdapter(adpClass);
-         
-         // Bind a listener to the drawer list
-         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-         
-	}
-	
-	   @Override
-	    protected void onPostCreate(Bundle savedInstanceState) {
-	        super.onPostCreate(savedInstanceState);
-	        // Sync the toggle state after onRestoreInstanceState has occurred.
-	        mDrawerToggle.syncState();
-	    }
-	   
-	   @Override
-	    public void onConfigurationChanged(Configuration newConfig) {
-	        super.onConfigurationChanged(newConfig);
-	        mDrawerToggle.onConfigurationChanged(newConfig);
-	    }
+    
+    public void navDrawerButtonListener(View view){
+   
+    	if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+        	mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+        	mDrawerLayout.openDrawer(mDrawerList);
+        }
+    }
+    
+    public void navDrawerLogoButtonListener(View view){
+    	
+    	Intent openMainScreen = new Intent(NavigationDrawerActivity.this, ContractController.class);
+    	startActivity(openMainScreen);
+    }
 	
     private void loadSettingsPage() {
 		// TODO Auto-generated method stub
@@ -230,18 +199,5 @@ public class NavigationDrawerActivity extends SherlockActivity {
 		// Replace current code with LogOutHelper code
 		HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
 	}
-	
-	public void navDrawerButtonListener(View view)
-	{
-		 if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-	        	mDrawerLayout.closeDrawer(mDrawerList);
-	        } else {
-	        	mDrawerLayout.openDrawer(mDrawerList);
-	        }
-	}
-	
-//	public void logoButtonListener(View view)
-//	{
-//		
-//	}
+
 }
