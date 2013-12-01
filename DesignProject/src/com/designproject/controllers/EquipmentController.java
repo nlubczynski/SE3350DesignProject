@@ -14,9 +14,7 @@ import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -225,13 +223,6 @@ public class EquipmentController extends NavigationDrawerActivity {
                         startActivity(nextPage);
     	            }
     	        });
-        }
-
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-                // Inflate the menu; this adds items to the action bar if it is present.
-                getMenuInflater().inflate(R.menu.inspection_form, menu);
-                return true;
         }
         
         public void populateContent(Equipment equipment, LinearLayout content) {

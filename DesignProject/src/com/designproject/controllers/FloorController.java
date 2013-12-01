@@ -89,13 +89,6 @@ public class FloorController extends NavigationDrawerActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.room_list, menu);
-		return true;
-	}
-
-	@Override
 	public void onResume(){
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
@@ -115,7 +108,6 @@ public class FloorController extends NavigationDrawerActivity {
 	}
 	
 	private void updateStatus() {
-		//ListView listView = getListView();
 		ListView myList=(ListView)findViewById(android.R.id.list);
 
 		if(myList.getChildCount() == rooms.length)
