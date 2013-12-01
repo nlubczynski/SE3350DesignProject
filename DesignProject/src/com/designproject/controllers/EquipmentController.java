@@ -1,5 +1,8 @@
 package com.designproject.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.designproject.models.Equipment;
 import com.designproject.models.HelperMethods;
 import com.designproject.models.InspectionElement;
@@ -14,13 +17,13 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class EquipmentController extends NavigationDrawerActivity {
@@ -139,12 +142,49 @@ public class EquipmentController extends NavigationDrawerActivity {
                 }
                 submit.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
+    	            	List<InspectionElement> failed = new ArrayList<InspectionElement>();
+    	            	updateData();
     	            	
     	            	// Set everything to complete
-    	            	for(InspectionElement e: elements)
+    	            	for(InspectionElement e: elements) {
     	            		e.setHasBeenTested();
+    	            		if (e.getTestResult() == false) {
+    	            			failed.add(e);
+    	            		}
+    	            	}
     	            	
-    	                finish();
+    	                if (failed.size() > 0) {
+    	                	content.removeAllViews();
+    	                	endOfContent.removeAllViews();
+    	                	footer.removeAllViews();
+    	                	header.removeView(pageView);
+    	                	ScrollView scroll = new ScrollView(EquipmentController.this);
+    	                	content.addView(scroll);
+    	                	LinearLayout ll = new LinearLayout(EquipmentController.this);
+    	                	ll.setOrientation(LinearLayout.VERTICAL);
+    	                	scroll.addView(ll);
+    	                	
+    	                	for(int i = 0; i < failed.size(); i++) {
+    	                		TextView question = new TextView(EquipmentController.this);
+    	                		question.setText("Why did "+failed.get(i).getName()+" fail?");
+    	                		ll.addView(question);
+    	                		
+    	                		EditText answer = new EditText(EquipmentController.this);
+    	                		answer.setText(failed.get(i).getTestNotes());
+    	                		ll.addView(answer);
+    	                	}
+    	                	final Button submit = new Button(EquipmentController.this);
+    	                	submit.setText("Submit");
+	                		ll.addView(submit);
+	                		submit.setOnClickListener(new View.OnClickListener() {
+	            	            public void onClick(View view) {
+	            	            	finish();
+	            	            }
+	            	        });
+    	                }
+    	                else {
+    	                	finish();
+    	                }
     	            }
     	        });
                 
@@ -193,56 +233,6 @@ public class EquipmentController extends NavigationDrawerActivity {
                 getMenuInflater().inflate(R.menu.inspection_form, menu);
                 return true;
         }
-
-        public boolean onDown(MotionEvent arg0) {
-                // TODO Auto-generated method stub
-                return false;
-        }
-
-        public boolean onFling(MotionEvent start, MotionEvent finish, float xVelocity, float yVelocity) {
-                // Left swipe
-                if (start.getRawX() < finish.getRawX()) {
-                        if (pageNum > 1)
-                        {
-                        	finish();
-                            Intent previousPage = new Intent(EquipmentController.this, EquipmentController.class);
-                            previousPage.putExtra("Page Number", --pageNum);
-                            startActivity(previousPage);
-                        }
-                } 
-                // Right swipe
-                else {
-                        if (pageNum < numPages)
-                        {
-                        	finish();
-                             Intent nextPage = new Intent(EquipmentController.this, EquipmentController.class);
-                             nextPage.putExtra("Page Number", ++pageNum);
-                             startActivity(nextPage);
-                        }
-                }
-                return true;
-        }
-
-        public void onLongPress(MotionEvent arg0) {
-                // TODO Auto-generated method stub
-                
-        }
-
-        public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
-                        float arg3) {
-                // TODO Auto-generated method stub
-                return false;
-        }
-
-        public void onShowPress(MotionEvent arg0) {
-                // TODO Auto-generated method stub
-                
-        }
-
-        public boolean onSingleTapUp(MotionEvent arg0) {
-                // TODO Auto-generated method stub
-                return false;
-        }
         
         public void populateContent(Equipment equipment, LinearLayout content) {
         	String type = equipment.getName();
@@ -274,7 +264,7 @@ public class EquipmentController extends NavigationDrawerActivity {
                 }
                 else
                 {
-                	for(int i = 6; i < elements.length - 1; i++)
+                	for(int i = 6; i < elements.length; i++)
 	                {
 	                     CheckBox cb = new CheckBox(EquipmentController.this);
 	                     cb.setText(elements[i].getName());
@@ -353,7 +343,7 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                equipment.addInspectionElement(new InspectionElement("Checked positioning of all nozzles"));
 	                equipment.addInspectionElement(new InspectionElement("Hood/Duct penetrations sealed"));
 	                equipment.addInspectionElement(new InspectionElement("Grease Accumulation"));
-	                equipment.addInspectionElement(new InspectionElement("Pressue gauge in proper range"));
+	                equipment.addInspectionElement(new InspectionElement("Pressure gauge in proper range"));
 	        		equipment.addInspectionElement(new InspectionElement("Checked cartridge weight"));
 	                equipment.addInspectionElement(new InspectionElement("Cylinder hydrostatic test date"));
 	                equipment.addInspectionElement(new InspectionElement("Inspect cylinder and mount"));
@@ -420,7 +410,7 @@ public class EquipmentController extends NavigationDrawerActivity {
         	super.finish();
         }
         
-        private void updateData(){
+        private void updateData() {
         	for(int i = content.getChildCount() - 1; i >= 0; i--)
             {
         		if(content.getChildAt(i) instanceof CheckBox)
@@ -436,23 +426,34 @@ public class EquipmentController extends NavigationDrawerActivity {
                     	}
                     }
         		}
-        		else if (content.getChildAt(i) instanceof TextView && !(content.getChildAt(i) instanceof EditText))
-        		{
-        			TextView tvView = (TextView) content.getChildAt(i);
-        			EditText etView = (EditText) content.getChildAt(i + 1);
-        			String text = tvView.getText().toString();
-        			String value = "";
-        			if(etView.getText() != null)
-        			{
-        				value = etView.getText().toString();
+        		else if(content.getChildAt(i) instanceof ScrollView) {
+        			ScrollView sv = (ScrollView) content.getChildAt(i);
+        			LinearLayout ll = (LinearLayout) sv.getChildAt(0);
+        			for (int j = 0; j < ll.getChildCount(); j++) {
+        				if (ll.getChildAt(j) instanceof TextView && !(ll.getChildAt(j) instanceof EditText) && !(ll.getChildAt(j) instanceof Button))
+                		{
+                			TextView tvView = (TextView) ll.getChildAt(j);
+                			EditText etView = (EditText) ll.getChildAt(j + 1);
+               
+                			String value = "", text="";
+                			if(tvView.getText() != null) {
+                				text = tvView.getText().toString().split(" ")[2];
+                			}
+                			if(etView.getText() != null)
+                			{
+                				value = etView.getText().toString();
+                			}
+                			
+                            for (InspectionElement element : elements)
+                            {
+                            	if(element.getName().equals(text))
+                            	{
+                            		element.setTestNotes(value);
+                            	}
+                            }
+                		}
         			}
-                    for (InspectionElement element : elements)
-                    {
-                    	if(element.getName().equals(text))
-                    	{
-                    		element.setTestNotes(value);
-                    	}
-                    }
+        			
         		}
         	}
         }
