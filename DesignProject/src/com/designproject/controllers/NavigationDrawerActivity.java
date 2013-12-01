@@ -2,15 +2,9 @@ package com.designproject.controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.ActionProvider;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -91,8 +85,11 @@ public class NavigationDrawerActivity extends SherlockActivity {
     
     public void navDrawerLogoButtonListener(View view){
     	
-    	Intent openMainScreen = new Intent(NavigationDrawerActivity.this, ContractController.class);
-    	startActivity(openMainScreen);
+    	if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+        	mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+        	mDrawerLayout.openDrawer(mDrawerList);
+        }
     }
 	
     private void loadSettingsPage() {
