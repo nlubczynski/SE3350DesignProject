@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
