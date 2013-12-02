@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -23,6 +22,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -350,7 +351,7 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                equipment.addInspectionElement(new InspectionElement("Operated system from terminal link"));
 	                equipment.addInspectionElement(new InspectionElement("Checked travel of cable and link position"));
 	                equipment.addInspectionElement(new InspectionElement("Fusible links"));
-	                equipment.addInspectionElement(new InspectionElement("Replaced fusible links. Mfg. Date"));
+	                equipment.addInspectionElement(new InspectionElement("Replaced fusible links"));
 	                equipment.addInspectionElement(new InspectionElement("Checked and cleaned fusible links"));
 	                equipment.addInspectionElement(new InspectionElement("Checked operation of manual release"));
 	                equipment.addInspectionElement(new InspectionElement("Checked operation of micro-switch"));
@@ -379,13 +380,186 @@ public class EquipmentController extends NavigationDrawerActivity {
         		}
               
                 elements = equipment.getInspectionElements();
-                numPages = elements.length / 6 + (elements.length % 6 == 0 ? 0 : 1);
-                for(int j = ((pageNum - 1)*6); j < Math.min((pageNum * 6), elements.length); j++)
-                {
-	               	CheckBox cb = new CheckBox(EquipmentController.this);
-		            cb.setText(elements[j].getName());
-		            cb.setChecked(elements[j].getTestResult());
-		            content.addView(cb);
+                numPages = 8;
+                		
+                switch(pageNum) {
+                case 1:
+                	for(int j = 0; j < 6; j++) {
+	                	CheckBox cb = new CheckBox(EquipmentController.this);
+			            cb.setText(elements[j].getName());
+			            cb.setChecked(elements[j].getTestResult());
+			            content.addView(cb);
+	                }
+                	break;
+                case 2:
+	                for(int j = 6; j < 10; j++) {
+	                	if(j == 7) {
+	                		TextView grease = new TextView(EquipmentController.this);
+	                		grease.setText(elements[j].getName());
+	                		content.addView(grease);
+	                		final RadioButton[] rb = new RadioButton[3];
+	                	    RadioGroup rg = new RadioGroup(this); 
+	                	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	                	    for(int i=0; i<3; i++){
+	                	        rb[i]  = new RadioButton(this);
+	                	        rg.addView(rb[i]); 
+	                	    }
+	                	    rb[0].setText("Normal");
+	                	    rb[1].setText("Heavy");
+	                	    rb[2].setText("Excess");
+	                	    if(elements[j].getTestNotes().equals("Normal"))
+	                	    	rb[0].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("Heavy"))
+	                	    	rb[1].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("Excess"))
+	                	    	rb[2].setChecked(true);
+	                	    content.addView(rg);
+	                	}
+	                	else if (j == 9) {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+				            cb.setText(elements[j].getName());
+				            cb.setChecked(elements[j].getTestResult());
+				            content.addView(cb);
+				            
+	                		TextView lastTest = new TextView(EquipmentController.this);
+	                		lastTest.setText("Last Tested");
+	                		content.addView(lastTest);
+	                		
+	                		EditText ans = new EditText(EquipmentController.this);
+	                		String note = elements[j].getTestNotes();
+	                		
+	                		CheckBox cb1 = new CheckBox(EquipmentController.this);
+				            cb1.setText("Replace?");
+				            
+				            if (note.equals("")) {
+	                			ans.setHint("dd/mm/yyyy");
+				            }
+	                		else {
+	                			String[] notes = note.split("-");
+	                			if(notes.length == 2) {
+	                				if (notes[0].equals(" "))
+	                					ans.setHint("dd/mm/yyyy");
+	                				else
+	                					ans.setText(notes[0]);
+	                				if (notes[1].equals("Replace"))
+		                				cb1.setChecked(true);
+	                			}
+	                		}
+				            content.addView(ans);
+				            content.addView(cb1);
+	                	}
+	                	else {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+	    		            cb.setText(elements[j].getName());
+	    		            cb.setChecked(elements[j].getTestResult());
+	    		            content.addView(cb);
+	                	}
+	                }
+	                break;
+                case 3:
+	                for(int j = 10; j < 15; j++) {
+	                	if (j == 10) {
+	                		TextView cylinder = new TextView(EquipmentController.this);
+	                		cylinder.setText(elements[j].getName());
+	                		content.addView(cylinder);
+	                		
+	                		EditText ans = new EditText(EquipmentController.this);
+	                		if (elements[j].getTestNotes().equals(""))
+	                			ans.setHint("dd/mm/yyyy");
+	                		else
+	                			ans.setText(elements[j].getTestNotes());
+	                		content.addView(ans);
+	                	}
+	                	else if (j == 14) {
+	                		TextView fusible = new TextView(EquipmentController.this);
+	                		fusible.setText(elements[j].getName());
+	                		content.addView(fusible);
+	                		
+	                		final RadioButton[] rb = new RadioButton[3];
+	                	    RadioGroup rg = new RadioGroup(this); 
+	                	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	                	    for(int i=0; i<3; i++){
+	                	        rb[i]  = new RadioButton(this);
+	                	        rg.addView(rb[i]); 
+	                	    }
+	                	    rb[0].setText("450");
+	                	    rb[1].setText("500");
+	                	    rb[2].setText("Other");
+	                	    if (elements[j].getTestNotes().equals("450"))
+	                	    	rb[0].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("500"))
+	                	    	rb[1].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("other"))
+	                	    	rb[2].setChecked(true);
+	                	    content.addView(rg);
+	                	}
+	                	else {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+	    		            cb.setText(elements[j].getName());
+	    		            cb.setChecked(elements[j].getTestResult());
+	    		            content.addView(cb);
+	                	}
+	                }
+	                break;
+                case 4:
+	                for (int j = 15; j < 19; j++) {
+	                	if (j == 15) {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+				            cb.setText(elements[j].getName());
+				            cb.setChecked(elements[j].getTestResult());
+				            content.addView(cb);
+				            
+	                		TextView mfgDate = new TextView(EquipmentController.this);
+	                		mfgDate.setText("Mfg. Date");
+	                		content.addView(mfgDate);
+	                		
+	                		EditText ans = new EditText(EquipmentController.this);
+	                		if (elements[j].getTestNotes().equals(""))
+	                			ans.setHint("dd/mm/yyyy");
+	                		else
+	                			ans.setText(elements[j].getTestNotes());
+	                		content.addView(ans);
+	                	}
+	                	else {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+				            cb.setText(elements[j].getName());
+				            cb.setChecked(elements[j].getTestResult());
+				            content.addView(cb);
+	                	}
+	                }
+	                break;
+                case 5: 
+                	for(int j = 19; j < 24; j++) {
+                		CheckBox cb = new CheckBox(EquipmentController.this);
+			            cb.setText(elements[j].getName());
+			            cb.setChecked(elements[j].getTestResult());
+			            content.addView(cb);
+                		if (j == 19) {
+	                		final RadioButton[] rb = new RadioButton[2];
+	                	    RadioGroup rg = new RadioGroup(this); 
+	                	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	                	    for(int i=0; i<2; i++){
+	                	        rb[i]  = new RadioButton(this);
+	                	        rg.addView(rb[i]); 
+	                	    }
+	                	    rb[0].setText("Electrical");
+	                	    rb[1].setText("Mechanical");
+	                	    if(elements[j].getTestNotes().equals("Electrical"))
+	                	    	rb[0].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("Mechanical"))
+	                	    	rb[1].setChecked(true);
+	                	    content.addView(rg);
+	                	}
+                	}
+                	break;
+                case 6: case 7: case 8: 
+	                for (int j = ((4*6) + ((pageNum - 6)*6)); j < Math.min(((4*6) + ((pageNum - 6)*6) + 6), elements.length); j++) {
+	                	CheckBox cb = new CheckBox(EquipmentController.this);
+			            cb.setText(elements[j].getName());
+			            cb.setChecked(elements[j].getTestResult());
+			            content.addView(cb);
+	                }
+	                break;
                 }
         	}
         }
@@ -426,6 +600,62 @@ public class EquipmentController extends NavigationDrawerActivity {
                     	}
                     }
         		}
+        		else if(content.getChildAt(i) instanceof RadioGroup) {
+        			String item = ((TextView) content.getChildAt(i - 1)).getText().toString();
+        			RadioGroup rgView = (RadioGroup) content.getChildAt(i);
+        			for(int j = 0; j < rgView.getChildCount(); j++) {
+        				RadioButton rb = (RadioButton) rgView.getChildAt(j);
+        				if(rb.isChecked()) {
+        					for (InspectionElement element : elements)
+                            {
+                            	if(element.getName().equals(item))
+                            	{
+                            		String result = rb.getText().toString();
+                            		if(element.getName().equals("Grease Accumulation")) {
+                            			if(result.equals("Normal"))
+                            				element.setTestResult(true);
+                            			else
+                            				element.setTestResult(false);
+                            		}
+                            		else if(element.getName().equals("Fusible links 360")) {
+                            			if(result.equals("Other"))
+                            				element.setTestResult(false);
+                            			else
+                            				element.setTestResult(true);
+                            		}
+                            		element.setTestNotes(result);
+                            		element.setHasBeenTested();
+                            	}
+                            }
+        				}
+        			}
+        		}
+        		else if(content.getChildAt(i) instanceof EditText) {
+        			String answer = " ";
+        			if(((EditText) content.getChildAt(i)).getText() != null)
+        			{
+        				answer = ((EditText) content.getChildAt(i)).getText().toString();
+        			}
+        			String item = "";
+        			if(((TextView) content.getChildAt(i - 1)).getText() != null)
+        			{
+        				item = ((TextView) content.getChildAt(i - 1)).getText().toString();
+        			}
+        			if (item.equals("Cylinder hydrostatic test date")) {
+        				elements[10].setHasBeenTested();
+        				elements[10].setTestResult(true);
+        				elements[10].setTestNotes(answer);
+        			}
+        			else if (item.equals("Mfg. Date")) {
+        				elements[15].setTestNotes(answer);
+        			}
+        			else if (item.equals("Last Tested")) {
+                        CheckBox cbView = (CheckBox) content.getChildAt(i + 1);
+                        boolean value = cbView.isChecked();
+                        String note = answer + "-"+(value ? "Replace" : " ");
+                        elements[9].setTestNotes(note);
+        			}
+        		}
         		else if(content.getChildAt(i) instanceof ScrollView) {
         			ScrollView sv = (ScrollView) content.getChildAt(i);
         			LinearLayout ll = (LinearLayout) sv.getChildAt(0);
@@ -437,7 +667,7 @@ public class EquipmentController extends NavigationDrawerActivity {
                
                 			String value = "", text="";
                 			if(tvView.getText() != null) {
-                				text = tvView.getText().toString().split(" ")[2];
+                				text = tvView.getText().toString().split(" ")[2]; //TODO: that won't work if the element's name is longer than 1. Go up to fail
                 			}
                 			if(etView.getText() != null)
                 			{
@@ -453,7 +683,6 @@ public class EquipmentController extends NavigationDrawerActivity {
                             }
                 		}
         			}
-        			
         		}
         	}
         }
