@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -310,7 +311,7 @@ public class EquipmentController extends NavigationDrawerActivity {
         		}
                 
                 elements = equipment.getInspectionElements();
-                numPages = 2;
+                numPages = 1;
                 
             	// Populate form
                 for(int i = 0; i < 2; i++)
@@ -655,6 +656,15 @@ public class EquipmentController extends NavigationDrawerActivity {
                         String note = answer + "-"+(value ? "Replace" : " ");
                         elements[9].setTestNotes(note);
         			}
+        			for (InspectionElement element : elements)
+                    {
+                    	if(element.getName().equals(item))
+                    	{
+                    		element.setTestResult(true);
+                    		element.setHasBeenTested();
+                    		element.setTestNotes(answer);
+                    	}
+                    }
         		}
         		else if(content.getChildAt(i) instanceof ScrollView) {
         			ScrollView sv = (ScrollView) content.getChildAt(i);
@@ -666,8 +676,14 @@ public class EquipmentController extends NavigationDrawerActivity {
                 			EditText etView = (EditText) ll.getChildAt(j + 1);
                
                 			String value = "", text="";
+                			String[] values = {};
                 			if(tvView.getText() != null) {
-                				text = tvView.getText().toString().split(" ")[2]; //TODO: that won't work if the element's name is longer than 1. Go up to fail
+                				values = tvView.getText().toString().split(" "); 
+                				for(int k = 2; k < values.length - 1; k++) {
+                					if(k != 2)
+                						text += " ";
+                					text += values[k];
+                				}
                 			}
                 			if(etView.getText() != null)
                 			{
