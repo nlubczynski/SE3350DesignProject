@@ -35,7 +35,7 @@ public class FloorController extends NavigationDrawerActivity {
 
 		setupActionBar();
 		
-		
+		//Get application context
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		mFloor = (Floor)a.getLocation();
 		rooms = mFloor.getRooms();
@@ -43,6 +43,7 @@ public class FloorController extends NavigationDrawerActivity {
 		ArrayList<HashMap<String,String>> listInformationString = new ArrayList<HashMap<String,String>>();
 		HashMap<String,String> item;
 		
+		//For each room, add the inspection information
 		for(Room inspectionInformation : rooms)
 		{
 			item = new HashMap<String, String>();
@@ -52,6 +53,7 @@ public class FloorController extends NavigationDrawerActivity {
 			listInformationString.add(item);
 		}
 		
+		//Create a list view displaying each room with its corresponding information
 		SimpleAdapter simpleAdapter =  new SimpleAdapter(this,listInformationString, R.layout.room_list_item,
 			new String[] {"line1", "line2", "line3"},
 			new int[] {R.id.RoomNameValue, R.id.RoomIDValue, R.id.numOfElementsValue}
@@ -61,12 +63,15 @@ public class FloorController extends NavigationDrawerActivity {
 		myList.setAdapter(simpleAdapter);
 	}
 	
+	//Listener for a room getting clicked
 	public void roomItemListener(View view)
 	{
+		//Get room name
 		View base =  ((ViewGroup)view).getChildAt(0);
 		View second = ((ViewGroup)base).getChildAt(1);
 		String text = (String) ((TextView)second).getText();
 		
+		//Set the application context to the selected room
 		for(Room r: rooms)
 			if( r.getRoomNo().equals(text) ){
 				FireAlertApplication a = (FireAlertApplication)getApplication();
@@ -74,6 +79,7 @@ public class FloorController extends NavigationDrawerActivity {
 				break;
 			}
 		
+		//Start the Inspection Overview activity
 		Intent openInspectionOverview= new Intent(FloorController.this, RoomController.class);
     	startActivity(openInspectionOverview);
 	}
@@ -100,12 +106,12 @@ public class FloorController extends NavigationDrawerActivity {
 		// Check if Logged in
         HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
 		super.onResume();
+		//Set the application context to the current floor
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a.setLocation(mFloor);
 		
 		ListView myList=(ListView)findViewById(android.R.id.list);
-
-		//ListView listView = getListView();
+		//Update the status of each room
 		myList.post(new Runnable() {
 		    @Override
 		    public void run() {
@@ -114,15 +120,17 @@ public class FloorController extends NavigationDrawerActivity {
 		});
 	}
 	
+	//Update status (ie complete or not) 
 	private void updateStatus() {
-		//ListView listView = getListView();
 		ListView myList=(ListView)findViewById(android.R.id.list);
 
 		if(myList.getChildCount() == rooms.length)
 		{
+			//Iterate through each room
 			for(int i = 0; i < rooms.length; i++)
 			{
 				View listElement = (ViewGroup)myList.getChildAt(i);
+				//If the room is completed, set the text color to green
 				if (rooms[i].isCompleted())
 				{
 	        		View toBeColored = (View)((ViewGroup)listElement).getChildAt(0);
@@ -133,6 +141,7 @@ public class FloorController extends NavigationDrawerActivity {
 				}
 				Equipment[] equipment = rooms[i].getEquipment();
 				int incompleteCount = 0;
+				//Update the number of equipment left to be inspected
 				for(int j = 0; j < equipment.length; j++)
 				{
 					if(!equipment[j].isCompleted())
