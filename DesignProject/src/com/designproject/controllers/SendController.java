@@ -33,6 +33,16 @@ public class SendController extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sender_view);
 		
+		SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
+		
+		String ip = preferences.getString("port", "");
+		int port = preferences.getInt("port", -1);
+		
+		if(ip.length() > 0)
+			((EditText)findViewById(R.id.ipText)).setText(ip);
+		if(port > -1)
+			((EditText)findViewById(R.id.portText)).setText(port);;
+		
 		this.setSendButton(false);
 		
 	}
@@ -73,15 +83,17 @@ public class SendController extends Activity {
 			toast.show();
 		}
 		else{
-			setSendButton(connect(portNumb, ip));
-			Toast toast = Toast.makeText(context, "Connection Valid", duration);
-			toast.show();
-			
-			SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
-			Editor editor = preferences.edit();
-			editor.putString("ip", ip);
-			editor.putInt("port", portNumb);
-			editor.commit();
+			if(connect(portNumb, ip)){
+				setSendButton(true);
+				Toast toast = Toast.makeText(context, "Connection Valid", duration);
+				toast.show();
+				
+				SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
+				Editor editor = preferences.edit();
+				editor.putString("ip", ip);
+				editor.putInt("port", portNumb);
+				editor.commit();
+			}
 		}
 	}
 	public void sendClick(View view){
@@ -135,7 +147,7 @@ public class SendController extends Activity {
 		
 		try {
 			sender = new Sender(ip, port);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Context context = getApplicationContext();
 			CharSequence text = "Can't Connect";
 			int duration = Toast.LENGTH_SHORT;

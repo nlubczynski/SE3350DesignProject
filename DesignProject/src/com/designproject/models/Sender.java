@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -22,15 +23,10 @@ public class Sender {
 	 * @param ServerPort int Port Number
 	 * @throws IOException
 	 */
-	public Sender(String IP, int ServerPort) throws IOException {
-		try {
-			ServerIPAdd = InetAddress.getByName(IP);
-			RTSPsocket = new Socket(ServerIPAdd, ServerPort);
-		}
-		catch (UnknownHostException e)
-		{
-			Log.d("Socket Connection", e.toString());
-		}
+	public Sender(String IP, int ServerPort) throws IOException, Exception {
+		ServerIPAdd = InetAddress.getByName(IP);
+		RTSPsocket = new Socket();
+		RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, ServerPort), 1000);
 	}
 
 	//send data to server

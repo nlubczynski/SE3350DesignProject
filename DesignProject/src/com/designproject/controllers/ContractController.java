@@ -222,7 +222,7 @@ public class ContractController extends NavigationDrawerActivity {
 				    			if(HelperMethods.connectAndSend(preferences, context))
 				    				textViewBuildingStatus.setText("SENT");
 				    			else
-				    				textViewBuildingStatus.setText("Saved");
+				    				textViewBuildingStatus.setText("SAVED");
 				    			
 				    		} catch (XmlPullParserException e) {
 				    			// TODO Auto-generated catch block
