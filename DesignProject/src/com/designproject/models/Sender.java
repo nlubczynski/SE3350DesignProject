@@ -27,9 +27,7 @@ public class Sender {
 	 * @throws IOException
 	 */
 	public Sender(String IP, int ServerPort) throws IOException, Exception {
-		ServerIPAdd = InetAddress.getByName(IP);
-		RTSPsocket = new Socket();
-		RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, ServerPort), 1000);
+		new connectAsync().execute(IP, String.valueOf(ServerPort));
 	}
 
 	//send data to server
@@ -52,6 +50,25 @@ public class Sender {
 			try {
 				final PrintWriter sendData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(RTSPsocket.getOutputStream())), true);
 				sendData.println(params[0]);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+		}
+		
+		protected void onPostExcecute(Boolean res){
+			returned = true;
+			result = res;
+		}		
+	}
+	class connectAsync extends AsyncTask<String, Void, Boolean>{
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			try {
+				ServerIPAdd = InetAddress.getByName(params[0]);
+				RTSPsocket = new Socket();
+				RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, Integer.parseInt(params[1])), 1000);
 			} catch (Exception e) {
 				return false;
 			}
