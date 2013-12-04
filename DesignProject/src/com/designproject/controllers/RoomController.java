@@ -48,19 +48,16 @@ public class RoomController extends NavigationDrawerActivity {
 		setContentView(R.layout.activity_equipment_inspection_list);
 		super.onCreate(savedInstanceState);
 
-		setupActionBar();
-
+		//Get application and location
 		FireAlertApplication a = (FireAlertApplication) getApplication();
 		a = (FireAlertApplication) getApplication();
 		mRoom = (Room) a.getLocation();
 		equipment = mRoom.getEquipment();
-		setTitle("Room: " + mRoom.getRoomNo());
 
 		ListView myList=(ListView)findViewById(android.R.id.list);
 		myList.setAdapter(new ArrayAdapter<Equipment>(this,
 				R.layout.equipment_list_item, equipment));
 
-		//listView = getListView();
 		myList.setTextFilterEnabled(true);
 
 		myList.setOnItemClickListener(new OnItemClickListener() {
@@ -117,13 +114,6 @@ public class RoomController extends NavigationDrawerActivity {
 		}
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.equipment_list, menu);
-//		return true;
-//	}
-
 	// given Scanner code
 	protected void onResume() {
 		// Check if Logged in
@@ -171,10 +161,6 @@ public class RoomController extends NavigationDrawerActivity {
 
 	// given Scanner code
 	private void initialComponent() {
-		// tv_getdata_from_scanner =
-		// (TextView)findViewById(R.id.tv_getdata_from_scanner);
-		// tv_getdata_from_edittext =
-		// (TextView)findViewById(R.id.tv_getdata_from_edittext);
 		editText = (EditText) findViewById(R.id.editText);
 		editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 		editText.addTextChangedListener(textWatcher);
@@ -243,8 +229,6 @@ public class RoomController extends NavigationDrawerActivity {
 				// "content" value
 				content = bundle.getString("CONTENT");
 
-				// tv_getdata_from_scanner.setText("Get data from Scanner : " +
-				// content);
 			}
 		}
 	}
