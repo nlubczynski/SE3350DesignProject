@@ -49,6 +49,7 @@ public class NavigationDrawerActivity extends SherlockActivity {
          
          ActionBar actionBar = getSupportActionBar();
 
+         //Inflate a custom view
          View actionBarView = getLayoutInflater().inflate(
                      R.layout.action_bar_layout, null);
 
@@ -56,6 +57,7 @@ public class NavigationDrawerActivity extends SherlockActivity {
          actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
          ((TextView)actionBarView.findViewById(R.id.navDrawerTitle)).setText(mTitle);
 
+         //disable all default options
          actionBar.setDisplayUseLogoEnabled(false);
          actionBar.setDisplayShowTitleEnabled(false);
          actionBar.setDisplayShowHomeEnabled(false);
@@ -74,6 +76,10 @@ public class NavigationDrawerActivity extends SherlockActivity {
      	return super.onOptionsItemSelected(item);
     }
     
+    /**
+     * listener for the nav icon to open/close navigation drawer
+     * @param view
+     */
     public void navDrawerButtonListener(View view){
    
     	if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
@@ -82,7 +88,10 @@ public class NavigationDrawerActivity extends SherlockActivity {
         	mDrawerLayout.openDrawer(mDrawerList);
         }
     }
-    
+    /**
+     * Listener for the logo to open/close navigation drawer
+     * @param view
+     */
     public void navDrawerLogoButtonListener(View view){
     	
     	if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
@@ -133,6 +142,7 @@ public class NavigationDrawerActivity extends SherlockActivity {
     	    text1.setText(TextValue[position]);
     	    ImageView image = (ImageView)rowView.findViewById(R.id.imageViewNavDrawer);
     	    
+    	    //Set icons for each navigation drawer item
     	    if(position == 0)
     	    	image.setImageResource(R.drawable.ic_client_light);
     	    else if(position == 1)
@@ -140,8 +150,10 @@ public class NavigationDrawerActivity extends SherlockActivity {
     	    else if(position == 2)
     	    	image.setImageResource(R.drawable.ic_inspection_light);
     	    else if(position == 3)
-    	    	image.setImageResource(R.drawable.ic_settings_light);
+    	    	image.setImageResource(R.drawable.ic_account_settings_light);
     	    else if(position == 4)
+    	    	image.setImageResource(R.drawable.ic_connection_settings_light);
+    	    else if(position == 5)
     	    	image.setImageResource(R.drawable.ic_logout_light);
 
     	    return rowView;
@@ -180,12 +192,14 @@ public class NavigationDrawerActivity extends SherlockActivity {
 		case 2:
 			displayInspections();
 			break;
-		//settings?
+		//settings
 		case 3:
 			loadSettingsPage();
 			break;
-		//logout
 		case 4:
+			break;
+		//logout
+		case 5:
 			signOut();
 			break;    	
 		}

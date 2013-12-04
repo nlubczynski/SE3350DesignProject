@@ -4,7 +4,8 @@
         <item>View Clients</item>
         <item>View Locations</item>
         <item>View Contracts</item>
-        <item>Settings</item>
+        <item>Account Settings</item>
+        <item>Connection Settings</item>
         <item>Logout</item>
     </array>
     
