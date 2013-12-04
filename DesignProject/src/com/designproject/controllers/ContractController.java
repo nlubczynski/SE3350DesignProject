@@ -1,5 +1,8 @@
 package com.designproject.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.designproject.FireAlertApplication;
@@ -33,6 +36,7 @@ public class ContractController extends NavigationDrawerActivity {
     private TabHost myTabHost;
     private Contract mContract;
     private Building[] mBuildings;
+    List<Button> buttons;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class ContractController extends NavigationDrawerActivity {
     	
     	//Get all buildings associated with the current contract
 		mBuildings = mContract.getBuildings();
+		
+		buttons = new ArrayList<Button>();
 		
 		setUpTabs();
 	}
@@ -181,6 +187,7 @@ public class ContractController extends NavigationDrawerActivity {
 					submitButton.setTag(building.getId());
 					submitButton.setEnabled(false);
 					submitButton.setBackgroundResource(R.drawable.backgrounds);
+					buttons.add(submitButton);
 					
 					//Create on click listener for the submit button
 					submitButton.setOnClickListener(new Button.OnClickListener() {  
@@ -259,9 +266,11 @@ public class ContractController extends NavigationDrawerActivity {
 		//Update their status accordingly
 		for(Building building : mBuildings) {
 			if (building.isCompleted()) {
-				View parent = findViewById(R.id.LinearLayout1);
-				Button submitButton = (Button) parent.findViewWithTag(building.getId());
-				submitButton.setEnabled(true);
+				View parent = findViewById(R.id.LinearLayout1);/*
+				Button submitButton = (Button) parent.findViewWithTag(building.getId());*/
+				for(Button b: buttons)
+					if(b.getTag().equals(building.getId()))
+						b.setEnabled(true);
 				
 				TextView status = (TextView) parent.findViewWithTag(building.getId()+" status");
 				status.setText("COMPLETE");
