@@ -22,17 +22,6 @@
             android:layout_gravity="top"
             android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/Button01"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_margin"
-                android:layout_marginRight="@dimen/default_margin"
-                android:layout_marginTop="@dimen/default_margin"
-                android:background="@drawable/backgrounds"
-                android:onClick="createUser"
-                android:text="Create User" />
-
             <TextView
                 android:id="@+id/lblUsername"
                 android:layout_width="wrap_content"

@@ -173,7 +173,7 @@ public class HelperMethods {
 		
 		//Add all users, except the "currentUser" map
 		for(Map.Entry<String,?> entry : keys.entrySet())
-			if(!entry.getKey().equals("CurrentUser") )
+			if(!entry.getKey().equals("CurrentUser") && !entry.getKey().equals("Admin"))
 				returnVal.add(entry.getKey());
 		
 		String[] returnArray = new String[ returnVal.size() ];
