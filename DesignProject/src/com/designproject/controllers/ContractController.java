@@ -16,6 +16,7 @@ import com.designproject.models.XMLReaderWriter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -214,7 +215,15 @@ public class ContractController extends NavigationDrawerActivity {
 				    			FireAlertApplication a = (FireAlertApplication)getApplication();
 				    			out.writeXML( a.getFranchise() );
 				    			v.setEnabled(false);
-				    			textViewBuildingStatus.setText("SENT");
+				    			
+				    			SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
+				    			Context context = getApplicationContext();
+				    			
+				    			if(HelperMethods.connectAndSend(preferences, context))
+				    				textViewBuildingStatus.setText("SENT");
+				    			else
+				    				textViewBuildingStatus.setText("SAVED");
+				    			
 				    		} catch (XmlPullParserException e) {
 				    			// TODO Auto-generated catch block
 				    			e.printStackTrace();

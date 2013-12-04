@@ -106,6 +106,11 @@ public class NavigationDrawerActivity extends SherlockActivity {
     	Intent openSettingsPage = new Intent (NavigationDrawerActivity.this, SettingsController.class);
     	startActivity(openSettingsPage);
 	}
+	private void loadConnectionSettingsPage() {
+		Intent openSettingsPage = new Intent (NavigationDrawerActivity.this, SendController.class);
+    	startActivity(openSettingsPage);
+		
+	}
 	
     /* The click listener for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -196,6 +201,7 @@ public class NavigationDrawerActivity extends SherlockActivity {
 			loadSettingsPage();
 			break;
 		case 4:
+			loadConnectionSettingsPage();
 			break;
 		//logout
 		case 5:
@@ -203,6 +209,8 @@ public class NavigationDrawerActivity extends SherlockActivity {
 			break;    	
 		}
 	}
+
+
 
 	public void signOut()
 	{

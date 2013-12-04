@@ -47,7 +47,7 @@
     <string name="port">Port:</string>
     <string name="scan">Scan</string>
     <string name="send">Send</string>
-    <string name="connect">Connect</string>
+    <string name="connect">Test Connection</string>
     <string name="title_activity_send_controller">Send Data</string>
     <string name="title_activity_display_list">Clients</string>
     <string name="title_activity_display_locations">List of Locations</string>
