@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="10" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -107,6 +107,10 @@
         <activity
             android:name="com.designproject.controllers.SendController"
             android:label="@string/title_activity_send_controller" >
+        </activity>
+        <activity
+            android:name="com.designproject.controllers.DisplaySpecificClientLocationActivity"
+            android:label="@string/title_activity_display_specific_client_location" >
         </activity>
     </application>
 
