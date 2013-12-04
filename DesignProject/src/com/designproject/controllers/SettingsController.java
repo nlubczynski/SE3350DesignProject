@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -22,6 +23,16 @@ public class SettingsController extends NavigationDrawerActivity {
 
 		super.onCreate(savedInstanceState);
 
+		LinearLayout adminPanel = (LinearLayout)findViewById(R.id.linearLayoutAdminPanel);
+		SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login",
+				Context.MODE_PRIVATE);
+		
+		//If not admin remove admin options from screen
+		if(!sharedPreferenceLogin.getString("CurrentUser", "").equals("Admin"))
+			adminPanel.setVisibility(2);
+		else
+			adminPanel.setVisibility(0);
+		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.spinner);
