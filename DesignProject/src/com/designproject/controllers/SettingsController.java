@@ -91,6 +91,12 @@ public class SettingsController extends Activity {
 			return;
 		}
 		
+		if(newUserName.length() == 0 || newUserNamePassword.length() == 0 ||  newUserNamePasswordConfirm.length() == 0){
+			Toast toast = Toast.makeText(context, "Can't have blank options", duration);
+			toast.show();
+			return;
+		}
+		
 		//Check if they already exist
 		SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
 		String doesNotExistPlaceHolder = "DOESNOTEXISTDOESNOTEXISTDOESNOTEXISTDOESNOTEXISTDOESNOTEXISTDOESNOTEXIST";

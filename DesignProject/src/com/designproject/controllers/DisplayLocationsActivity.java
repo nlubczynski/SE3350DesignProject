@@ -42,11 +42,13 @@ public class DisplayLocationsActivity extends Activity {
 		
 		List<Map<String,String>> locationClientList = new ArrayList<Map<String,String>>();
 		
+		//Get the application context
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a = (FireAlertApplication)getApplication();
 		theFranchise = (Franchise)a.getFranchise();
 		clients = theFranchise.getClients();
 		
+		//Add the location and client name for all contracts
 		for (Client theClient : clients)
 		{
 			contracts = theClient.getContracts();
@@ -71,34 +73,6 @@ public class DisplayLocationsActivity extends Activity {
 				new int[] {android.R.id.text1, android.R.id.text2});
 		
 		list.setAdapter(adapter);
-		
-		/*
-		 * Code for single row display - only locations, no client names
-		 * 
-		ListView list = (ListView) findViewById(R.id.android_locationlist);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-		
-		FireAlertApplication a = (FireAlertApplication)getApplication();
-		a = (FireAlertApplication)getApplication();
-		theFranchise = (Franchise)a.getFranchise();
-		clients = theFranchise.getClients();
-		
-		for (Client theClient : clients)
-		{
-			contracts = theClient.getContracts();
-			
-			for (Contract theContract : contracts)
-			{
-				buildings = theContract.getBuildings();
-				
-				for (Building theBuilding : buildings)
-				{
-					adapter.add(theBuilding.getAddress());
-				}
-			}
-		}
-		
-		list.setAdapter(adapter);*/
 	}
 
 	@Override

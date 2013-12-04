@@ -52,6 +52,20 @@ public class LoginScreen extends Activity {
     	String usernameString = username.getText().toString();
     	String passwordString = password.getText().toString();
     	
+    	//add in a admin
+    	if(usernameString.equalsIgnoreCase("admin") && passwordString.equals("passwordAdmin"))
+    	{
+    		// Save the current user to the saved preferences
+        	// so that other parts of the application know that someone is logged in
+        	saveUserDetails();
+        	
+        	// Start the application main menu
+        	Intent openLoginScreen = new Intent(LoginScreen.this, MainMenu.class);
+    		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+    		startActivity(openLoginScreen);
+    		return;
+    	}
+    	
     	SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
     	String userPassword = preferences.getString( usernameString, "NO_SUCH_USER");
     	

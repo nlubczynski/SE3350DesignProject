@@ -1,6 +1,5 @@
 package com.designproject.controllers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,39 +13,83 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.designproject.R;
 import com.designproject.models.HelperMethods;
 
-public class NavigationDrawerActivity extends Activity {
+public class NavigationDrawerActivity extends SherlockActivity {
 
 	private String[] mDrawerListTitles;
 	private DrawerLayout mDrawerLayout;
+	//private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mDrawerList;
+	
+	private CharSequence mTitle;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated constructor stub
 		super.onCreate(savedInstanceState);
 
-		//setContentView(R.layout.activity_main_menu);
-
-
-		setupNavigationDrawer();
-
-	}
-
-	private void setupNavigationDrawer()
-	{
-         mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
+		 mDrawerListTitles = getResources().getStringArray(R.array.drawer_list_options);
          mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
          mDrawerList = (ListView) findViewById(R.id.left_drawer);
          
-         // Set the adapater for the list view through custom adapter
+         mTitle = getTitle();
+         
+         //Set the adapater for the list view through custom adapter
          AdapterClass adpClass = new AdapterClass(this, mDrawerListTitles);
          mDrawerList.setAdapter(adpClass);
          
          // Bind a listener to the drawer list
          mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+         
+         ActionBar actionBar = getSupportActionBar();
+
+         View actionBarView = getLayoutInflater().inflate(
+                     R.layout.action_bar_layout, null);
+
+         actionBar.setCustomView(actionBarView);
+         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+         ((TextView)actionBarView.findViewById(R.id.navDrawerTitle)).setText(mTitle);
+
+         actionBar.setDisplayUseLogoEnabled(false);
+         actionBar.setDisplayShowTitleEnabled(false);
+         actionBar.setDisplayShowHomeEnabled(false);
+         actionBar.setDisplayHomeAsUpEnabled(false);
+	}
+	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+     	return super.onOptionsItemSelected(item);
+    }
+    
+    public void navDrawerButtonListener(View view){
+   
+    	if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+        	mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+        	mDrawerLayout.openDrawer(mDrawerList);
+        }
+    }
+    
+    public void navDrawerLogoButtonListener(View view){
+    	
+    	if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+        	mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+        	mDrawerLayout.openDrawer(mDrawerList);
+        }
     }
 	
     private void loadSettingsPage() {
@@ -153,4 +196,5 @@ public class NavigationDrawerActivity extends Activity {
 		// Replace current code with LogOutHelper code
 		HelperMethods.logOutHandler( HelperMethods.LOGOUT, this);
 	}
+
 }
