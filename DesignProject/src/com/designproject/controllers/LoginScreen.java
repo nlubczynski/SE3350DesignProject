@@ -125,6 +125,8 @@ public class LoginScreen extends Activity {
     	
     	// Save the information
     	editor.putString("CurrentUser", usernameString);
+    	
+    	editor.commit();
 
 	}
 }
