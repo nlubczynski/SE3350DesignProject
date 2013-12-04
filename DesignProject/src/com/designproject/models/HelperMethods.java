@@ -1,7 +1,10 @@
 package com.designproject.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -13,6 +16,7 @@ import com.designproject.controllers.LoginScreen;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class HelperMethods {
 	public final static int CHECK_IF_LOGGED_IN = 0;
@@ -155,6 +159,44 @@ public class HelperMethods {
 		}
 		return isCompleted;
 		
+	}
+	/**
+	 * Get all the users from shared preferences
+	 * @param context - The application's context
+	 * @return
+	 */
+	public final static String[] getUsers(Context context){
+		
+		SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+		Map<String,?> keys = preferences.getAll();
+		ArrayList<String> returnVal = new ArrayList<String>();
+		
+		//Add all users, except the "currentUser" map
+		for(Map.Entry<String,?> entry : keys.entrySet())
+			if(!entry.getKey().equals("CurrentUser") )
+				returnVal.add(entry.getKey());
+		
+		String[] returnArray = new String[ returnVal.size() ];
+		
+		for(int i = 0; i < returnVal.size(); i++)
+			returnArray[i] = returnVal.get(i);
+		
+		return returnArray;	
+			
+	}
+	/**
+	 * Delete a user from the system
+	 * @param user - String - the user to delete
+	 * @param context - The application's context
+	 * @return
+	 */
+	public final static boolean delteUser(String user, Context context){
+		SharedPreferences preferences = context.getSharedPreferences("Login", Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		
+		editor.remove(user);
+		
+		return editor.commit();
 	}
 }
 

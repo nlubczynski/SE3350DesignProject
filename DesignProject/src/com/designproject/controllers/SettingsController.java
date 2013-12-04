@@ -1,14 +1,19 @@
 package com.designproject.controllers;
 
 import com.designproject.R;
+import com.designproject.models.HelperMethods;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +23,24 @@ public class SettingsController extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings_controller);
+		
+		Spinner spinner = (Spinner)findViewById(R.id.spinner1);				
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner);
+		
+		String[] users = HelperMethods.getUsers(getApplicationContext());
+		
+		for(String user: users)
+			adapter.add(user);
+		spinner.setAdapter(adapter);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.settings_controller, menu);
+
+
+		
 		return true;
 	}
 	
@@ -125,5 +142,64 @@ public class SettingsController extends Activity {
 		Toast toast = Toast.makeText(context, "User Created", duration);
 		toast.show();
 		
+		restart();
+		
+	}
+	public void deleteUser(String user){
+		
+		if( HelperMethods.delteUser(user, getApplicationContext()))
+			new AlertDialog.Builder(this)
+	    	.setIcon(android.R.drawable.ic_dialog_alert)
+	    	.setTitle("User deleted")
+	    	.setMessage("User " + user + " deleted.")
+			.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	
+	                //Restart the activity
+	                restart();
+	            }
+
+    		})
+			.show();
+		else
+			new AlertDialog.Builder(this)
+	    	.setIcon(android.R.drawable.ic_dialog_alert)
+	    	.setTitle("User not deleted")
+	    	.setMessage("User " + user + " was not deleted.")
+			.setNegativeButton("Okay", null)
+			.show();
+
+		
+	}
+	/**
+	 * Restart the activity - after you delete or add an user - so they appear in the proper loactiosn
+	 */
+	public void restart(){
+		finish();
+		startActivity(getIntent());
+	}
+	public void confirmDelete(View view){
+		
+		Spinner spinner = (Spinner)findViewById(R.id.spinner1);	
+		final String user = spinner.getSelectedItem().toString();
+		
+		new AlertDialog.Builder(this)
+        	.setIcon(android.R.drawable.ic_dialog_alert)
+        	.setTitle("Delete User Confirmation")
+        	.setMessage("Delete " + user + "?")
+        	.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+	
+	                //Stop the activity
+	                deleteUser(user);
+	            }
+
+    		})
+    		.setNegativeButton("No", null)
+    		.show();
 	}
 }
