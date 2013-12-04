@@ -43,9 +43,9 @@ public class SettingsController extends NavigationDrawerActivity {
 			adapter.add(user);
 		spinner.setAdapter(adapter);
 	}
-
-	public void savePassword(View view) {
-
+	
+	public void savePassword(View view) throws Exception{
+		
 		Context context = getApplicationContext();
 		int duration = Toast.LENGTH_SHORT;
 
@@ -76,12 +76,12 @@ public class SettingsController extends NavigationDrawerActivity {
 			toast.show();
 			return;
 		}
-
+		
 		// To edit you need to call the shared preference editor
-		SharedPreferences.Editor editor = preferences.edit();
-
-		// Save the information
-		editor.putString(currentUser.trim(), newPassword.trim());
+    	SharedPreferences.Editor editor = preferences.edit();
+    	
+    	// Save the information
+    	editor.putString(currentUser.trim(), HelperMethods.computeSHAHash(newPassword.trim()));
 
 		// commit changes
 		editor.commit();
@@ -95,53 +95,44 @@ public class SettingsController extends NavigationDrawerActivity {
 		toast.show();
 
 	}
-
-	public void createUser(View view) {
-
+	
+	public void createUser(View view) throws Exception{
+		
 		Context context = getApplicationContext();
 		int duration = Toast.LENGTH_SHORT;
-
-		String newUserName = ((EditText) findViewById(R.id.newUserName))
-				.getText().toString();
-		String newUserNamePassword = ((EditText) findViewById(R.id.newUserPassword))
-				.getText().toString();
-		String newUserNamePasswordConfirm = ((EditText) findViewById(R.id.newUserPasswordConfirm))
-				.getText().toString();
-
-		// Check if the same
-		if (!newUserNamePassword.equals(newUserNamePasswordConfirm)) {
-			Toast toast = Toast.makeText(context, "Passwords don't match",
-					duration);
+		
+		String newUserName 					= ((EditText)findViewById(R.id.newUserName)).getText().toString();
+		String newUserNamePassword 			= ((EditText)findViewById(R.id.newUserPassword)).getText().toString();
+		String newUserNamePasswordConfirm 	= ((EditText)findViewById(R.id.newUserPasswordConfirm)).getText().toString();
+		
+		//Check if the same
+		if( !newUserNamePassword.equals(newUserNamePasswordConfirm) ){
+			Toast toast = Toast.makeText(context, "Passwords don't match", duration);
 			toast.show();
 			return;
 		}
-
-		if (newUserName.length() == 0 || newUserNamePassword.length() == 0
-				|| newUserNamePasswordConfirm.length() == 0) {
-			Toast toast = Toast.makeText(context, "Can't have blank options",
-					duration);
+		
+		if(newUserName.length() == 0 || newUserNamePassword.length() == 0 ||  newUserNamePasswordConfirm.length() == 0){
+			Toast toast = Toast.makeText(context, "Can't have blank options", duration);
 			toast.show();
 			return;
 		}
-
-		// Check if they already exist
-		SharedPreferences preferences = getSharedPreferences("Login",
-				Context.MODE_PRIVATE);
+		
+		//Check if they already exist
+		SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
 		String doesNotExistPlaceHolder = "DOESNOTEXISTDOESNOTEXISTDOESNOTEXISTDOESNOTEXISTDOESNOTEXISTDOESNOTEXIST";
-		String userExists = preferences.getString(newUserName,
-				doesNotExistPlaceHolder);
-		if (!userExists.equals(doesNotExistPlaceHolder)) {
-			Toast toast = Toast.makeText(context, "User already exists",
-					duration);
+		String userExists = preferences.getString(newUserName, doesNotExistPlaceHolder);
+		if( !userExists.equals(doesNotExistPlaceHolder) ){
+			Toast toast = Toast.makeText(context, "User already exists", duration);
 			toast.show();
 			return;
 		}
-
+		
 		// To edit you need to call the shared preference editor
-		SharedPreferences.Editor editor = preferences.edit();
-
-		// Save the information
-		editor.putString(newUserName.trim(), newUserNamePassword.trim());
+    	SharedPreferences.Editor editor = preferences.edit();
+    	
+    	// Save the information
+    	editor.putString(newUserName.trim(), HelperMethods.computeSHAHash(newUserNamePassword.trim()));
 
 		// commit changes
 		editor.commit();

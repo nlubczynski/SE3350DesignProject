@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -17,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Base64;
 
 public class HelperMethods {
 	public final static int CHECK_IF_LOGGED_IN = 0;
@@ -226,6 +231,37 @@ public class HelperMethods {
 
 		return true;
 	}
+	private static String convertToHex(byte[] data) throws java.io.IOException 
+	     {
+	             
+	             
+	            StringBuffer sb = new StringBuffer();
+	            String hex=null;
+	             
+	            hex=Base64.encodeToString(data, 0, data.length, Base64.NO_PADDING);
+	             
+	            sb.append(hex);
+	                         
+	            return sb.toString();
+	        }
+	     
+	     
+    public final static String computeSHAHash(String password) throws Exception
+	      {
+	          MessageDigest mdSha1 = null;
+	          String SHAHash;
+
+              mdSha1 = MessageDigest.getInstance("SHA-1");
+
+              mdSha1.update(password.getBytes("ASCII"));
+
+              byte[] data = mdSha1.digest();
+
+              SHAHash=convertToHex(data);
+
+	          return SHAHash;
+	      }
+	        
 }
 
 
