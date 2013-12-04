@@ -61,8 +61,8 @@ public class MainMenu extends NavigationDrawerActivity {
             e.printStackTrace();
         }
        
-        /*Intent displayClientList = new Intent(MainMenu.this, SendController.class);
-		startActivity(displayClientList);*/
+        Intent displayClientList = new Intent(MainMenu.this, SendController.class);
+		startActivity(displayClientList);
 
         calculateDates();
     }
