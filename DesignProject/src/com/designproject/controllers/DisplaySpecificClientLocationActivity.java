@@ -18,7 +18,7 @@ import com.designproject.models.Contract;
  * 
  */
 public class DisplaySpecificClientLocationActivity extends
-		NavigationDrawerActivity {
+		Activity {
 
 	private Client clients;
 	private Contract[] contracts;

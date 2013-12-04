@@ -1,5 +1,6 @@
 package com.designproject.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,12 +19,11 @@ import com.designproject.models.Franchise;
  * @author Jess
  * 
  */
-public class DisplayListActivity extends NavigationDrawerActivity {
+public class DisplayListActivity extends Activity {
 
 	private Franchise theFranchise;
 	private Client[] clients;
 
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
 		// Set page title

@@ -23,7 +23,7 @@ import android.widget.SimpleAdapter;
  * @author Jess
  * 
  */
-public class DisplayLocationsActivity extends NavigationDrawerActivity {
+public class DisplayLocationsActivity extends Activity {
 
 	private Franchise theFranchise;
 	private Client[] clients;
