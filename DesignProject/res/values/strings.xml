@@ -24,10 +24,10 @@
     <string name="due_next_month">Next Month</string>
     <string name="reports_waiting_to_be_sent_string">Reports Pending:</string>
     <string name="Inspect_string">Inspect</string>
-    <string name="title_activity_inspection_view">Inspections</string>
+    <string name="title_activity_inspection_view">Contract List</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_inspection_overview">InspectionOverview</string>
-    <string name="title_activity_equipment_inspection_list">EquipmentInspectionList</string>
+    <string name="title_activity_inspection_overview">Contract</string>
+    <string name="title_activity_equipment_inspection_list">Equipment To Inspect</string>
     <string name="title_activity_inspection_overview_v2">InspectionOverviewV2</string>
     <string name="title_activity_inspection_form">Inspection Form</string>
     <string name="drawer_open">Drawer Open</string>
@@ -49,9 +49,9 @@
     <string name="send">Send</string>
     <string name="connect">Connect</string>
     <string name="title_activity_send_controller">Send Data</string>
-    <string name="title_activity_display_list">DisplayListActivity</string>
+    <string name="title_activity_display_list">Clients</string>
     <string name="title_activity_display_locations">List of Locations</string>
-    <string name="title_activity_settings_controller">SettingsController</string>
-    <string name="title_activity_display_specific_client_location">DisplaySpecificClientLocationActivity</string>
+    <string name="title_activity_settings_controller">Account Settings</string>
+    <string name="title_activity_display_specific_client_location">Client Locations</string>
 
 </resources>

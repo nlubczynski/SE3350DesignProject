@@ -1,43 +1,36 @@
 package com.designproject.controllers;
 
-import android.app.Activity;
 import android.content.Intent;
-
-import com.designproject.FireAlertApplication;
-import com.designproject.R;
-import com.designproject.models.Building;
-import com.designproject.models.Client;
-import com.designproject.models.Contract;
-import com.designproject.models.Franchise;
-
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.designproject.FireAlertApplication;
+import com.designproject.R;
+import com.designproject.models.Client;
+import com.designproject.models.Franchise;
+
 /**
  * 
  * @author Jess
  *
  */
-public class DisplayListActivity extends Activity {
+public class DisplayListActivity extends NavigationDrawerActivity {
 
 	private Franchise theFranchise;
 
 	private Client[] clients;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
+		setContentView(R.layout.activity_display_list);
+
+		super.onCreate(savedInstanceState);
 
 		setTitle("Clients");
-		
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_display_list);
 		
 		ListView list = (ListView) findViewById(R.id.android_clientlist);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
@@ -84,12 +77,5 @@ public class DisplayListActivity extends Activity {
 			}
 			
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.display_list, menu);
-		return true;
 	}
 }

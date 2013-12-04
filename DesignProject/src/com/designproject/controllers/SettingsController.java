@@ -17,12 +17,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SettingsController extends Activity {
+public class SettingsController extends NavigationDrawerActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_settings_controller);
+
+		super.onCreate(savedInstanceState);
 		
 		Spinner spinner = (Spinner)findViewById(R.id.spinner1);				
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner);
@@ -32,16 +33,6 @@ public class SettingsController extends Activity {
 		for(String user: users)
 			adapter.add(user);
 		spinner.setAdapter(adapter);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.settings_controller, menu);
-
-
-		
-		return true;
 	}
 	
 	public void savePassword(View view){

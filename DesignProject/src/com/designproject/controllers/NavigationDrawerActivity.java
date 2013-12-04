@@ -67,7 +67,6 @@ public class NavigationDrawerActivity extends SherlockActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.activity_main_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 

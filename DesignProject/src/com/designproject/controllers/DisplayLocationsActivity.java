@@ -23,7 +23,7 @@ import android.widget.SimpleAdapter;
  * @author Jess
  *
  */
-public class DisplayLocationsActivity extends Activity {
+public class DisplayLocationsActivity extends NavigationDrawerActivity {
 
 	private Franchise theFranchise;
 	private Client [] clients;
@@ -31,12 +31,12 @@ public class DisplayLocationsActivity extends Activity {
 	private Building [] buildings;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		
 		setTitle("Locations");
+		setContentView(R.layout.activity_display_locations);
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_display_locations);
 		
 		ListView list = (ListView) findViewById(R.id.android_locationlist);
 		
@@ -73,12 +73,5 @@ public class DisplayLocationsActivity extends Activity {
 				new int[] {android.R.id.text1, android.R.id.text2});
 		
 		list.setAdapter(adapter);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.display_locations, menu);
-		return true;
 	}
 }
