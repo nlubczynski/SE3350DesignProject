@@ -32,8 +32,6 @@ public class FloorController extends NavigationDrawerActivity {
 		setContentView(R.layout.activity_room_list);
 		super.onCreate(savedInstanceState);
 
-		setupActionBar();
-
 		// Get application context
 		FireAlertApplication a = (FireAlertApplication) getApplication();
 		mFloor = (Floor) a.getLocation();
@@ -83,16 +81,6 @@ public class FloorController extends NavigationDrawerActivity {
 		Intent openInspectionOverview = new Intent(FloorController.this,
 				RoomController.class);
 		startActivity(openInspectionOverview);
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override
