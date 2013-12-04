@@ -51,4 +51,6 @@
     <string name="title_activity_display_list">DisplayListActivity</string>
     <string name="title_activity_display_locations">List of Locations</string>
     <string name="title_activity_settings_controller">SettingsController</string>
+    <string name="title_activity_display_specific_client_location">DisplaySpecificClientLocationActivity</string>
+
 </resources>
