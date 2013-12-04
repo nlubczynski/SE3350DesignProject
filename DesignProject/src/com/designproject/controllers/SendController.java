@@ -42,7 +42,7 @@ public class SendController extends Activity {
 		if(ip.length() > 0)
 			((EditText)findViewById(R.id.ipText)).setText(ip);
 		if(port > -1)
-			((EditText)findViewById(R.id.portText)).setText(port);;
+			((EditText)findViewById(R.id.portText)).setText(String.valueOf(port));;
 		
 		this.setSendButton(false);
 		
