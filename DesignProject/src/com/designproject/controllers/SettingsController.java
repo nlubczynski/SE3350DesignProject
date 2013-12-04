@@ -58,7 +58,7 @@ public class SettingsController extends NavigationDrawerActivity {
 		String currentPassword = preferences.getString(currentUser, "");
 
 		// check if the current password is right
-		if (!currentPassword.equals(oldPassword)) {
+		if (!currentPassword.equals(HelperMethods.computeSHAHash(oldPassword))) {
 			Toast toast = Toast.makeText(context, "Wrong password", duration);
 			toast.show();
 			return;
