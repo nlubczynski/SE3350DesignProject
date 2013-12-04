@@ -18,59 +18,67 @@ import android.widget.TextView;
 
 public class LoginScreen extends Activity {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_login_screen);
-        
-        // Password on enter click button listener
-        // User name doesn't need an enter listener - it defaults to switching focus to password
-        this.findViewById(R.id.password).setOnKeyListener(new OnKeyListener() {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_login_screen);
+
+		// Password on enter click button listener
+		// User name doesn't need an enter listener - it defaults to switching
+		// focus to password
+		this.findViewById(R.id.password).setOnKeyListener(new OnKeyListener() {
 
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if( event.getAction() == KeyEvent.ACTION_DOWN &&	keyCode == KeyEvent.KEYCODE_ENTER)
+
+				if( event.getAction() == KeyEvent.ACTION_DOWN &&	
+						keyCode == KeyEvent.KEYCODE_ENTER){
 					try {
 						logIn();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+				}
 				return false;
 			}
-        
-        	});
-        }
+		});
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_login_screen, menu);
-        return true;
-    }
-    
-    public void logIn() throws Exception
-    {
-    	//Check if details are correct
-    	//Get required information
-    	TextView username= (TextView) findViewById(R.id.username);
-    	TextView password= (TextView) findViewById(R.id.password);
-    	
-    	String usernameString = username.getText().toString();
-    	String passwordString = password.getText().toString();
-    	
-    	SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
-    	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    getMenuInflater().inflate(R.menu.activity_login_screen, menu);
+	    return true;
+	}
+		    
+		
+
+	public void logIn() throws Exception {
+		// Check if details are correct
+		// Get required information
+		TextView username = (TextView) findViewById(R.id.username);
+		TextView password = (TextView) findViewById(R.id.password);
+
+		String usernameString = username.getText().toString();
+		String passwordString = password.getText().toString();
+
+		SharedPreferences preferences = getSharedPreferences("Login",
+				Context.MODE_PRIVATE);
+
+
 		/* Add Admin Account, If it doesn't exist */
 		if (!preferences.contains("Admin")) {
+
     		Editor editor = preferences.edit();
     		editor.putString("Admin", HelperMethods.computeSHAHash("adminPassword")); 
     		editor.commit();
     	}
     	
-    	String userPassword = preferences.getString( usernameString, "NO_SUCH_USER");
+    	String userPassword = preferences.getString( usernameString, "NO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USER");
     	
-    	if( userPassword.equals("NO_SUCH_USER") || !userPassword.equals( HelperMethods.computeSHAHash(passwordString) ) )
+    	if( userPassword.equals("NO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USERNO_SUCH_USER") || !userPassword.equals( HelperMethods.computeSHAHash(passwordString) ) )
     		// Log in NOT successful. Return without granting access
     		return;
     	
@@ -80,8 +88,10 @@ public class LoginScreen extends Activity {
     	
     	// Start the application main menu
     	Intent openLoginScreen = new Intent(LoginScreen.this, InspectionController.class);
+
 		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		startActivity(openLoginScreen);
+
     }
     
     //Redirect Method
@@ -116,9 +126,6 @@ public class LoginScreen extends Activity {
     	// Save the information
     	editor.putString("CurrentUser", usernameString);
 
-    	//commit changes
-    	editor.commit();
-    	
-    	
-    }
+	}
 }
+

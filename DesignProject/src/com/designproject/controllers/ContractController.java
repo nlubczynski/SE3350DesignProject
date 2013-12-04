@@ -33,12 +33,11 @@ import android.widget.TextView;
 
 public class ContractController extends NavigationDrawerActivity {
 
-
-    private TabHost myTabHost;
-    private Contract mContract;
-    private Building[] mBuildings;
-    List<Button> buttons;
-    List<TextView> textViews;
+	private TabHost myTabHost;
+	private Contract mContract;
+	private Building[] mBuildings;
+	List<Button> buttons;
+	List<TextView> textViews;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class ContractController extends NavigationDrawerActivity {
 
 		// Get all buildings associated with the current contract
 		mBuildings = mContract.getBuildings();
-		
+
 		buttons = new ArrayList<Button>();
 		textViews = new ArrayList<TextView>();
 
@@ -204,32 +203,38 @@ public class ContractController extends NavigationDrawerActivity {
 					submitButton.setEnabled(false);
 					submitButton.setBackgroundResource(R.drawable.backgrounds);
 					buttons.add(submitButton);
-					
-					//Create on click listener for the submit button
-					submitButton.setOnClickListener(new Button.OnClickListener() {  
-				        public void onClick(View v)
-			            {
-				        	try {
-				    			XMLReaderWriter out = new XMLReaderWriter(context);
-				    			
-				    			FireAlertApplication a = (FireAlertApplication)getApplication();
-				    			out.writeXML( a.getFranchise() );
-				    			v.setEnabled(false);
-				    			
-				    			SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
-				    			Context context = getApplicationContext();
-				    			
-				    			if(HelperMethods.connectAndSend(preferences, context))
-				    				textViewBuildingStatus.setText("SENT");
-				    			else
-				    				textViewBuildingStatus.setText("SAVED");
-				    			
-				    		} catch (XmlPullParserException e) {
-				    			// TODO Auto-generated catch block
-				    			e.printStackTrace();
-				    		}
-			            }
-			         });
+
+					// Create on click listener for the submit button
+					submitButton
+							.setOnClickListener(new Button.OnClickListener() {
+								public void onClick(View v) {
+									try {
+										XMLReaderWriter out = new XMLReaderWriter(
+												context);
+
+										FireAlertApplication a = (FireAlertApplication) getApplication();
+										out.writeXML(a.getFranchise());
+										v.setEnabled(false);
+
+										SharedPreferences preferences = getSharedPreferences(
+												"Connection",
+												Context.MODE_PRIVATE);
+										Context context = getApplicationContext();
+
+										if (HelperMethods.connectAndSend(
+												preferences, context))
+											textViewBuildingStatus
+													.setText("SENT");
+										else
+											textViewBuildingStatus
+													.setText("SAVED");
+
+									} catch (XmlPullParserException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							});
 					layout1.addView(submitButton);
 
 					return view;
@@ -277,7 +282,6 @@ public class ContractController extends NavigationDrawerActivity {
 		linearLayoutFloorButtonContainer.addView(button);
 	}
 
-
 	@Override
 	public void onRestart() {
 
@@ -296,12 +300,12 @@ public class ContractController extends NavigationDrawerActivity {
 		// Update their status accordingly
 		for (Building building : mBuildings) {
 			if (building.isCompleted()) {
-				for(Button b: buttons)
-					if(b.getTag().equals(building.getId()))
+				for (Button b : buttons)
+					if (b.getTag().equals(building.getId()))
 						b.setEnabled(true);
-				
-				for(TextView tv: textViews)
-					if(tv.getTag().equals(building.getId()+" status")){
+
+				for (TextView tv : textViews)
+					if (tv.getTag().equals(building.getId() + " status")) {
 						tv.setText("COMPLETE");
 						tv.setTextColor(Color.GREEN);
 					}

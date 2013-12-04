@@ -1,21 +1,19 @@
 package com.designproject.controllers;
 
-import com.designproject.R;
-import com.designproject.models.HelperMethods;
-
-import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.designproject.R;
+import com.designproject.models.HelperMethods;
 
 public class SettingsController extends NavigationDrawerActivity {
 
@@ -24,13 +22,24 @@ public class SettingsController extends NavigationDrawerActivity {
 		setContentView(R.layout.activity_settings_controller);
 
 		super.onCreate(savedInstanceState);
+
+		LinearLayout adminPanel = (LinearLayout)findViewById(R.id.linearLayoutAdminPanel);
+		SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login",
+				Context.MODE_PRIVATE);
 		
-		Spinner spinner = (Spinner)findViewById(R.id.spinner1);				
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner);
+		//If not admin remove admin options from screen
+		if(!sharedPreferenceLogin.getString("CurrentUser", "").equals("Admin"))
+			adminPanel.setVisibility(2);
+		else
+			adminPanel.setVisibility(0);
 		
+		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.spinner);
+
 		String[] users = HelperMethods.getUsers(getApplicationContext());
-		
-		for(String user: users)
+
+		for (String user : users)
 			adapter.add(user);
 		spinner.setAdapter(adapter);
 	}
@@ -39,26 +48,31 @@ public class SettingsController extends NavigationDrawerActivity {
 		
 		Context context = getApplicationContext();
 		int duration = Toast.LENGTH_SHORT;
-		
-		String oldPassword = ((EditText)findViewById(R.id.oldPassword)).getText().toString();
-		
-		SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
+
+		String oldPassword = ((EditText) findViewById(R.id.oldPassword))
+				.getText().toString();
+
+		SharedPreferences preferences = getSharedPreferences("Login",
+				Context.MODE_PRIVATE);
 		String currentUser = preferences.getString("CurrentUser", "");
-		String currentPassword =  preferences.getString( currentUser, "");
-		
-		//check if the current password is right
-		if( !currentPassword.equals(oldPassword) ){
+		String currentPassword = preferences.getString(currentUser, "");
+
+		// check if the current password is right
+		if (!currentPassword.equals(oldPassword)) {
 			Toast toast = Toast.makeText(context, "Wrong password", duration);
 			toast.show();
-    		return;
+			return;
 		}
-    	
-		String newPassword = ((EditText)findViewById(R.id.newPassword)).getText().toString();
-		String newPasswordConfirm = ((EditText)findViewById(R.id.newPasswordConfirm)).getText().toString();
-		
-		//check the passwords are the same
-		if( !newPassword.equals(newPasswordConfirm) ){
-			Toast toast = Toast.makeText(context, "Passwords don't match", duration);
+
+		String newPassword = ((EditText) findViewById(R.id.newPassword))
+				.getText().toString();
+		String newPasswordConfirm = ((EditText) findViewById(R.id.newPasswordConfirm))
+				.getText().toString();
+
+		// check the passwords are the same
+		if (!newPassword.equals(newPasswordConfirm)) {
+			Toast toast = Toast.makeText(context, "Passwords don't match",
+					duration);
 			toast.show();
 			return;
 		}
@@ -69,18 +83,17 @@ public class SettingsController extends NavigationDrawerActivity {
     	// Save the information
     	editor.putString(currentUser.trim(), HelperMethods.computeSHAHash(newPassword.trim()));
 
-    	//commit changes
-    	editor.commit();
-    	
-    	//Gui stuff
-    	((EditText)findViewById(R.id.oldPassword)).setText("");
-    	((EditText)findViewById(R.id.newPassword)).setText("");
-		((EditText)findViewById(R.id.newPasswordConfirm)).setText("");
-		
-		
+		// commit changes
+		editor.commit();
+
+		// Gui stuff
+		((EditText) findViewById(R.id.oldPassword)).setText("");
+		((EditText) findViewById(R.id.newPassword)).setText("");
+		((EditText) findViewById(R.id.newPasswordConfirm)).setText("");
+
 		Toast toast = Toast.makeText(context, "Password Changed", duration);
 		toast.show();
-		
+
 	}
 	
 	public void createUser(View view) throws Exception{
@@ -121,76 +134,78 @@ public class SettingsController extends NavigationDrawerActivity {
     	// Save the information
     	editor.putString(newUserName.trim(), HelperMethods.computeSHAHash(newUserNamePassword.trim()));
 
-    	//commit changes
-    	editor.commit();
-    	
-    	//Gui stuff
-    	((EditText)findViewById(R.id.newUserName)).setText("");
-    	((EditText)findViewById(R.id.newUserPassword)).setText("");
-		((EditText)findViewById(R.id.newUserPasswordConfirm)).setText("");
-		
-		
+		// commit changes
+		editor.commit();
+
+		// Gui stuff
+		((EditText) findViewById(R.id.newUserName)).setText("");
+		((EditText) findViewById(R.id.newUserPassword)).setText("");
+		((EditText) findViewById(R.id.newUserPasswordConfirm)).setText("");
+
 		Toast toast = Toast.makeText(context, "User Created", duration);
 		toast.show();
-		
+
 		restart();
-		
+
 	}
-	public void deleteUser(String user){
-		
-		if( HelperMethods.delteUser(user, getApplicationContext()))
+
+	public void deleteUser(String user) {
+
+		if (HelperMethods.delteUser(user, getApplicationContext()))
 			new AlertDialog.Builder(this)
-	    	.setIcon(android.R.drawable.ic_dialog_alert)
-	    	.setTitle("User deleted")
-	    	.setMessage("User " + user + " deleted.")
-			.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle("User deleted")
+					.setMessage("User " + user + " deleted.")
+					.setPositiveButton("Okay",
+							new DialogInterface.OnClickListener() {
 
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	
-	                //Restart the activity
-	                restart();
-	            }
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
 
-    		})
-			.show();
+									// Restart the activity
+									restart();
+								}
+
+							}).show();
 		else
 			new AlertDialog.Builder(this)
-	    	.setIcon(android.R.drawable.ic_dialog_alert)
-	    	.setTitle("User not deleted")
-	    	.setMessage("User " + user + " was not deleted.")
-			.setNegativeButton("Okay", null)
-			.show();
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setTitle("User not deleted")
+					.setMessage("User " + user + " was not deleted.")
+					.setNegativeButton("Okay", null).show();
 
-		
 	}
+
 	/**
-	 * Restart the activity - after you delete or add an user - so they appear in the proper loactiosn
+	 * Restart the activity - after you delete or add an user - so they appear
+	 * in the proper loactiosn
 	 */
-	public void restart(){
+	public void restart() {
 		finish();
 		startActivity(getIntent());
 	}
-	public void confirmDelete(View view){
-		
-		Spinner spinner = (Spinner)findViewById(R.id.spinner1);	
+
+	public void confirmDelete(View view) {
+
+		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
 		final String user = spinner.getSelectedItem().toString();
-		
+
 		new AlertDialog.Builder(this)
-        	.setIcon(android.R.drawable.ic_dialog_alert)
-        	.setTitle("Delete User Confirmation")
-        	.setMessage("Delete " + user + "?")
-        	.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.setTitle("Delete User Confirmation")
+				.setMessage("Delete " + user + "?")
+				.setPositiveButton("Confirm",
+						new DialogInterface.OnClickListener() {
 
-	            @Override
-	            public void onClick(DialogInterface dialog, int which) {
-	
-	                //Stop the activity
-	                deleteUser(user);
-	            }
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
 
-    		})
-    		.setNegativeButton("No", null)
-    		.show();
+								// Stop the activity
+								deleteUser(user);
+							}
+
+						}).setNegativeButton("No", null).show();
 	}
 }

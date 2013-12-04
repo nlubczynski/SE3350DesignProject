@@ -16,66 +16,66 @@ import com.designproject.models.Franchise;
 /**
  * 
  * @author Jess
- *
+ * 
  */
 public class DisplayListActivity extends NavigationDrawerActivity {
 
 	private Franchise theFranchise;
-
 	private Client[] clients;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		// Content view must be set before call to NavigationDrawerActivity
 		setContentView(R.layout.activity_display_list);
-
 		super.onCreate(savedInstanceState);
 
-		setTitle("Clients");
-		
+		// Get the layouts list view
 		ListView list = (ListView) findViewById(R.id.android_clientlist);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-		
-		//Get the application context
-		FireAlertApplication a = (FireAlertApplication)getApplication();
-		a = (FireAlertApplication)getApplication();
-		theFranchise = (Franchise)a.getFranchise();
+
+		// Get adapter to bind data to
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1);
+
+		// Get the application context
+		FireAlertApplication a = (FireAlertApplication) getApplication();
+		a = (FireAlertApplication) getApplication();
+		theFranchise = (Franchise) a.getFranchise();
 		clients = theFranchise.getClients();
-		
-		//Add all the clients to the list adapter
-		for (Client theClient : clients)
-		{
+
+		// Add all the clients to the list adapter
+		for (Client theClient : clients) {
 			adapter.add(theClient.getName());
 		}
-		
+
 		list.setAdapter(adapter);
-		
-		//show selected client's locations
+
+		// Create on listener to redirect to client location's page on click
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 
-				TextView selection = (TextView)arg1;
+				TextView selection = (TextView) arg1;
 				String clientSelect = selection.getText().toString();
-				
-				for (Client theClient : clients)
-				{
-					if (theClient.getName() == clientSelect)
-					{						
-						//selection.setText(theClient.getId());
-						FireAlertApplication a = (FireAlertApplication)getApplication();
+
+				for (Client theClient : clients) {
+					if (theClient.getName() == clientSelect) {
+						// selection.setText(theClient.getId());
+						FireAlertApplication a = (FireAlertApplication) getApplication();
 						a.setClient(theClient);
-						
-						//Display client's locations
-						Intent displayClientLocations = new Intent(DisplayListActivity.this, DisplaySpecificClientLocationActivity.class);
+
+						// Display client's locations
+						Intent displayClientLocations = new Intent(
+								DisplayListActivity.this,
+								DisplaySpecificClientLocationActivity.class);
 						startActivity(displayClientLocations);
 						break;
 					}
-					
-				}	
+
+				}
 			}
-			
+
 		});
 	}
 }
