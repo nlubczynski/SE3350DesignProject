@@ -34,16 +34,14 @@ public class DisplayListActivity extends Activity {
 		
 		ListView list = (ListView) findViewById(R.id.android_clientlist);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
-		/*
-		adapter.add("test");
-		adapter.add("second test");
-		list.setAdapter(adapter);*/
 		
+		//Get the application context
 		FireAlertApplication a = (FireAlertApplication)getApplication();
 		a = (FireAlertApplication)getApplication();
 		theFranchise = (Franchise)a.getFranchise();
 		clients = theFranchise.getClients();
 		
+		//Add all the clients to the list adapter
 		for (Client theClient : clients)
 		{
 			adapter.add(theClient.getName());

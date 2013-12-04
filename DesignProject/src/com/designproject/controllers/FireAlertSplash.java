@@ -30,26 +30,7 @@ public class FireAlertSplash extends Activity implements AnimationListener {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_fire_alert_splash);
         
-        //TODO REMOVE TEMPORARY CODE
-        // TEMPORARY CODE TO CREATE USERS FOR TESTING
-        
-        
-        // Gets a shared preference called 'login' if it doesn't exist it will create it
-    	SharedPreferences sharedPreferenceLogin = getSharedPreferences("Login", Context.MODE_PRIVATE);
-    	
-    	// To edit you need to call the shared preference editor
-    	SharedPreferences.Editor editor = sharedPreferenceLogin.edit();
-    	
-    	// Create a user with name "username" and password "password"
-    	editor.putString("username", "password");
-
-    	//commit changes
-    	editor.commit();
-    	
-    	
-        //TODO REMOVE TEMPORARY CODE
-        // END OF TEMPORARY CODE
-        
+        //Login to the system
         logIn();
     }
 
@@ -59,7 +40,7 @@ public class FireAlertSplash extends Activity implements AnimationListener {
         return true;
     }
     
-    
+    //Animate the logo moving across the screen
     private void animateWithXML(View view)
     {
     	Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.animator.animate);
@@ -71,11 +52,13 @@ public class FireAlertSplash extends Activity implements AnimationListener {
     
     private void logIn()
     {
+    	//If they;re logged in, go to the main menu
 		if(isLogInSaved()){
 			Intent openMenu = new Intent(FireAlertSplash.this, MainMenu.class);
 			openMenu.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startActivity(openMenu);
 		}
+		//Otherwise the logo will move across the screen, the XML will be parsed
 		else{
 			View image = findViewById(R.id.imageView1);
 			animateWithXML(image);
@@ -107,8 +90,8 @@ public class FireAlertSplash extends Activity implements AnimationListener {
     }
 
 	@Override
+	//When the animation is complete, start the login screen activity
 	public void onAnimationEnd(Animation animation) {
-		
 		Intent openLoginScreen = new Intent(FireAlertSplash.this,LoginScreen.class);
 		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		onDestroy();
