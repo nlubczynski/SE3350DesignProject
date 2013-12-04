@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -53,6 +54,13 @@ public class SendController extends Activity {
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
+		if(sender != null)
+			sender.close();
+		
+		TextView connected = (TextView)findViewById(R.id.connectedView);
+		connected.setText("Not Connected");
+		connected.setTextColor(getResources().getColor(R.color.red));
+		
 		super.onDestroy();
 	}
 
@@ -157,12 +165,10 @@ public class SendController extends Activity {
 			
 			return false;
 		}
-		Context context = getApplicationContext();
-		CharSequence text = "Connected";
-		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
+		
+		TextView connected = (TextView)findViewById(R.id.connectedView);
+		connected.setText("Connected");
+		connected.setTextColor(getResources().getColor(R.color.green));
 		
 		return true;
 	}
