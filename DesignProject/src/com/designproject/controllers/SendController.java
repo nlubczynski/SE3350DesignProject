@@ -155,36 +155,6 @@ public class SendController extends Activity {
 		return true;
 	}
 	
-	public boolean connectAndSend(){		
-		
-		SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
-		String ip = preferences.getString("ip", "");
-		int port = preferences.getInt("port", -1);
-		
-		if(ip.equals("") || port == -1)
-			return false;
-		
-		try {
-			sender = new Sender(ip, port);
-		} catch (Exception e) {			
-			return false;
-		}
-
-		XMLReaderWriter reader;
-		try {
-			reader = new XMLReaderWriter(getApplicationContext());
-		} catch (Exception e) {
-			return false;
-		}			
-		try {
-			sender.RTSPSend(reader.getXML());
-		} catch (Exception e) {
-			return false;
-		}
-
-		return true;
-	}
-	
 	private void setSendButton(boolean set){
 		connected = set;
 		Button button = (Button)findViewById(R.id.sendButton);

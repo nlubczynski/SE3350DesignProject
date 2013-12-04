@@ -198,6 +198,34 @@ public class HelperMethods {
 		
 		return editor.commit();
 	}
+	public final static boolean connectAndSend(SharedPreferences preferences, Context context){		
+		
+		String ip = preferences.getString("ip", "");
+		int port = preferences.getInt("port", -1);
+		Sender sender;
+		XMLReaderWriter reader;
+		
+		if(ip.equals("") || port == -1)
+			return false;
+		
+		try {
+			sender = new Sender(ip, port);
+		} catch (Exception e) {			
+			return false;
+		}
+		try {
+			reader = new XMLReaderWriter(context);
+		} catch (Exception e) {
+			return false;
+		}			
+		try {
+			sender.RTSPSend(reader.getXML());
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
 }
 
 
