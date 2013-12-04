@@ -1,6 +1,7 @@
 package com.designproject.controllers;
 
 import com.designproject.R;
+import com.designproject.models.HelperMethods;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -30,7 +31,12 @@ public class LoginScreen extends Activity {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if( event.getAction() == KeyEvent.ACTION_DOWN &&	keyCode == KeyEvent.KEYCODE_ENTER)
-					logIn();
+					try {
+						logIn();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				return false;
 			}
         
@@ -43,7 +49,7 @@ public class LoginScreen extends Activity {
         return true;
     }
     
-    public void logIn()
+    public void logIn() throws Exception
     {
     	//Check if details are correct
     	//Get required information
@@ -58,13 +64,13 @@ public class LoginScreen extends Activity {
 		/* Add Admin Account, If it doesn't exist */
 		if (!preferences.contains("Admin")) {
     		Editor editor = preferences.edit();
-    		editor.putString("Admin", "adminPassword");
+    		editor.putString("Admin", HelperMethods.computeSHAHash("adminPassword")); 
     		editor.commit();
     	}
     	
     	String userPassword = preferences.getString( usernameString, "NO_SUCH_USER");
     	
-    	if( userPassword.equals("NO_SUCH_USER") || !userPassword.equals( passwordString ) )
+    	if( userPassword.equals("NO_SUCH_USER") || !userPassword.equals( HelperMethods.computeSHAHash(passwordString) ) )
     		// Log in NOT successful. Return without granting access
     		return;
     	
@@ -85,7 +91,12 @@ public class LoginScreen extends Activity {
      * @param view
      */
     public void logIn(View view){
-    	logIn();
+    	try {
+			logIn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     public void saveUserDetails()

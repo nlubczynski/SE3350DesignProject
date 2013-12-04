@@ -35,7 +35,7 @@ public class SettingsController extends NavigationDrawerActivity {
 		spinner.setAdapter(adapter);
 	}
 	
-	public void savePassword(View view){
+	public void savePassword(View view) throws Exception{
 		
 		Context context = getApplicationContext();
 		int duration = Toast.LENGTH_SHORT;
@@ -67,7 +67,7 @@ public class SettingsController extends NavigationDrawerActivity {
     	SharedPreferences.Editor editor = preferences.edit();
     	
     	// Save the information
-    	editor.putString(currentUser.trim(), newPassword.trim());
+    	editor.putString(currentUser.trim(), HelperMethods.computeSHAHash(newPassword.trim()));
 
     	//commit changes
     	editor.commit();
@@ -83,7 +83,7 @@ public class SettingsController extends NavigationDrawerActivity {
 		
 	}
 	
-	public void createUser(View view){
+	public void createUser(View view) throws Exception{
 		
 		Context context = getApplicationContext();
 		int duration = Toast.LENGTH_SHORT;
@@ -119,7 +119,7 @@ public class SettingsController extends NavigationDrawerActivity {
     	SharedPreferences.Editor editor = preferences.edit();
     	
     	// Save the information
-    	editor.putString(newUserName.trim(), newUserNamePassword.trim());
+    	editor.putString(newUserName.trim(), HelperMethods.computeSHAHash(newUserNamePassword.trim()));
 
     	//commit changes
     	editor.commit();
