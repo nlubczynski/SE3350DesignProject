@@ -60,9 +60,6 @@ public class MainMenu extends NavigationDrawerActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       
-        /*Intent displayClientList = new Intent(MainMenu.this, SendController.class);
-		startActivity(displayClientList);*/
 
         calculateDates();
     }
