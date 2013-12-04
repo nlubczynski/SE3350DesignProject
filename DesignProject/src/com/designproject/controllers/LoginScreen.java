@@ -55,8 +55,8 @@ public class LoginScreen extends Activity {
     	
     	SharedPreferences preferences = getSharedPreferences("Login", Context.MODE_PRIVATE);
     	
-    	/* Add Admin Account, If it doesn't exist */
-    	if(!preferences.contains("Admin")){
+		/* Add Admin Account, If it doesn't exist */
+		if (!preferences.contains("Admin")) {
     		Editor editor = preferences.edit();
     		editor.putString("Admin", "adminPassword");
     		editor.commit();
@@ -73,7 +73,7 @@ public class LoginScreen extends Activity {
     	saveUserDetails();
     	
     	// Start the application main menu
-    	Intent openLoginScreen = new Intent(LoginScreen.this, MainMenu.class);
+    	Intent openLoginScreen = new Intent(LoginScreen.this, InspectionController.class);
 		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		startActivity(openLoginScreen);
     }

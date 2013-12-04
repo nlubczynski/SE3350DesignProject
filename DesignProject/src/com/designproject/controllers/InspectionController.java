@@ -1,10 +1,22 @@
 package com.designproject.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import org.joda.time.Interval;
+import org.xmlpull.v1.XmlPullParserException;
+
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
@@ -12,20 +24,7 @@ import com.designproject.models.Client;
 import com.designproject.models.Contract;
 import com.designproject.models.Franchise;
 import com.designproject.models.HelperMethods;
-
-import android.os.Bundle;
-import android.app.ListActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.support.v4.app.NavUtils;
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.os.Build;
+import com.designproject.models.XMLReaderWriter;
 
 public class InspectionController extends NavigationDrawerActivity {
 
@@ -46,6 +45,26 @@ public class InspectionController extends NavigationDrawerActivity {
 		setContentView(R.layout.activity_inspection_view);
 		super.onCreate(savedInstanceState);
 
+		 try {
+	        	//Create the reader writer
+	        	XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
+				// Get out application
+	        	FireAlertApplication a = (FireAlertApplication)getApplication();
+				// Parse the xml and set the franchise to our application
+	        	a.setFranchise( reader.parseXML() );
+				//We're currently in the franchise
+	        	a.setLocation( a.getFranchise() );
+	        	//Set the local variable for franchise
+				mFranchise = (Franchise) a.getLocation();
+				
+				reader.writeXML(mFranchise);
+				
+	        }catch (XmlPullParserException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		 
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
