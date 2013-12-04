@@ -29,9 +29,9 @@ public class SettingsController extends NavigationDrawerActivity {
 		
 		//If not admin remove admin options from screen
 		if(!sharedPreferenceLogin.getString("CurrentUser", "").equals("Admin"))
-			adminPanel.setVisibility(2);
+			adminPanel.setVisibility(View.GONE);
 		else
-			adminPanel.setVisibility(0);
+			adminPanel.setVisibility(View.VISIBLE);
 		
 		Spinner spinner = (Spinner) findViewById(R.id.spinner1);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
