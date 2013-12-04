@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 public class Sender {
@@ -16,6 +17,8 @@ public class Sender {
 	InetAddress ServerIPAdd = null;
 	InetAddress ClientIPAdd = null;
 	int RTSP_PORT;
+	boolean returned = false;
+	boolean result = false;
 
 	/**
 	 * 
@@ -31,12 +34,7 @@ public class Sender {
 
 	//send data to server
 	public void RTSPSend(String data) {
-		try {
-			final PrintWriter sendData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(RTSPsocket.getOutputStream())), true);
-			sendData.println(data);
-		} catch (Exception e) {
-			Log.d("Socket Send", e.toString());
-		}
+		new sendAsync().execute(data);
 	}
 
 	public void close() {
@@ -45,5 +43,24 @@ public class Sender {
 		} catch (IOException e) {
 			Log.d("Socket Error", e.toString());
 		}
+	}
+	
+	class sendAsync extends AsyncTask<String, Void, Boolean>{
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			try {
+				final PrintWriter sendData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(RTSPsocket.getOutputStream())), true);
+				sendData.println(params[0]);
+			} catch (Exception e) {
+				return false;
+			}
+			return true;
+		}
+		
+		protected void onPostExcecute(Boolean res){
+			returned = true;
+			result = res;
+		}		
 	}
 }
