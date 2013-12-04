@@ -21,6 +21,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -34,31 +36,34 @@ public class EquipmentController extends NavigationDrawerActivity {
         	// Check if Logged in
             HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
             	
-            	setContentView(R.layout.activity_inspection_form);
-                super.onCreate(savedInstanceState);
-                
-                Intent mIntent = getIntent();
-                pageNum = mIntent.getIntExtra("Page Number", 0);
+            setContentView(R.layout.activity_inspection_form);
+            super.onCreate(savedInstanceState);
+              
+            //Get the page number 
+            Intent mIntent = getIntent();
+            pageNum = mIntent.getIntExtra("Page Number", 0);
                  
-                FireAlertApplication app = (FireAlertApplication) getApplication();
-                equipment = (Equipment) app.getLocation();
-                //equipment.clearInspectionElements();
+            //Get the application context
+            FireAlertApplication app = (FireAlertApplication) getApplication();
+            equipment = (Equipment) app.getLocation();
                 
-                content = (LinearLayout) findViewById(R.id.inspect_form_content);
-                final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
-                final LinearLayout endOfContent = (LinearLayout) findViewById(R.id.inspect_form_end_of_content);
-                final LinearLayout footer = (LinearLayout) findViewById(R.id.inspect_form_footer);
-                final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
-                final LinearLayout header2 = (LinearLayout) findViewById(R.id.inspect_form_header2);
+            //Access the various layouts
+            content = (LinearLayout) findViewById(R.id.inspect_form_content);
+            final LinearLayout header = (LinearLayout) findViewById(R.id.inspect_form_header);
+            final LinearLayout endOfContent = (LinearLayout) findViewById(R.id.inspect_form_end_of_content);
+            final LinearLayout footer = (LinearLayout) findViewById(R.id.inspect_form_footer);
+            final LinearLayout info = (LinearLayout) findViewById(R.id.inspect_form_info);
+            final LinearLayout header2 = (LinearLayout) findViewById(R.id.inspect_form_header2);
+            
+            //Access the inspection elements and populate the form
+            elements = equipment.getInspectionElements();
+            populateContent(equipment);
                 
-                elements = equipment.getInspectionElements();
-                populateContent(equipment, content);
-                
-                // Set header
-                setTitle(equipment.getName());
-                final TextView typeView = new TextView(EquipmentController.this);
-                typeView.setText(equipment.getName());
-                header.addView(typeView);
+            //Set header containing all information about the equipment and page number
+            setTitle(equipment.getName());
+            final TextView typeView = new TextView(EquipmentController.this);
+            typeView.setText(equipment.getName());
+            header.addView(typeView);
                 
                 final TextView pageView = new TextView(EquipmentController.this);
                 if (numPages > 1)
@@ -89,7 +94,7 @@ public class EquipmentController extends NavigationDrawerActivity {
                         header2.addView(idView, lparams);
                 }
                 
-                //More Info button
+                // Create a More Info button and add it to the header
                 final node[] attributes = equipment.getAttributes();
                 if(attributes.length > 2)
                 {
@@ -102,6 +107,8 @@ public class EquipmentController extends NavigationDrawerActivity {
                     lparams.height = 50;
                     lparams.gravity = Gravity.RIGHT;
                     info.addView(moreInfo, lparams);
+                    
+                    //On click, toggle more/less info
                     moreInfo.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         if (moreInfo.getText().equals("More Info"))
@@ -132,15 +139,20 @@ public class EquipmentController extends NavigationDrawerActivity {
                 });
                 }
                 
+                //Add a submit button if it is the final page
                 final Button submit = new Button(EquipmentController.this);
                 if (pageNum == numPages)
                 {
                         submit.setText("Submit");
                         endOfContent.addView(submit);
                 }
+                
+                // On click, set all the elements to complete, and request comments on the items that failed
                 submit.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
     	            	List<InspectionElement> failed = new ArrayList<InspectionElement>();
+    	            	
+    	            	//Save the data
     	            	updateData();
     	            	
     	            	// Set everything to complete
@@ -151,6 +163,7 @@ public class EquipmentController extends NavigationDrawerActivity {
     	            		}
     	            	}
     	            	
+    	            	// Clear the screen and present a form requesting comments for all the items that failed
     	                if (failed.size() > 0) {
     	                	content.removeAllViews();
     	                	endOfContent.removeAllViews();
@@ -174,18 +187,22 @@ public class EquipmentController extends NavigationDrawerActivity {
     	                	final Button submit = new Button(EquipmentController.this);
     	                	submit.setText("Submit");
 	                		ll.addView(submit);
+	                		
+	                		//On submit, finish the activity
 	                		submit.setOnClickListener(new View.OnClickListener() {
 	            	            public void onClick(View view) {
 	            	            	finish();
 	            	            }
 	            	        });
     	                }
+    	                //If no items failed, finish the activity
     	                else {
     	                	finish();
     	                }
     	            }
     	        });
                 
+                // Add a button to go back a page on all pages except the first
                 final ImageButton previous = new ImageButton(EquipmentController.this);
                 if(pageNum > 1)
                 {
@@ -193,6 +210,7 @@ public class EquipmentController extends NavigationDrawerActivity {
                 	previous.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
                 	footer.addView(previous);
                 }
+                //restart activity for the previous page
                 previous.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
     	            	finish();
@@ -202,12 +220,14 @@ public class EquipmentController extends NavigationDrawerActivity {
     	            }
     	        });
                 
+                //Filler
                 TextView blank = new TextView(EquipmentController.this);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                 params.weight = 1.0f;
             	footer.addView(blank, params);
                 
+            	//Add a button to go forward a page on all pages except the last
                 final ImageButton next = new ImageButton(EquipmentController.this);
                 if(pageNum < numPages)
                 {
@@ -215,6 +235,7 @@ public class EquipmentController extends NavigationDrawerActivity {
                 	next.setBackgroundColor(getResources().getColor(R.color.lighter_light_grey));
                 	footer.addView(next);
                 }
+                //restart activity for the next page
                 next.setOnClickListener(new View.OnClickListener() {
     	            public void onClick(View view) {
     	            	finish();
@@ -225,9 +246,14 @@ public class EquipmentController extends NavigationDrawerActivity {
     	        });
         }
         
-        public void populateContent(Equipment equipment, LinearLayout content) {
+        //Populates the form depending on equipment type
+        public void populateContent(Equipment equipment) {
+        	//Get the type of the equipment
         	String type = equipment.getName();
+        	
+        	//If it's a fire extinguisher, the form is all check boxes
         	if (type.equals("Extinguisher")) {
+        		//Ensure that there are the correct number of inspection elements
         		if(equipment.getInspectionElements().length < 9)
         		{
         			equipment.clearInspectionElements();
@@ -242,6 +268,7 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                equipment.addInspectionElement(new InspectionElement("Hose"));
         		}
                 
+        		//Add elements to one of two pages
                 elements = equipment.getInspectionElements();
                 if(pageNum == 1)
                 {
@@ -265,8 +292,10 @@ public class EquipmentController extends NavigationDrawerActivity {
                 }
             	numPages = 2;
         	}
+        	//If it's a fire hose cabinet, the form is all check boxes
         	else if (type.equals("FireHoseCabinet"))
         	{
+        		//Ensure the correct number of inspection elements are present
         		if(equipment.getInspectionElements().length < 4)
         		{
         			equipment.clearInspectionElements();
@@ -287,8 +316,10 @@ public class EquipmentController extends NavigationDrawerActivity {
                      content.addView(cb);
                 }
         	}
+        	//If it's an emergency light the form consists of a combination of check boxes and text fields
         	else if (type.equals("EmergencyLight"))
         	{
+        		//Ensure the correct number of elements are present
         		if(equipment.getInspectionElements().length < 5)
         		{
         			equipment.clearInspectionElements();
@@ -300,7 +331,7 @@ public class EquipmentController extends NavigationDrawerActivity {
         		}
                 
                 elements = equipment.getInspectionElements();
-                numPages = 2;
+                numPages = 1;
                 
             	// Populate form
                 for(int i = 0; i < 2; i++)
@@ -321,8 +352,11 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                content.addView(et);
                 }
         	}
+        	//If it's a kitchen suppression system, the form consists of a combination of check boxes, text fields, and radio buttons
+        	//Lots of special case handling
         	else if (type.equals("KitchenSuppressionSystem"))
         	{
+        		//Ensure that the correct number of inspection items are present
         		if(equipment.getInspectionElements().length < 41)
         		{
         			equipment.clearInspectionElements();
@@ -341,7 +375,7 @@ public class EquipmentController extends NavigationDrawerActivity {
 	                equipment.addInspectionElement(new InspectionElement("Operated system from terminal link"));
 	                equipment.addInspectionElement(new InspectionElement("Checked travel of cable and link position"));
 	                equipment.addInspectionElement(new InspectionElement("Fusible links"));
-	                equipment.addInspectionElement(new InspectionElement("Replaced fusible links. Mfg. Date"));
+	                equipment.addInspectionElement(new InspectionElement("Replaced fusible links"));
 	                equipment.addInspectionElement(new InspectionElement("Checked and cleaned fusible links"));
 	                equipment.addInspectionElement(new InspectionElement("Checked operation of manual release"));
 	                equipment.addInspectionElement(new InspectionElement("Checked operation of micro-switch"));
@@ -370,13 +404,187 @@ public class EquipmentController extends NavigationDrawerActivity {
         		}
               
                 elements = equipment.getInspectionElements();
-                numPages = elements.length / 6 + (elements.length % 6 == 0 ? 0 : 1);
-                for(int j = ((pageNum - 1)*6); j < Math.min((pageNum * 6), elements.length); j++)
-                {
-	               	CheckBox cb = new CheckBox(EquipmentController.this);
-		            cb.setText(elements[j].getName());
-		            cb.setChecked(elements[j].getTestResult());
-		            content.addView(cb);
+                numPages = 8;
+                		
+                //Populate the appropriate page of the form
+                switch(pageNum) {
+                case 1:
+                	for(int j = 0; j < 6; j++) {
+	                	CheckBox cb = new CheckBox(EquipmentController.this);
+			            cb.setText(elements[j].getName());
+			            cb.setChecked(elements[j].getTestResult());
+			            content.addView(cb);
+	                }
+                	break;
+                case 2:
+	                for(int j = 6; j < 10; j++) {
+	                	if(j == 7) {
+	                		TextView grease = new TextView(EquipmentController.this);
+	                		grease.setText(elements[j].getName());
+	                		content.addView(grease);
+	                		final RadioButton[] rb = new RadioButton[3];
+	                	    RadioGroup rg = new RadioGroup(this); 
+	                	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	                	    for(int i=0; i<3; i++){
+	                	        rb[i]  = new RadioButton(this);
+	                	        rg.addView(rb[i]); 
+	                	    }
+	                	    rb[0].setText("Normal");
+	                	    rb[1].setText("Heavy");
+	                	    rb[2].setText("Excess");
+	                	    if(elements[j].getTestNotes().equals("Normal"))
+	                	    	rb[0].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("Heavy"))
+	                	    	rb[1].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("Excess"))
+	                	    	rb[2].setChecked(true);
+	                	    content.addView(rg);
+	                	}
+	                	else if (j == 9) {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+				            cb.setText(elements[j].getName());
+				            cb.setChecked(elements[j].getTestResult());
+				            content.addView(cb);
+				            
+	                		TextView lastTest = new TextView(EquipmentController.this);
+	                		lastTest.setText("Last Tested");
+	                		content.addView(lastTest);
+	                		
+	                		EditText ans = new EditText(EquipmentController.this);
+	                		String note = elements[j].getTestNotes();
+	                		
+	                		CheckBox cb1 = new CheckBox(EquipmentController.this);
+				            cb1.setText("Replace?");
+				            
+				            if (note.equals("")) {
+	                			ans.setHint("dd/mm/yyyy");
+				            }
+	                		else {
+	                			String[] notes = note.split("-");
+	                			if(notes.length == 2) {
+	                				if (notes[0].equals(" "))
+	                					ans.setHint("dd/mm/yyyy");
+	                				else
+	                					ans.setText(notes[0]);
+	                				if (notes[1].equals("Replace"))
+		                				cb1.setChecked(true);
+	                			}
+	                		}
+				            content.addView(ans);
+				            content.addView(cb1);
+	                	}
+	                	else {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+	    		            cb.setText(elements[j].getName());
+	    		            cb.setChecked(elements[j].getTestResult());
+	    		            content.addView(cb);
+	                	}
+	                }
+	                break;
+                case 3:
+	                for(int j = 10; j < 15; j++) {
+	                	if (j == 10) {
+	                		TextView cylinder = new TextView(EquipmentController.this);
+	                		cylinder.setText(elements[j].getName());
+	                		content.addView(cylinder);
+	                		
+	                		EditText ans = new EditText(EquipmentController.this);
+	                		if (elements[j].getTestNotes().equals(""))
+	                			ans.setHint("dd/mm/yyyy");
+	                		else
+	                			ans.setText(elements[j].getTestNotes());
+	                		content.addView(ans);
+	                	}
+	                	else if (j == 14) {
+	                		TextView fusible = new TextView(EquipmentController.this);
+	                		fusible.setText(elements[j].getName());
+	                		content.addView(fusible);
+	                		
+	                		final RadioButton[] rb = new RadioButton[3];
+	                	    RadioGroup rg = new RadioGroup(this); 
+	                	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	                	    for(int i=0; i<3; i++){
+	                	        rb[i]  = new RadioButton(this);
+	                	        rg.addView(rb[i]); 
+	                	    }
+	                	    rb[0].setText("450");
+	                	    rb[1].setText("500");
+	                	    rb[2].setText("Other");
+	                	    if (elements[j].getTestNotes().equals("450"))
+	                	    	rb[0].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("500"))
+	                	    	rb[1].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("other"))
+	                	    	rb[2].setChecked(true);
+	                	    content.addView(rg);
+	                	}
+	                	else {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+	    		            cb.setText(elements[j].getName());
+	    		            cb.setChecked(elements[j].getTestResult());
+	    		            content.addView(cb);
+	                	}
+	                }
+	                break;
+                case 4:
+	                for (int j = 15; j < 19; j++) {
+	                	if (j == 15) {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+				            cb.setText(elements[j].getName());
+				            cb.setChecked(elements[j].getTestResult());
+				            content.addView(cb);
+				            
+	                		TextView mfgDate = new TextView(EquipmentController.this);
+	                		mfgDate.setText("Mfg. Date");
+	                		content.addView(mfgDate);
+	                		
+	                		EditText ans = new EditText(EquipmentController.this);
+	                		if (elements[j].getTestNotes().equals(""))
+	                			ans.setHint("dd/mm/yyyy");
+	                		else
+	                			ans.setText(elements[j].getTestNotes());
+	                		content.addView(ans);
+	                	}
+	                	else {
+	                		CheckBox cb = new CheckBox(EquipmentController.this);
+				            cb.setText(elements[j].getName());
+				            cb.setChecked(elements[j].getTestResult());
+				            content.addView(cb);
+	                	}
+	                }
+	                break;
+                case 5: 
+                	for(int j = 19; j < 24; j++) {
+                		CheckBox cb = new CheckBox(EquipmentController.this);
+			            cb.setText(elements[j].getName());
+			            cb.setChecked(elements[j].getTestResult());
+			            content.addView(cb);
+                		if (j == 19) {
+	                		final RadioButton[] rb = new RadioButton[2];
+	                	    RadioGroup rg = new RadioGroup(this); 
+	                	    rg.setOrientation(RadioGroup.HORIZONTAL);
+	                	    for(int i=0; i<2; i++){
+	                	        rb[i]  = new RadioButton(this);
+	                	        rg.addView(rb[i]); 
+	                	    }
+	                	    rb[0].setText("Electrical");
+	                	    rb[1].setText("Mechanical");
+	                	    if(elements[j].getTestNotes().equals("Electrical"))
+	                	    	rb[0].setChecked(true);
+	                	    else if (elements[j].getTestNotes().equals("Mechanical"))
+	                	    	rb[1].setChecked(true);
+	                	    content.addView(rg);
+	                	}
+                	}
+                	break;
+                case 6: case 7: case 8: 
+	                for (int j = ((4*6) + ((pageNum - 6)*6)); j < Math.min(((4*6) + ((pageNum - 6)*6) + 6), elements.length); j++) {
+	                	CheckBox cb = new CheckBox(EquipmentController.this);
+			            cb.setText(elements[j].getName());
+			            cb.setChecked(elements[j].getTestResult());
+			            content.addView(cb);
+	                }
+	                break;
                 }
         	}
         }
@@ -395,15 +603,17 @@ public class EquipmentController extends NavigationDrawerActivity {
     		super.onDestroy();
     	}
         
-        @Override
+        //To complete the activity, update the data then call super.finish()
 		public void finish(){
         	updateData();
         	super.finish();
         }
         
+		//Accesses the information from the form and updates the inspection elements
         private void updateData() {
         	for(int i = content.getChildCount() - 1; i >= 0; i--)
             {
+        		//If the element is a check box, set test result to the value of the check box
         		if(content.getChildAt(i) instanceof CheckBox)
         		{
                     CheckBox cbView = (CheckBox) content.getChildAt(i);
@@ -417,6 +627,74 @@ public class EquipmentController extends NavigationDrawerActivity {
                     	}
                     }
         		}
+        		//If the element is a radio group, set the test note of the inspection element to the value of the selected radio button
+        		// and set the test result to pass/fail based on the value of the selected radio button
+        		else if(content.getChildAt(i) instanceof RadioGroup) {
+        			String item = ((TextView) content.getChildAt(i - 1)).getText().toString();
+        			RadioGroup rgView = (RadioGroup) content.getChildAt(i);
+        			for(int j = 0; j < rgView.getChildCount(); j++) {
+        				RadioButton rb = (RadioButton) rgView.getChildAt(j);
+        				if(rb.isChecked()) {
+        					for (InspectionElement element : elements)
+                            {
+                            	if(element.getName().equals(item))
+                            	{
+                            		String result = rb.getText().toString();
+                            		if(element.getName().equals("Grease Accumulation")) {
+                            			if(result.equals("Normal"))
+                            				element.setTestResult(true);
+                            			else
+                            				element.setTestResult(false);
+                            		}
+                            		else if(element.getName().equals("Fusible links 360")) {
+                            			if(result.equals("Other"))
+                            				element.setTestResult(false);
+                            			else
+                            				element.setTestResult(true);
+                            		}
+                            		element.setTestNotes(result);
+                            	}
+                            }
+        				}
+        			}
+        		}
+        		//Special handling for each instance of EditText
+        		else if(content.getChildAt(i) instanceof EditText) {
+        			String answer = " ";
+        			if(((EditText) content.getChildAt(i)).getText() != null)
+        			{
+        				answer = ((EditText) content.getChildAt(i)).getText().toString();
+        			}
+        			String item = "";
+        			if(((TextView) content.getChildAt(i - 1)).getText() != null)
+        			{
+        				item = ((TextView) content.getChildAt(i - 1)).getText().toString();
+        			}
+        			if (item.equals("Cylinder hydrostatic test date")) {
+        				elements[10].setHasBeenTested();
+        				elements[10].setTestResult(true);
+        				elements[10].setTestNotes(answer);
+        			}
+        			else if (item.equals("Mfg. Date")) {
+        				elements[15].setTestNotes(answer);
+        			}
+        			else if (item.equals("Last Tested")) {
+                        CheckBox cbView = (CheckBox) content.getChildAt(i + 1);
+                        boolean value = cbView.isChecked();
+                        String note = answer + "-"+(value ? "Replace" : " ");
+                        elements[9].setTestNotes(note);
+        			}
+        			for (InspectionElement element : elements)
+                    {
+                    	if(element.getName().equals(item))
+                    	{
+                    		element.setTestResult(true);
+                    		element.setTestNotes(answer);
+                    	}
+                    }
+        		}
+        		//If the element is a scroll view, it is the final page asking why inspection elements were failed
+        		//The entered text is recorded as test notes
         		else if(content.getChildAt(i) instanceof ScrollView) {
         			ScrollView sv = (ScrollView) content.getChildAt(i);
         			LinearLayout ll = (LinearLayout) sv.getChildAt(0);
@@ -427,8 +705,14 @@ public class EquipmentController extends NavigationDrawerActivity {
                 			EditText etView = (EditText) ll.getChildAt(j + 1);
                
                 			String value = "", text="";
+                			String[] values = {};
                 			if(tvView.getText() != null) {
-                				text = tvView.getText().toString().split(" ")[2];
+                				values = tvView.getText().toString().split(" "); 
+                				for(int k = 2; k < values.length - 1; k++) {
+                					if(k != 2)
+                						text += " ";
+                					text += values[k];
+                				}
                 			}
                 			if(etView.getText() != null)
                 			{
@@ -444,7 +728,6 @@ public class EquipmentController extends NavigationDrawerActivity {
                             }
                 		}
         			}
-        			
         		}
         	}
         }
