@@ -29,161 +29,148 @@ import com.designproject.models.XMLReaderWriter;
 public class InspectionController extends NavigationDrawerActivity {
 
 	// for storing the information.
-	private ArrayList<String []> inspectionInformationArray;
+	private ArrayList<String[]> inspectionInformationArray;
 	// Adapters are used to bind to data. I want 2d so create my own
 	private SimpleAdapter simpleAdapter;
-	
-	//Create arraylist which will hold the string data
-	ArrayList<HashMap<String, String>> listInformationString = new 
-			ArrayList<HashMap<String, String>>();
+
+	// Create arraylist which will hold the string data
+	ArrayList<HashMap<String, String>> listInformationString = new ArrayList<HashMap<String, String>>();
 	Franchise mFranchise;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// Check if Logged in
-        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
+		HelperMethods.logOutHandler(HelperMethods.CHECK_IF_LOGGED_IN, this);
 		setContentView(R.layout.activity_inspection_view);
 		super.onCreate(savedInstanceState);
 
-		 try {
-	        	//Create the reader writer
-	        	XMLReaderWriter reader = new XMLReaderWriter( this.getApplicationContext() );
-				// Get out application
-	        	FireAlertApplication a = (FireAlertApplication)getApplication();
-				// Parse the xml and set the franchise to our application
-	        	a.setFranchise( reader.parseXML() );
-				//We're currently in the franchise
-	        	a.setLocation( a.getFranchise() );
-	        	//Set the local variable for franchise
-				mFranchise = (Franchise) a.getLocation();
-				
-				reader.writeXML(mFranchise);
-				
-	        }catch (XmlPullParserException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-		 
-		// Show the Up button in the action bar.
-		setupActionBar();
-		
-		FireAlertApplication a = (FireAlertApplication)getApplication();
-		mFranchise = (Franchise)a.getLocation(); 
-		
-		inspectionInformationArray = new ArrayList<String []>();
-		
+		try {
+			// Create the reader writer
+			XMLReaderWriter reader = new XMLReaderWriter(
+					this.getApplicationContext());
+			// Get out application
+			FireAlertApplication a = (FireAlertApplication) getApplication();
+			// Parse the xml and set the franchise to our application
+			a.setFranchise(reader.parseXML());
+			// We're currently in the franchise
+			a.setLocation(a.getFranchise());
+			// Set the local variable for franchise
+			mFranchise = (Franchise) a.getLocation();
+
+			reader.writeXML(mFranchise);
+
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		FireAlertApplication a = (FireAlertApplication) getApplication();
+		mFranchise = (Franchise) a.getLocation();
+
+		inspectionInformationArray = new ArrayList<String[]>();
+
 		populateListInformation();
 	}
 
-	private void populateListInformation() 
-	{
-		//TODO: take in data from model classes and write to the member variables
+	/**
+	 * Retrieve the data from the XML and save to member variable
+	 */
+	private void populateListInformation() {
+		// TODO: take in data from model classes and write to the member
+		// variables
 		String clientName;
 		String contractDueDate;
 		String contractId;
-		
-		for(Client client : mFranchise.getClients())
-		{
+
+		for (Client client : mFranchise.getClients()) {
 			clientName = client.getName();
-			
-    		for(Contract contract : client.getContracts())
-    		{
-    			Calendar startDateCalendar = contract.getStartDate();
-    			Calendar endDateCalendar = contract.getEndDate();
-    			String terms = contract.getTerms();
-    			
-    			Interval nextInspectionInterval = HelperMethods.returnNextInspectionInterval(startDateCalendar, endDateCalendar, terms);
-    			
-    			contractDueDate = nextInspectionInterval.getEnd()
-    					.toLocalDate()
-    					.toString();
-    			
-    			contractId = contract.getId();
-    			
-    			String[] s = {clientName, contractDueDate, contractId};
-    			inspectionInformationArray.add(s);
-    		}
+
+			for (Contract contract : client.getContracts()) {
+				Calendar startDateCalendar = contract.getStartDate();
+				Calendar endDateCalendar = contract.getEndDate();
+				String terms = contract.getTerms();
+
+				Interval nextInspectionInterval = HelperMethods
+						.returnNextInspectionInterval(startDateCalendar,
+								endDateCalendar, terms);
+
+				contractDueDate = nextInspectionInterval.getEnd().toLocalDate()
+						.toString();
+
+				contractId = contract.getId();
+
+				String[] s = { clientName, contractDueDate, contractId };
+				inspectionInformationArray.add(s);
+			}
 		}
-		
+
 		bindListView();
 	}
-	
-	private void bindListView()
-	{
-		HashMap<String,String> item;
-		
-		for(String [] inspectionInformation : inspectionInformationArray)
-		{
+
+	/**
+	 * Builds the data (3 values per line) and binds it to adapter
+	 */
+	private void bindListView() {
+		HashMap<String, String> item;
+
+		for (String[] inspectionInformation : inspectionInformationArray) {
 			item = new HashMap<String, String>();
 			item.put("line1", inspectionInformation[0]);
 			item.put("line2", inspectionInformation[1]);
 			item.put("line3", inspectionInformation[2]);
 			listInformationString.add(item);
 		}
-		
-		simpleAdapter =  new SimpleAdapter(this,listInformationString, R.layout.custom_two_lines,
-				new String[] {"line1", "line2", "line3"},
-				new int[] {R.id.clientName, R.id.dueDate, R.id.textViewIdValue});
-		ListView myList=(ListView)findViewById(android.R.id.list);
-		///bind the data
+
+		simpleAdapter = new SimpleAdapter(this, listInformationString,
+				R.layout.custom_two_lines, new String[] { "line1", "line2",
+						"line3" }, new int[] { R.id.clientName, R.id.dueDate,
+						R.id.textViewIdValue });
+		ListView myList = (ListView) findViewById(android.R.id.list);
+		// /bind the data
 		myList.setAdapter(simpleAdapter);
-		
+
 	}
 
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
-	}
-
-	public void inspectionItemListener(View view)
-	{
+	public void inspectionItemListener(View view) {
 		Client[] clientList = mFranchise.getClients();
-		TextView clientNameChild = (TextView) ((ViewGroup)view).getChildAt(0);
+		TextView clientNameChild = (TextView) ((ViewGroup) view).getChildAt(0);
 		String clientName = clientNameChild.getText().toString();
-		
-		//The view is a listView and its second child element is a relative layout. 
-		//So I cast that relativeLayout as a ViewGroup and get its child.
-		TextView contractIdChild = (TextView)((ViewGroup)((ViewGroup)view).getChildAt(1)).getChildAt(0);
+
+		// The view is a listView and its second child element is a relative
+		// layout.
+		// So cast that relativeLayout as a ViewGroup and get its child.
+		TextView contractIdChild = (TextView) ((ViewGroup) ((ViewGroup) view)
+				.getChildAt(1)).getChildAt(0);
 		String contractId = contractIdChild.getText().toString();
 
-
-		for(Client client : clientList)
-		{
-			    if(client.getName() == clientName)
-			    {
-			    	for(Contract contract : client.getContracts())
-			    	{
-			    		if(contract.getId()== contractId)
-			    		{
-			    			FireAlertApplication a = (FireAlertApplication)getApplication();
-					    	a.setLocation(contract); 	
-			    		}
-			    	}
-			    }	
+		for (Client client : clientList) {
+			if (client.getName() == clientName) {
+				for (Contract contract : client.getContracts()) {
+					if (contract.getId() == contractId) {
+						FireAlertApplication a = (FireAlertApplication) getApplication();
+						a.setLocation(contract);
+					}
+				}
+			}
 		}
-		
-		Intent openInspectionOverview= new Intent(InspectionController.this, ContractController.class);
-    	startActivity(openInspectionOverview);
-		
-	}
-	
-	@Override
-	public void onResume() 
-	{
-		// Check if Logged in
-        HelperMethods.logOutHandler( HelperMethods.CHECK_IF_LOGGED_IN , this);
-        
-	    super.onResume();  // Always call the superclass method first
 
-	    FireAlertApplication a = (FireAlertApplication)getApplication();
-    	a.setLocation(mFranchise); 	
-	   
+		Intent openInspectionOverview = new Intent(InspectionController.this,
+				ContractController.class);
+		startActivity(openInspectionOverview);
+
+	}
+
+	@Override
+	public void onResume() {
+		// Check if Logged in
+		HelperMethods.logOutHandler(HelperMethods.CHECK_IF_LOGGED_IN, this);
+
+		super.onResume(); // Always call the superclass method first
+
+		FireAlertApplication a = (FireAlertApplication) getApplication();
+		a.setLocation(mFranchise);
+
 	}
 
 }
