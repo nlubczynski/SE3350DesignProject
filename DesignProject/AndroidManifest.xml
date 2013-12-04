@@ -18,7 +18,8 @@
         android:theme="@style/Theme.Styled" >"
         <activity
             android:name="com.designproject.controllers.FireAlertSplash"
-            android:label="@string/title_activity_fire_alert_splash" >
+            android:label="@string/title_activity_fire_alert_splash"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,19 +28,23 @@
         </activity>
         <activity
             android:name="com.designproject.controllers.LoginScreen"
-            android:label="@string/title_activity_login_screen" >
+            android:label="@string/title_activity_login_screen"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.designproject.controllers.MainMenu"
-            android:label="@string/title_activity_main_menu" >
+            android:label="@string/title_activity_main_menu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.designproject.MenuListActivity"
-            android:label="@string/title_menu_list" >
+            android:label="@string/title_menu_list" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.designproject.MenuDetailActivity"
-            android:label="@string/title_menu_detail" >
+            android:label="@string/title_menu_detail" 
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MenuListActivity" />
@@ -47,7 +52,8 @@
         <activity
             android:name="com.designproject.controllers.InspectionController"
             android:label="@string/title_activity_inspection_view"
-            android:parentActivityName="com.designproject.controllers.MainMenu" >
+            android:parentActivityName="com.designproject.controllers.MainMenu"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.MainMenu" />
@@ -55,7 +61,8 @@
         <activity
             android:name="com.designproject.controllers.ContractController"
             android:label="@string/title_activity_inspection_overview"
-            android:parentActivityName="com.designproject.controllers.InspectionController" >
+            android:parentActivityName="com.designproject.controllers.InspectionController"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
@@ -63,7 +70,8 @@
         <activity
             android:name="com.designproject.controllers.RoomController"
             android:label="@string/title_activity_equipment_inspection_list"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionOverview" />
@@ -71,7 +79,8 @@
         <activity
             android:name="com.designproject.InspectionOverviewCollection"
             android:label="@string/title_activity_inspection_overview_v2"
-            android:parentActivityName="com.designproject.controllers.InspectionController" >
+            android:parentActivityName="com.designproject.controllers.InspectionController"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
@@ -79,7 +88,8 @@
         <activity
             android:name="com.designproject.controllers.EquipmentController"
             android:label="@string/title_activity_inspection_form"
-            android:parentActivityName="com.designproject.controllers.EquipmentController" >
+            android:parentActivityName="com.designproject.controllers.EquipmentController"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionView" />
@@ -87,30 +97,36 @@
         <activity
             android:name="com.designproject.controllers.FloorController"
             android:label="@string/title_room_list"
-            android:parentActivityName="com.designproject.ContractController" >
+            android:parentActivityName="com.designproject.ContractController"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.designproject.InspectionOverview" />
         </activity>
         <activity
             android:name="com.designproject.controllers.DisplayListActivity"
-            android:label="@string/title_activity_display_list" >
+            android:label="@string/title_activity_display_list"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.designproject.controllers.DisplayLocationsActivity"
-            android:label="@string/title_activity_display_locations" >
+            android:label="@string/title_activity_display_locations"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.designproject.controllers.SettingsController"
-            android:label="@string/title_activity_settings_controller" >
+            android:label="@string/title_activity_settings_controller"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.designproject.controllers.SendController"
-            android:label="@string/title_activity_send_controller" >
+            android:label="@string/title_activity_send_controller"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.designproject.controllers.DisplaySpecificClientLocationActivity"
-            android:label="@string/title_activity_display_specific_client_location" >
+            android:label="@string/title_activity_display_specific_client_location"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

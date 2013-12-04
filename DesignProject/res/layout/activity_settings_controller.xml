@@ -19,6 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="top"
             android:orientation="vertical" >
 
             <TextView
@@ -30,7 +31,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/navDrawerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_margin"
@@ -148,7 +149,37 @@
                 android:onClick="createUser"
                 android:text="Create User" />
 
+            <TextView
+                android:id="@+id/DelteUserLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="Delete User"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:background="@drawable/backgrounds"
+                />
+            <Button
+                android:id="@+id/delteUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:background="@drawable/backgrounds"
+                android:onClick="confirmDelete"
+                android:text="Confirm Delete" />
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

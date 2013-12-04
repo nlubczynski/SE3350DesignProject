@@ -258,6 +258,7 @@ public class ContractController extends NavigationDrawerActivity {
 		linearLayoutFloorButtonContainer.addView(button);
 	}
 
+
 	@Override
 	public void onRestart() {
 
