@@ -36,7 +36,7 @@ public class SendController extends Activity {
 		
 		SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
 		
-		String ip = preferences.getString("port", "");
+		String ip = preferences.getString("ip", "");
 		int port = preferences.getInt("port", -1);
 		
 		if(ip.length() > 0)
