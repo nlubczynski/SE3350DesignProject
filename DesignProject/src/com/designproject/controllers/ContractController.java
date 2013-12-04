@@ -37,6 +37,7 @@ public class ContractController extends NavigationDrawerActivity {
     private Contract mContract;
     private Building[] mBuildings;
     List<Button> buttons;
+    List<TextView> textViews;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class ContractController extends NavigationDrawerActivity {
 		mBuildings = mContract.getBuildings();
 		
 		buttons = new ArrayList<Button>();
+		textViews = new ArrayList<TextView>();
 
 		setUpTabs();
 	}
@@ -118,6 +120,7 @@ public class ContractController extends NavigationDrawerActivity {
 					textViewBuildingStatus.setLayoutParams(params);
 					textViewBuildingStatus.setGravity(Gravity.RIGHT);
 					textViewBuildingStatus.setTag(building.getId() + " status");
+					textViews.add(textViewBuildingStatus);
 
 					// Check if building is complete and update building status
 					// label accordingly
@@ -284,16 +287,15 @@ public class ContractController extends NavigationDrawerActivity {
 		// Update their status accordingly
 		for (Building building : mBuildings) {
 			if (building.isCompleted()) {
-				View parent = findViewById(R.id.LinearLayout1);/*
-				Button submitButton = (Button) parent.findViewWithTag(building.getId());*/
 				for(Button b: buttons)
 					if(b.getTag().equals(building.getId()))
 						b.setEnabled(true);
 				
-				TextView status = (TextView) parent.findViewWithTag(building.getId()+" status");
-
-				status.setText("COMPLETE");
-				status.setTextColor(Color.GREEN);
+				for(TextView tv: textViews)
+					if(tv.getTag().equals(building.getId()+" status")){
+						tv.setText("COMPLETE");
+						tv.setTextColor(Color.GREEN);
+					}
 			}
 		}
 	}
