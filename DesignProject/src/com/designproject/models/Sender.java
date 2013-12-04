@@ -30,7 +30,7 @@ public class Sender {
 		
 		ServerIPAdd = InetAddress.getByName(IP);
 		RTSPsocket = new Socket();
-		RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, ServerPort), 1000);
+		RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, ServerPort), 10000);
 	}
 
 	//send data to server
