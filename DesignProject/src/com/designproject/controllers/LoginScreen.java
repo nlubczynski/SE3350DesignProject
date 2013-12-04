@@ -60,7 +60,6 @@ public class LoginScreen extends Activity {
     		Editor editor = preferences.edit();
     		editor.putString("Admin", "adminPassword");
     		editor.commit();
-
     	}
     	
     	String userPassword = preferences.getString( usernameString, "NO_SUCH_USER");
@@ -74,7 +73,7 @@ public class LoginScreen extends Activity {
     	saveUserDetails();
     	
     	// Start the application main menu
-    	Intent openLoginScreen = new Intent(LoginScreen.this, InspectionController.class);
+    	Intent openLoginScreen = new Intent(LoginScreen.this, MainMenu.class);
 		openLoginScreen.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		startActivity(openLoginScreen);
     }

@@ -54,7 +54,7 @@ public class FireAlertSplash extends Activity implements AnimationListener {
     {
     	//If they;re logged in, go to the main menu
 		if(isLogInSaved()){
-			Intent openMenu = new Intent(FireAlertSplash.this, InspectionController.class);
+			Intent openMenu = new Intent(FireAlertSplash.this, MainMenu.class);
 			openMenu.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startActivity(openMenu);
 		}
