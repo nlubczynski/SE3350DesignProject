@@ -6,6 +6,8 @@ import com.designproject.models.XMLReaderWriter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -72,6 +74,14 @@ public class SendController extends Activity {
 		}
 		else{
 			setSendButton(connect(portNumb, ip));
+			Toast toast = Toast.makeText(context, "Connection Valid", duration);
+			toast.show();
+			
+			SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
+			Editor editor = preferences.edit();
+			editor.putString("ip", ip);
+			editor.putInt("port", portNumb);
+			editor.commit();
 		}
 	}
 	public void sendClick(View view){
@@ -99,9 +109,9 @@ public class SendController extends Activity {
 				return;
 			}
 			
-			//it worked!
-			sender.close();
-			setSendButton(false);
+			toast = Toast.makeText(context, "Data Sent!", duration);
+			toast.show();
+			return;
 			
 		}else{
 			
@@ -142,6 +152,36 @@ public class SendController extends Activity {
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 		
+		return true;
+	}
+	
+	public boolean connectAndSend(){		
+		
+		SharedPreferences preferences = getSharedPreferences("Connection", Context.MODE_PRIVATE);
+		String ip = preferences.getString("ip", "");
+		int port = preferences.getInt("port", -1);
+		
+		if(ip.equals("") || port == -1)
+			return false;
+		
+		try {
+			sender = new Sender(ip, port);
+		} catch (Exception e) {			
+			return false;
+		}
+
+		XMLReaderWriter reader;
+		try {
+			reader = new XMLReaderWriter(getApplicationContext());
+		} catch (Exception e) {
+			return false;
+		}			
+		try {
+			sender.RTSPSend(reader.getXML());
+		} catch (Exception e) {
+			return false;
+		}
+
 		return true;
 	}
 	
