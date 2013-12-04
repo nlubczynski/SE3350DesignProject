@@ -2,11 +2,14 @@ package com.designproject.controllers;
 
 import com.designproject.FireAlertApplication;
 import com.designproject.R;
+import com.designproject.models.Building;
 import com.designproject.models.Client;
+import com.designproject.models.Contract;
 import com.designproject.models.Franchise;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +26,8 @@ public class DisplayListActivity extends Activity {
 
 	private Franchise theFranchise;
 	private Client [] clients;
+	private Contract [] contracts;
+	private Building [] buildings;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class DisplayListActivity extends Activity {
 		
 		list.setAdapter(adapter);
 		
-		//switch between client name and client ID
+		//show selected client's locations
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -62,15 +67,24 @@ public class DisplayListActivity extends Activity {
 				for (Client theClient : clients)
 				{
 					if (theClient.getName() == clientSelect)
-					{
-						selection.setText(theClient.getId());
+					{						
+						//selection.setText(theClient.getId());
+						FireAlertApplication a = (FireAlertApplication)getApplication();
+						a.setClient(theClient);
+						
+						//Display client's locations
+						Intent displayClientLocations = new Intent(DisplayListActivity.this, DisplaySpecificClientLocationActivity.class);
+						startActivity(displayClientLocations);
 						break;
 					}
+					
+					/*
 					if (theClient.getId() == clientSelect)
 					{
 						selection.setText(theClient.getName());
 						break;
 					}
+					*/
 				}	
 			}
 			
