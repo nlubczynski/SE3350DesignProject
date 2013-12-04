@@ -91,7 +91,7 @@
                     android:background="@drawable/backgrounds"
                     android:onClick="savePassword"
                     android:text="Save" />
-
+      			
                 <LinearLayout
                     android:id="@+id/linearLayoutAdminPanel"
                     android:layout_width="match_parent"

@@ -36,17 +36,27 @@ public class SendController extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sender_view);
 
+
 		SharedPreferences preferences = getSharedPreferences("Connection",
 				Context.MODE_PRIVATE);
 
 		String ip = preferences.getString("port", "");
+
+
 		int port = preferences.getInt("port", -1);
+
 
 		if (ip.length() > 0)
 			((EditText) findViewById(R.id.ipText)).setText(ip);
 		if (port > -1)
 			((EditText) findViewById(R.id.portText)).setText(port);
 		;
+
+		
+		if(ip.length() > 0)
+			((EditText)findViewById(R.id.ipText)).setText(ip);
+		if(port > -1)
+			((EditText)findViewById(R.id.portText)).setText(String.valueOf(port));;
 
 		this.setSendButton(false);
 

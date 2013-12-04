@@ -7,8 +7,8 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
+import android.os.StrictMode;
 import android.util.Log;
 
 public class Sender {
@@ -24,6 +24,10 @@ public class Sender {
 	 * @throws IOException
 	 */
 	public Sender(String IP, int ServerPort) throws IOException, Exception {
+		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
+		
 		ServerIPAdd = InetAddress.getByName(IP);
 		RTSPsocket = new Socket();
 		RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, ServerPort), 1000);
@@ -31,6 +35,8 @@ public class Sender {
 
 	//send data to server
 	public void RTSPSend(String data) {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
 		try {
 			final PrintWriter sendData = new PrintWriter(new BufferedWriter(new OutputStreamWriter(RTSPsocket.getOutputStream())), true);
 			sendData.println(data);
