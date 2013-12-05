@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-public class SendController extends Activity {
+public class SendController extends NavigationDrawerActivity {
 
 	Sender sender;
 	boolean connected;
@@ -32,10 +32,9 @@ public class SendController extends Activity {
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_sender_view);
-
+		super.onCreate(savedInstanceState);
 
 		SharedPreferences preferences = getSharedPreferences("Connection",
 				Context.MODE_PRIVATE);
