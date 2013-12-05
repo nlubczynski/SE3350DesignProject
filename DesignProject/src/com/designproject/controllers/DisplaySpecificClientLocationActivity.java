@@ -40,6 +40,10 @@ public class DisplaySpecificClientLocationActivity extends
 		FireAlertApplication a = (FireAlertApplication) getApplication();
 		a = (FireAlertApplication) getApplication();
 
+		//Get the contracts
+		 clients = (Client)a.getClient();
+		 contracts = clients.getContracts();
+		
 		// Build the data by getting building address and bind to adapter
 		for (Contract theContract : contracts) {
 			buildings = theContract.getBuildings();
