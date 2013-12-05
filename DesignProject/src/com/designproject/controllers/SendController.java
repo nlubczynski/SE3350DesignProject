@@ -39,7 +39,7 @@ public class SendController extends NavigationDrawerActivity {
 		SharedPreferences preferences = getSharedPreferences("Connection",
 				Context.MODE_PRIVATE);
 
-		String ip = preferences.getString("port", "");
+		String ip = preferences.getString("ip", "");
 
 
 		int port = preferences.getInt("port", -1);
