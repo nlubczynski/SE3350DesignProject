@@ -261,8 +261,7 @@ public class XMLReaderWriter {
 		
 		if(canRead()){
 			File sdCard = Environment.getExternalStorageDirectory();
-			File file = new File(sdCard.getAbsoluteFile(), "FireAlertData.xml");
-		
+			File file = new File(sdCard.getAbsoluteFile() + "/FireAlertApp/" , "FireAlertData.xml");		
 			if(file.exists()){
 				
 				FileInputStream fis = new FileInputStream(file);
