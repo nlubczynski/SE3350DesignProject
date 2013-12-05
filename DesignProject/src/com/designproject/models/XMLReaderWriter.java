@@ -3,15 +3,18 @@ package com.designproject.models;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.content.Context;
@@ -179,7 +182,7 @@ public class XMLReaderWriter {
 		        							serializer.attribute( "", "testResult", equipment.getInspectionElements()[i].hasBeenTested() == false ? "" :
 		        									equipment.getInspectionElements()[i].getTestResult() == true ? "PASS" : "FAIL" );
 	        							serializer.attribute( "", "testNote", equipment.getInspectionElements()[i].getTestNotes() );
-	        							serializer.endTag( "", "inspectionElement_" + String.valueOf( i + 1 ) );
+	        							serializer.endTag( "", "inspectionElement" );
 	        						}
 	        						serializer.endTag( "", equipment.getName() );
 	        					}
@@ -256,69 +259,86 @@ public class XMLReaderWriter {
 	
 	public Franchise parseXML() throws XmlPullParserException, IOException{
 		
-		// Set the parser
-		XmlResourceParser parser = context.getResources().getXml(R.xml.inspection_data);	
+		if(canRead()){
+			File sdCard = Environment.getExternalStorageDirectory();
+			File file = new File(sdCard.getAbsoluteFile() + "/FireAlertApp/" , "FireAlertData.xml");
 		
-		// Prepare for the while loop
- 		int eventType = parser.getEventType();
- 		
- 		// store the more recently created element
- 		Client lastClient = null;
- 		Contract lastContract = null;
- 		Building lastBuilding = null;
- 		Floor lastFloor = null;
- 		Room lastRoom = null;
- 		Equipment lastEquipment = null;
- 		
- 		// Booleans inRoom and inEquipment
- 		// if inRoom, but not inEquipment - the next startTag is a piece of equipment
- 		// if not inRoom, then then next starTag is anything
- 		//if inRoom and inEquipment then next startTag is inspectionElement
- 		boolean inRoom = false;
- 		boolean inEquipment = false;
-		
-		// Loop through the XML document
-		while(eventType != XmlPullParser.END_DOCUMENT){
-			
-			switch(eventType){
-				case XmlPullParser.START_DOCUMENT:
-					System.out.println("Starting parsing of document");
-					break;
-				case XmlPullParser.START_TAG:
-					if( parser.getName().equals( "Franchisee" ) ) 
-						this.franchise = franchiseParser( parser );
-					else if( parser.getName().equals("Client" ) ) 
-						lastClient = clientParser( parser );
-					else if( parser.getName().equals( "clientContract" ) ) 
-						lastContract = contractParser( parser, lastClient );
-					else if( parser.getName().equals( "ServiceAddress" ) ) 
-						lastBuilding = buildingParser( parser, lastContract );
-					else if( parser.getName().equals( "Floor" ) ) 
-						lastFloor = floorParser( parser, lastBuilding );
-					else if( parser.getName().equals( "Room" ) ){ 
-						lastRoom = roomParser( parser, lastFloor );
-						inRoom = true;
-					}
-					else if( inRoom == true && inRoom != inEquipment ){ 
-						lastEquipment = equipmentParser( parser, lastRoom );
-						inEquipment = true;
-					}
-					else if( parser.getName().matches( "inspectionElement_[0-9]+" ) ) 
-						inspectionElementParser( parser, lastEquipment );
-					break;
-				case XmlPullParser.END_TAG:
-					if( parser.getName().equals( "Room" ) )
-						inRoom = false;
-					else if( inRoom == true && inRoom == inEquipment && !parser.getName().matches( "inspectionElement_[0-9]+" ))
-						inEquipment = false;
-					break;
-				case XmlPullParser.TEXT:
-					break;			
-			}	
-			eventType = parser.next();			
+			if(file.exists()){
+				
+				FileInputStream fis = new FileInputStream(file);
+				XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+				
+				// Set the parser
+				XmlPullParser parser = factory.newPullParser();
+				
+				parser.setInput(new InputStreamReader(fis));
+				
+				// Prepare for the while loop
+		 		int eventType = parser.getEventType();
+		 		
+		 		// store the more recently created element
+		 		Client lastClient = null;
+		 		Contract lastContract = null;
+		 		Building lastBuilding = null;
+		 		Floor lastFloor = null;
+		 		Room lastRoom = null;
+		 		Equipment lastEquipment = null;
+		 		
+		 		// Booleans inRoom and inEquipment
+		 		// if inRoom, but not inEquipment - the next startTag is a piece of equipment
+		 		// if not inRoom, then then next starTag is anything
+		 		//if inRoom and inEquipment then next startTag is inspectionElement
+		 		boolean inRoom = false;
+		 		boolean inEquipment = false;
+				
+				// Loop through the XML document
+				while(eventType != XmlPullParser.END_DOCUMENT){
+					
+					switch(eventType){
+						case XmlPullParser.START_DOCUMENT:
+							System.out.println("Starting parsing of document");
+							break;
+						case XmlPullParser.START_TAG:
+							if( parser.getName().equals( "Franchisee" ) ) 
+								this.franchise = franchiseParser( parser );
+							else if( parser.getName().equals("Client" ) ) 
+								lastClient = clientParser( parser );
+							else if( parser.getName().equals( "clientContract" ) ) 
+								lastContract = contractParser( parser, lastClient );
+							else if( parser.getName().equals( "ServiceAddress" ) ) 
+								lastBuilding = buildingParser( parser, lastContract );
+							else if( parser.getName().equals( "Floor" ) ) 
+								lastFloor = floorParser( parser, lastBuilding );
+							else if( parser.getName().equals( "Room" ) ){ 
+								lastRoom = roomParser( parser, lastFloor );
+								inRoom = true;
+							}
+							else if( inRoom == true && inRoom != inEquipment ){ 
+								lastEquipment = equipmentParser( parser, lastRoom );
+								inEquipment = true;
+							}
+							else if( parser.getName().matches( "inspectionElement" ) ) 
+								inspectionElementParser( parser, lastEquipment );
+							break;
+						case XmlPullParser.END_TAG:
+							if( parser.getName().equals( "Room" ) )
+								inRoom = false;
+							else if( inRoom == true && inRoom == inEquipment && !parser.getName().matches( "inspectionElement" ))
+								inEquipment = false;
+							break;
+						case XmlPullParser.TEXT:
+							break;			
+					}	
+					eventType = parser.next();			
+				}
+				
+				return this.franchise;
+			}
+			else
+				throw new IOException();
 		}
-		
-		return this.franchise;
+		else
+			throw new IOException();
 	}
 	
 	/**
@@ -585,7 +605,7 @@ public class XMLReaderWriter {
 	private void inspectionElementParser( XmlPullParser elementParser, Equipment lastEquipment ){	
 		
 		// Error checking
-		if( !elementParser.getName().matches("inspectionElement_[0-9]+") )
+		if( !elementParser.getName().matches("inspectionElement") )
 			return;
 		
 		// Expected - 3 attributes (name, testResult, testNote)
@@ -593,13 +613,26 @@ public class XMLReaderWriter {
 		
 		// Initialize variables 
 		String name = "testingElement";
+		boolean result = false;
+		String comment = "";
 		
 		for ( int i = 0; i < counter; i++ )
 			if (elementParser.getAttributeName( i ).equals(  "name" ) )
 				name = elementParser.getAttributeValue( i );
+			else if (elementParser.getAttributeName( i ).equals(  "testResult" ) )
+				if(elementParser.getAttributeValue( i ).equals("PASS"))
+					result = true ;
+			else if (elementParser.getAttributeName( i ).equals(  "testNote" ) )
+				comment = elementParser.getAttributeValue( i );
+		
+		InspectionElement temp = new InspectionElement( name );
+		if(result)
+			temp.setHasBeenTested();
+		temp.setTestNotes(comment);
+		temp.setTestResult(result);
 		
 		//Add Inspection Element to Above Equipment
-		lastEquipment.addInspectionElement( new InspectionElement( name ) );
+		lastEquipment.addInspectionElement( temp );
 		
 	}
 	private boolean canRead(){
