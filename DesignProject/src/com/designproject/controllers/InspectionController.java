@@ -64,10 +64,11 @@ public class InspectionController extends NavigationDrawerActivity {
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			onPause();
 			new AlertDialog.Builder(this)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setTitle("XML File Error")
-			.setMessage("Please save XML file as /FireAlertAppFireAlertData.xml on the SD card.")
+			.setMessage("Please save XML file as /FireAlertApp/FireAlertData.xml on the SD card.")
 			.setPositiveButton("Okay",
 					new DialogInterface.OnClickListener() {
 
@@ -80,6 +81,7 @@ public class InspectionController extends NavigationDrawerActivity {
 						}
 
 					}).show();
+			return;
 		}
 
 		FireAlertApplication a = (FireAlertApplication) getApplication();
