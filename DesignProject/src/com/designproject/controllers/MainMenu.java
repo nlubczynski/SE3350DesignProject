@@ -18,6 +18,8 @@ import com.designproject.models.HelperMethods;
 import com.designproject.models.XMLReaderWriter;
 
 import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,7 +56,22 @@ public class MainMenu extends NavigationDrawerActivity {
 			reader.writeXML(mFranchise);
 
 		} catch (XmlPullParserException e) {
-			e.printStackTrace();
+			new AlertDialog.Builder(this)
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setTitle("XML File Error")
+			.setMessage("Please save XML file as /FireAlertAppFireAlertData.xml on the SD card.")
+			.setPositiveButton("Okay",
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog,
+								int which) {
+
+							// Restart the activity
+							finish();
+						}
+
+					}).show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
