@@ -78,7 +78,8 @@ public class InspectionController extends NavigationDrawerActivity {
 
 							//LOGOUT
 							HelperMethods.logOutHandler(HelperMethods.LOGOUT, getApplicationContext());
-
+							
+							finish();
 						}
 
 					}).show();

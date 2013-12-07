@@ -136,6 +136,7 @@ public class HelperMethods {
 				// User isn't logged in, send them to the main screen
 				// Prepare the login screen
 		        Intent loginScreen = new Intent(context, LoginScreen.class);
+		        loginScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		        // Tell the intent to close all open activities
 		        // This will also kill this thread, as it resides in the topmost activity
 		        loginScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
