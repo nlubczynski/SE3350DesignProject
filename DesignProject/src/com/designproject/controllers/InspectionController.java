@@ -76,11 +76,8 @@ public class InspectionController extends NavigationDrawerActivity {
 						public void onClick(DialogInterface dialog,
 								int which) {
 
-							//Go to home screen
-							Intent intent = new Intent(Intent.ACTION_MAIN);
-							intent.addCategory(Intent.CATEGORY_HOME);
-							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-							startActivity(intent);
+							//LOGOUT
+							HelperMethods.logOutHandler(HelperMethods.LOGOUT, getApplicationContext());
 
 						}
 
