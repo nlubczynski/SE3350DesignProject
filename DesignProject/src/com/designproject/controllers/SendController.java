@@ -45,13 +45,6 @@ public class SendController extends NavigationDrawerActivity {
 		int port = preferences.getInt("port", -1);
 
 
-		if (ip.length() > 0)
-			((EditText) findViewById(R.id.ipText)).setText(ip);
-		if (port > -1)
-			((EditText) findViewById(R.id.portText)).setText(port);
-		;
-
-		
 		if(ip.length() > 0)
 			((EditText)findViewById(R.id.ipText)).setText(ip);
 		if(port > -1)
