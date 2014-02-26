@@ -40,7 +40,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:layout_weight="1"
             android:text="@string/address_label"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
@@ -60,7 +60,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:layout_weight="1"
             android:text="@string/floors_label"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:layout_weight="1"
             android:text="@string/rooms_label"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
@@ -100,7 +100,7 @@
             android:layout_marginRight="@dimen/default_margin"
             android:layout_weight="1"
             android:text="@string/items_label"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
