@@ -116,7 +116,7 @@ public class ContractController extends NavigationDrawerActivity {
 					final TextView textViewBuildingStatus = new TextView(
 							context);
 					textViewBuildingStatus.setTextAppearance(context,
-							android.R.attr.textAppearanceLarge);
+							android.R.style.TextAppearance_Large);
 					textViewBuildingStatus.setLayoutParams(params);
 					textViewBuildingStatus.setGravity(Gravity.RIGHT);
 					textViewBuildingStatus.setTag(building.getId() + " status");
@@ -141,6 +141,8 @@ public class ContractController extends NavigationDrawerActivity {
 					textViewAddress.setText(building.getAddress());
 					textViewAddress.setLayoutParams(params);
 					textViewAddress.setGravity(Gravity.RIGHT);
+					textViewAddress.setTextAppearance(context,
+							android.R.style.TextAppearance_Medium);
 					layout1.addView(textViewAddress);
 
 					// Get necessary linearLayout and add number of floors to
@@ -150,6 +152,8 @@ public class ContractController extends NavigationDrawerActivity {
 					textViewFloor.setText(String.valueOf(building.getFloors().length));
 					textViewFloor.setLayoutParams(params);
 					textViewFloor.setGravity(Gravity.RIGHT);
+					textViewFloor.setTextAppearance(context,
+							android.R.style.TextAppearance_Medium);
 					layout1.addView(textViewFloor);
 
 					int numberOfRooms = 0;
@@ -182,6 +186,8 @@ public class ContractController extends NavigationDrawerActivity {
 					textViewRooms.setText(String.valueOf(numberOfRooms));
 					textViewRooms.setLayoutParams(params);
 					textViewRooms.setGravity(Gravity.RIGHT);
+					textViewRooms.setTextAppearance(context,
+							android.R.style.TextAppearance_Medium);
 					layout1.addView(textViewRooms);
 
 					// Get necessary linearLayout and add number of inspection
@@ -192,6 +198,8 @@ public class ContractController extends NavigationDrawerActivity {
 							.valueOf(numberOfInspectionsElements));
 					textViewInspectionElements.setLayoutParams(params);
 					textViewInspectionElements.setGravity(Gravity.RIGHT);
+					textViewInspectionElements.setTextAppearance(context,
+							android.R.style.TextAppearance_Medium);
 					layout1.addView(textViewInspectionElements);
 
 					// Get necessary linearLayout and add submit button to the
