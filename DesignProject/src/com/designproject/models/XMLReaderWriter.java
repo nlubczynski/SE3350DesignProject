@@ -205,13 +205,13 @@ public class XMLReaderWriter {
 		if(canWrite()){
 			
 			File sdCard = Environment.getExternalStorageDirectory();
-			File dir = new File (sdCard.getAbsolutePath() + "/FireAlertApp");
+			File dir = new File (sdCard.getAbsolutePath());
 			
 			//It doesn't exist, and we can't make it - we don't have the permissions
 			if( !(dir.mkdirs() || dir.isDirectory()) )
 				return false;
 			
-			File file = new File(dir, "FireAlertData.xml");
+			File file = new File(dir, "InspectionData.xml");
 			
 			FileOutputStream os;
 			BufferedOutputStream out;
@@ -236,7 +236,7 @@ public class XMLReaderWriter {
 		
 		if(canRead()){
 			File sdCard = Environment.getExternalStorageDirectory();
-			File file = new File(sdCard.getAbsoluteFile() + "/FireAlertApp/" , "FireAlertData.xml");
+			File file = new File(sdCard.getAbsoluteFile(), "InspectionData.xml");
 			
 			if(file.exists()){			
 				BufferedReader br = new BufferedReader(new FileReader(file));		
@@ -261,7 +261,7 @@ public class XMLReaderWriter {
 		
 		if(canRead()){
 			File sdCard = Environment.getExternalStorageDirectory();
-			File file = new File(sdCard.getAbsoluteFile() + "/FireAlertApp/" , "FireAlertData.xml");		
+			File file = new File(sdCard.getAbsoluteFile() , "InspectionData.xml");		
 			if(file.exists()){
 				
 				FileInputStream fis = new FileInputStream(file);
