@@ -60,7 +60,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/default_margin_2x"
-            android:text="Due:"
+            android:text="End Date:"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>

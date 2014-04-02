@@ -28,6 +28,8 @@ public class LoginScreen extends Activity {
 		// User name doesn't need an enter listener - it defaults to switching
 		// focus to password
 		this.findViewById(R.id.password).setOnKeyListener(new OnKeyListener() {
+			
+			//do nothings
 
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {

@@ -75,10 +75,15 @@ public class XMLReaderWriter {
 	        		int day = contract.getStartDate().get( Calendar.DAY_OF_MONTH );
 	        		int month = contract.getStartDate().get( Calendar.MONTH ) + 1;
 	        		int year = contract.getStartDate().get( Calendar.YEAR );
+	        		int hour = contract.getStartDate().get( Calendar.HOUR ) ;
+	        		int min = contract.getStartDate().get( Calendar.MINUTE );
+	        		int sec = contract.getStartDate().get ( Calendar.SECOND );
+	        		String am_pm = contract.getStartDate().get( Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
 	        		
 	        		// need to make sure that day, month, hour, and minutes are not single digits
 	        		// hourString and minute string are used in the next level of loop
-	        		String dayString, monthString, hourString, minuteString;
+	        		String dayString, monthString, hourString, minuteString, secondString;
+	        		// need to make sure that day, month, hour, minutes, and second are not single digits
         			if(day < 10)
         				dayString = "0" + day;
         			else
@@ -87,14 +92,33 @@ public class XMLReaderWriter {
         				monthString = "0" + month;
         			else
         				monthString = String.valueOf( month );
-	        		
-	        		serializer.attribute("", "startDate", dayString + "/" + monthString + "/" + year );
+        			if(hour < 10)
+        				hourString = "0" + hour;
+        			else
+        				hourString = String.valueOf( hour );
+        			if(min < 10)
+        				minuteString = "0" + min;
+        			else
+        				minuteString = String.valueOf( min );
+        			if(sec<10)
+        				secondString = "0" + sec;
+        			else
+        				secondString = String.valueOf( sec );
+        			
+	        		//2014-03-29 3:11:43 AM
+	        		serializer.attribute("", "startDate", year + "-" + monthString + "-" + dayString +
+	        				" " + hourString + ":" + minuteString + ":" + secondString + " " + am_pm);
 	        		// end date to ints
 	        		day = contract.getEndDate().get( Calendar.DAY_OF_MONTH );
 	        		month = contract.getEndDate().get( Calendar.MONTH ) + 1;
 	        		year = contract.getEndDate().get( Calendar.YEAR );
+	        		hour = contract.getStartDate().get( Calendar.HOUR ) ;
+	        		min = contract.getStartDate().get( Calendar.MINUTE );
+	        		sec = contract.getStartDate().get ( Calendar.SECOND );
+	        		am_pm = contract.getStartDate().get( Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
 	        		
 	        		// need to make sure that day, month, hour, and minutes are not single digits
+	        		// need to make sure that day, month, hour, minutes, and second are not single digits
         			if(day < 10)
         				dayString = "0" + day;
         			else
@@ -103,8 +127,23 @@ public class XMLReaderWriter {
         				monthString = "0" + month;
         			else
         				monthString = String.valueOf( month );
+        			if(hour < 10)
+        				hourString = "0" + hour;
+        			else
+        				hourString = String.valueOf( hour );
+        			if(min < 10)
+        				minuteString = "0" + min;
+        			else
+        				minuteString = String.valueOf( min );
+        			if(sec<10)
+        				secondString = "0" + sec;
+        			else
+        				secondString = String.valueOf( sec );
 	        		
-	        		serializer.attribute("", "endDate", dayString + "/" + monthString + "/" + year );
+	        		//2014-03-29 3:11:43 AM
+	        		serializer.attribute("", "endDate", year + "-" + monthString + "-" + dayString +
+	        				" " + hourString + ":" + minuteString + ":" + secondString + " " + am_pm);
+	        		
 	        		serializer.attribute("", "terms", contract.getTerms() );
 	        		// Buildings
 	        		for( Building building: contract.getBuildings() ){
@@ -123,11 +162,12 @@ public class XMLReaderWriter {
 	        			day = building.getTimeStamp().get( Calendar.DAY_OF_MONTH );
         				month = building.getTimeStamp().get( Calendar.MONTH ) + 1;	        				
 	        			year = building.getTimeStamp().get( Calendar.YEAR );
-	        			int hour = building.getTimeStamp().get( Calendar.HOUR);
-	        			int minute = building.getTimeStamp().get( Calendar.MINUTE );
-	        			String am_pm = building.getTimeStamp().get( Calendar.AM_PM ) == Calendar.AM ? "AM" : "PM";
+	        			hour = building.getTimeStamp().get( Calendar.HOUR);
+	        			min = building.getTimeStamp().get( Calendar.MINUTE );
+	        			sec = building.getTimeStamp().get( Calendar.SECOND );
+	        			am_pm = building.getTimeStamp().get( Calendar.AM_PM ) == Calendar.AM ? "AM" : "PM";
 	        			
-	        			// need to make sure that day, month, hour, and minutes are not single digits
+	        			// need to make sure that day, month, hour, minutes, and second are not single digits
 	        			if(day < 10)
 	        				dayString = "0" + day;
 	        			else
@@ -140,13 +180,17 @@ public class XMLReaderWriter {
 	        				hourString = "0" + hour;
 	        			else
 	        				hourString = String.valueOf( hour );
-	        			if(minute < 10)
-	        				minuteString = "0" + minute;
+	        			if(min < 10)
+	        				minuteString = "0" + min;
 	        			else
-	        				minuteString = String.valueOf( minute );
+	        				minuteString = String.valueOf( min );
+	        			if(sec<10)
+	        				secondString = "0" + sec;
+	        			else
+	        				secondString = String.valueOf( sec );
 	        			
 	        			serializer.attribute( "", "testTimeStamp", year + monthString + dayString + " " 
-	        					+ hourString + ":" + minuteString + am_pm);
+	        					+ hourString + ":" + minuteString +" "+ am_pm);
 	        			// Floors
 	        			for(Floor floor: building.getFloors() ){
 	        				// <Floor name="First Floor">
@@ -448,21 +492,56 @@ public class XMLReaderWriter {
 				terms = parser.getAttributeValue( i );
 			else if( parser.getAttributeName( i ).equals( "startDate" ) ){
 				
-				String [] temp = parser.getAttributeValue( i ).split("/");
-				int year = Integer.valueOf( temp[2] );
-				int month = Integer.valueOf( temp[1] ) - 1;
-				int day = Integer.valueOf( temp[0] ) ;
+				//GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second)
+				//2014-03-29 3:11:43 AM
 				
-				startDate = new GregorianCalendar(year, month, day);
+				String [] temp = parser.getAttributeValue( i ).split(" ");
+				
+				if(temp.length != 3){
+					startDate = new GregorianCalendar();
+					continue;
+				}
+					
+				
+				//Date
+				String [] date = temp[0].split("-");				
+				int year = Integer.valueOf( date[0] );
+				int month = Integer.valueOf( date[1] ) - 1;
+				int day = Integer.valueOf( date[2] ) ;
+				
+				//Time
+				String [] time = temp[1].split(":");
+				int hour = temp[2].equals("AM") ? Integer.valueOf( time[0] ) : Integer.valueOf( time[0] ) + 12;
+				int min = Integer.valueOf( time[1] );
+				int sec = Integer.valueOf( time[2] );
+				
+				startDate = new GregorianCalendar(year, month, day, hour, min, sec);
 			}
 			else if( parser.getAttributeName( i ).equals( "endDate" ) ){
 				
-				String [] temp = parser.getAttributeValue( i ).split("/");
-				int year = Integer.valueOf( temp[2] );
-				int month = Integer.valueOf( temp[1] ) - 1;
-				int day = Integer.valueOf( temp[0] ) ;
+				//GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute, int second)
+				//2014-03-29 3:11:43 AM
 				
-				endDate = new GregorianCalendar(year, month, day);
+				String [] temp = parser.getAttributeValue( i ).split(" ");
+				
+				if(temp.length != 3){
+					endDate = new GregorianCalendar();
+					continue;
+				}
+				
+				//Date
+				String [] date = temp[0].split("-");				
+				int year = Integer.valueOf( date[0] );
+				int month = Integer.valueOf( date[1] ) - 1;
+				int day = Integer.valueOf( date[2] ) ;
+				
+				//Time
+				String [] time = temp[1].split(":");
+				int hour = temp[2].equals("AM") ? Integer.valueOf( time[0] ) : Integer.valueOf( time[0] ) + 12;
+				int min = Integer.valueOf( time[1] );
+				int sec = Integer.valueOf( time[2] );
+				
+				endDate = new GregorianCalendar(year, month, day, hour, min, sec);
 			}
 		
 		// Create a new contract
@@ -522,6 +601,12 @@ public class XMLReaderWriter {
 			else if( parser.getAttributeName( i ).equals(  "testTimeStamp" ) ){
 				
 				String [] temp = parser.getAttributeValue( i ).split(" ");
+				
+				if(temp.length != 3){
+					timeStamp = new GregorianCalendar();
+					continue;
+				}
+				
 				int year = Integer.valueOf( temp[0].substring(0, 4) );
 				int month = Integer.valueOf( temp[0].substring(4, 6) ) - 1;
 				int day = Integer.valueOf( temp[0].substring(6, 8) ) ;

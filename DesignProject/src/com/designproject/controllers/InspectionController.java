@@ -1,9 +1,11 @@
 package com.designproject.controllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.joda.time.Interval;
 import org.xmlpull.v1.XmlPullParserException;
@@ -112,12 +114,15 @@ public class InspectionController extends NavigationDrawerActivity {
 				Calendar endDateCalendar = contract.getEndDate();
 				String terms = contract.getTerms();
 
-				Interval nextInspectionInterval = HelperMethods
+				/*Interval nextInspectionInterval = HelperMethods
 						.returnNextInspectionInterval(startDateCalendar,
 								endDateCalendar, terms);
 
 				contractDueDate = nextInspectionInterval.getEnd().toLocalDate()
-						.toString();
+						.toString();*/
+				SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy");
+				
+				contractDueDate = sdf.format(endDateCalendar.getTime());
 
 				contractId = contract.getId();
 

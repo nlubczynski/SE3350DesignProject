@@ -59,7 +59,7 @@ public class MainMenu extends NavigationDrawerActivity {
 			new AlertDialog.Builder(this)
 			.setIcon(android.R.drawable.ic_dialog_alert)
 			.setTitle("XML File Error")
-			.setMessage("Please save XML file as /FireAlertAppFireAlertData.xml on the SD card.")
+			.setMessage("Please save XML file as mnt/sdcard/InspectionData.xml on the SD card.")
 			.setPositiveButton("Okay",
 					new DialogInterface.OnClickListener() {
 
